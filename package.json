@@ -7,6 +7,8 @@
     "api": "cd api && astro dev"
   },
   "dependencies": {
-    "astro": "^3.2.1"
+    "astro": "^3.2.1",
+    "node-fetch": "^3.3.2",
+    "pokemontcgsdk": "^2.0.0"
   }
 }
