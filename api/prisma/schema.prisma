@@ -9,27 +9,28 @@ generator client {
 
 model Pokemons {
     id          BigInt  @id @db.UnsignedBigInt
+    cards       Cards[]
     description String  @db.VarChar(1000)
     name        String  @db.VarChar(100)
     numero      Int
     type        String  @db.VarChar(100)
-    cards       Cards[]
 }
 
 model Sets {
     id       BigInt  @id @db.UnsignedBigInt
-    name     String  @db.VarChar(100)
-    imageUrl String  @map("image_url") @db.VarChar(100)
     cards    Cards[]
+    imageUrl String  @map("image_url") @db.VarChar(100)
+    name     String  @db.VarChar(100)
 }
 
 model Cards {
     id        BigInt   @id @db.UnsignedBigInt
+    imageUrl  String?  @map("image_url") @db.VarChar(100)
     pokemon   Pokemons @relation(fields: [pokemonId], references: [id])
     pokemonId BigInt   @map("pokemon_id") @db.UnsignedBigInt
+    price     Float?
+    rarity    String   @db.VarChar(100)
     set       Sets     @relation(fields: [setId], references: [id])
     setId     BigInt   @map("set_id") @db.UnsignedBigInt
-    price     Float?
-    imageUrl  String?  @map("image_url") @db.VarChar(100)
-    rarity    String   @db.VarChar(100)
+    types     String   @db.VarChar(50)
 }

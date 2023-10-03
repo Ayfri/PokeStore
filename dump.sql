@@ -19,7 +19,6 @@
 -- Table structure for table `cards`
 --
 
-DROP TABLE IF EXISTS `cards`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cards` (
@@ -29,6 +28,7 @@ CREATE TABLE `cards` (
   `price` float(8,2) unsigned DEFAULT NULL,
   `image_url` varchar(1000) DEFAULT NULL,
   `rarity` varchar(50) DEFAULT NULL,
+  `types` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_cards_sets` (`set_id`),
   KEY `fk_cards_pokemons` (`pokemon_id`),
@@ -41,7 +41,6 @@ CREATE TABLE `cards` (
 -- Table structure for table `pokemons`
 --
 
-DROP TABLE IF EXISTS `pokemons`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pokemons` (
@@ -58,7 +57,6 @@ CREATE TABLE `pokemons` (
 -- Table structure for table `sets`
 --
 
-DROP TABLE IF EXISTS `sets`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sets` (
@@ -78,4 +76,4 @@ CREATE TABLE `sets` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-03 17:02:01
+-- Dump completed on 2023-10-03 21:11:14

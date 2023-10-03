@@ -1,10 +1,9 @@
-import cards from '../../resources/cards.json';
-import sets from '../../resources/sets.json';
-import pokemons from '../../resources/pokemons.json';
-import prisma from '../prisma.ts';
 import type {Prisma} from '@prisma/client';
+import cards from '../../resources/cards.json';
+import pokemons from '../../resources/pokemons.json';
+import sets from '../../resources/sets.json';
+import prisma from '../prisma.ts';
 import {newId} from '../random.ts';
-import {sleep} from '../utils.ts';
 
 const prismaClient = prisma();
 
@@ -24,8 +23,8 @@ async function pushPokemons() {
 	await prismaClient.pokemons.createMany({
 		data: pokemons.pokemon.map((pokemon) => ({
 			id: newId(),
-			name: pokemon.name.replace(/ [♀♂] /, ''),
 			description: 'DESCRIPTION NOT FOUND',
+			name: pokemon.name.replace(/ [♀♂] /, ''),
 			numero: parseInt(pokemon.num),
 			type: pokemon.type.join(','),
 		})),
@@ -58,11 +57,12 @@ async function pushCards() {
 
 			return ({
 				id: newId(),
-				price: card.price || null,
 				imageUrl: card.image,
+				pokemonId: pokemon.id,
+				price: card.price || null,
 				rarity: card.rarity || "Unknown",
 				setId: set.id,
-				pokemonId: pokemon.id,
+				types: card.types.replace(' ', ''),
 			});
 		})).flat(),
 	]);
@@ -74,15 +74,15 @@ async function pushCards() {
 	});
 }
 
-async function removeAllSetsAndPokemons() {
-	await prismaClient.cards.deleteMany({});
+async function removeAll() {
+	await prismaClient.pokemons.deleteMany({});
 	await prismaClient.sets.deleteMany({});
+	await prismaClient.cards.deleteMany({});
 }
 
 export async function migrate() {
-	await removeAllSetsAndPokemons();
+	await removeAll();
 	await pushSets();
 	await pushPokemons();
-	await sleep(500);
 	await pushCards();
 }
