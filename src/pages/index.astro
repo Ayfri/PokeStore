@@ -8,6 +8,7 @@ import PageTitle from "../components/PageTitle.astro";
 interface Card {
 	name: string;
 	imageUrl: string;
+	types: string;
 }
 
 const response = await fetch(`${import.meta.env.API_URL}/cards`)
@@ -21,16 +22,8 @@ const cards = await response.json() as Card[];
 		        cart_icon="/icons/cart.svg"
 		        cart_href="/cart">
 		</Header>
-		<!--card_name: string;-->
-		<!--card_img: string;-->
-		<!--type: string;-->
-		<!--number: number;-->
-		<!--set: string;-->
-		<!--subtypes: string;-->
-		<!--supertype: string;-->
-		<!--rarity: string;-->
 		<PageTitle title="Card List"></PageTitle>
-		{cards.map(card => <CardList card={card}/>)}
+		{cards.map(card => <CardList card={card}/>)} <!--todo: add types-->
 	</main>
 </Layout>
 
