@@ -9,21 +9,23 @@ interface Props {
 const {cards_href, username, cart_icon, logo_href} = Astro.props;
 ---
 
-<header>
-    <a href={cards_href} class="cards_link">
-        Cards
-    </a>
-    <a href={logo_href} class="logo_link">
-        <img class="logo" src="public/pokestore.png" alt="logo"/>
-    </a>
-    <a href="/cart">
-        <img src={cart_icon} alt="cart"/>
-    </a>
-    <a href="/account">
-        {username}
-    </a>
+<div class="fixed_container">
 
-</header>
+    <header>
+        <a href={cards_href} class="cards_link">
+            Cards
+        </a>
+        <a href={logo_href} class="logo_link">
+            <img class="logo" src="public/pokestore.png" alt="logo"/>
+        </a>
+        <a href="/cart">
+            <img src={cart_icon} alt="cart"/>
+        </a>
+        <a href="/account">
+            {username}
+        </a>
+    </header>
+</div>
 <style>
     header {
         display: flex;
@@ -63,5 +65,11 @@ const {cards_href, username, cart_icon, logo_href} = Astro.props;
 
     .cards_link {
         flex: 1;
+    }
+
+    .fixed_container {
+        position: fixed;
+        z-index: 99999;
+        width: 100%;
     }
 </style>
