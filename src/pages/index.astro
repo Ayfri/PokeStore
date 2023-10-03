@@ -3,6 +3,15 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import CardList from "../components/CardList.astro";
 import PageTitle from "../components/PageTitle.astro";
+
+
+interface Card {
+	name: string;
+	imageUrl: string;
+}
+
+const response = await fetch(`${import.meta.env.API_URL}/cards`)
+const cards = await response.json() as Card[];
 ---
 
 <Layout title="Pokéstore">
@@ -21,11 +30,7 @@ import PageTitle from "../components/PageTitle.astro";
 		<!--supertype: string;-->
 		<!--rarity: string;-->
 		<PageTitle title="Card List"></PageTitle>
-		<CardList
-				card_name="Bulbasaur"
-				card_img="https://images.pokemontcg.io/swshp/SWSH303_hires.png">
-		</CardList>
-
+		{cards.map(card => <CardList card={card}/>)}
 	</main>
 </Layout>
 

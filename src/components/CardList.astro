@@ -1,18 +1,24 @@
 ---
 import { Image } from "astro:assets";
 
-interface Props {
-	card_name: string;
-	card_img: string;
+export interface Props {
+	card: {
+		imageUrl: string;
+	};
 }
 
-const { card_name, card_img, card_price } = Astro.props;
----
+const {
+	card: {
+		imageUrl
+	}
+} = Astro.props;
 
+const name = 'test';
+---
 <div class="card">
 	<div class="aura"></div>
-	<Image src={card_img} alt={card_name} width="300em" height="420em"/>
-	<h2>{card_name}</h2>
+	<Image src={imageUrl} alt={name} width="300" height="420"/>
+	<h2>{name}</h2>
 </div>
 <style>
 	.card {
@@ -21,7 +27,7 @@ const { card_name, card_img, card_price } = Astro.props;
 		padding: 2rem;
 	}
 
-	.card:hover	{
+	.card:hover {
 		cursor: pointer;
 	}
 
@@ -51,10 +57,12 @@ const { card_name, card_img, card_price } = Astro.props;
 		font-size: 1.75rem;
 		transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 	}
+
 	p {
 		margin-top: 0.5rem;
 		margin-bottom: 0;
 	}
+
 	.link-card:is(:hover, :focus-within) {
 		background-position: 0;
 		background-image: var(--accent-gradient);
