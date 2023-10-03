@@ -19,11 +19,11 @@ async function pushSets() {
 }
 
 async function pushPokemons() {
-	console.log(`Pushing ${pokemons.pokemon.length} pokemons`);
+	console.log(`Pushing ${pokemons.length} pokemons`);
 	await prismaClient.pokemons.createMany({
-		data: pokemons.pokemon.map((pokemon) => ({
+		data: pokemons.map((pokemon) => ({
 			id: newId(),
-			description: 'DESCRIPTION NOT FOUND',
+			description: pokemon.description,
 			name: pokemon.name.replace(/ [♀♂] /, ''),
 			numero: parseInt(pokemon.num),
 			type: pokemon.type.join(','),

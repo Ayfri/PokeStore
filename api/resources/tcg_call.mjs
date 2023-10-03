@@ -1,5 +1,7 @@
 import pokemon from 'pokemontcgsdk'
 import {configDotenv} from "dotenv";
+// noinspection ES6UnusedImports
+import fs from "fs";
 
 
 const dotenv = configDotenv({
@@ -20,7 +22,7 @@ async function getPokemon(index) {
 
 	console.log(`Pokedex: ${index}/151, caught ${cards[0].name} ! (${cards.length} cards)`);
 
-	return cards.map(card => ({
+	const filteredCards = cards.map(card => ({
 		name: card.name,
 		rarity: card.rarity,
 		image: card.images.large,
@@ -30,6 +32,8 @@ async function getPokemon(index) {
 			|| card?.tcgplayer?.prices?.["1stEditionHolofoil"]?.market || card?.tcgplayer?.prices?.["1stEditionNormal"]?.market,
 		types: card.types.join(', ')
 	})).filter((_, index) => index <= 10).sort((a, b) => b.price - a.price);
+
+	return filteredCards;
 }
 
 async function getSet() {
@@ -58,11 +62,10 @@ async function getSet() {
 
 // UNCOMMENT TO GET POKÉMONS
 
-// const pokemonGroups = [];
-// for (let i = 1; i <= 151; i++) {
-//     pokemonGroups.push(await getPokemon(i));
-// }
-// fs.writeFileSync('cards.json', JSON.stringify(pokemonGroups, null, 2))
+// const promises = Array.from({length: 151}, (_, i) => getPokemon(i + 1));
+// const pokemonGroups = await Promise.all(promises);
+
+// fs.writeFileSync('cards.json', JSON.stringify(pokemonGroups, null, 2));
 
 
 // UNCOMMENT TO GET SETS
