@@ -1,0 +1,66 @@
+@font-face {
+    font-family: 'Clash Display';
+    src: url('ClashDisplay-Light.woff2') format('woff2'),
+        url('ClashDisplay-Light.woff') format('woff'),
+        url('ClashDisplay-Light.ttf') format('truetype'),
+        url('ClashDisplay-Light.svg#ClashDisplay-Light') format('svg');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Clash Display';
+    src: url('ClashDisplay-Semibold.woff2') format('woff2'),
+        url('ClashDisplay-Semibold.woff') format('woff'),
+        url('ClashDisplay-Semibold.ttf') format('truetype'),
+        url('ClashDisplay-Semibold.svg#ClashDisplay-Semibold') format('svg');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Clash Display';
+    src: url('ClashDisplay-Extralight.woff2') format('woff2'),
+        url('ClashDisplay-Extralight.woff') format('woff'),
+        url('ClashDisplay-Extralight.ttf') format('truetype'),
+        url('ClashDisplay-Extralight.svg#ClashDisplay-Extralight') format('svg');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Clash Display';
+    src: url('ClashDisplay-Bold.woff2') format('woff2'),
+        url('ClashDisplay-Bold.woff') format('woff'),
+        url('ClashDisplay-Bold.ttf') format('truetype'),
+        url('ClashDisplay-Bold.svg#ClashDisplay-Bold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Clash Display';
+    src: url('ClashDisplay-Medium.woff2') format('woff2'),
+        url('ClashDisplay-Medium.woff') format('woff'),
+        url('ClashDisplay-Medium.ttf') format('truetype'),
+        url('ClashDisplay-Medium.svg#ClashDisplay-Medium') format('svg');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Clash Display';
+    src: url('ClashDisplay-Regular.woff2') format('woff2'),
+        url('ClashDisplay-Regular.woff') format('woff'),
+        url('ClashDisplay-Regular.ttf') format('truetype'),
+        url('ClashDisplay-Regular.svg#ClashDisplay-Regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
