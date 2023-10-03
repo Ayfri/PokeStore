@@ -1,355 +1,354 @@
 ---
+import Card from "../pages/index.astro";
 import {Image} from "astro:assets";
 
 export interface Props {
-    card: {
-        imageUrl: string;
-        types: string;
-        rarity: string;
-    };
+	card: Card;
 }
 
 const {
-    card: {
-        imageUrl,
-        types,
-        rarity,
-        price,
-        pokemon: {
-            name
-        }
-    }
+	card: {
+		imageUrl, types, rarity, price, pokemon: {
+			name, description
+		}
+	}
 } = Astro.props;
 ---
+
 <div class="card-pokestore">
-    <div class:list={rarity.toLowerCase()}></div>
-    <div class:list={['aura', types.toLowerCase().split(',')]}></div>
-    <Image src={imageUrl} alt={name} width="300"
-           height="420"/>
-    <h2>{name}</h2>
-    <h3>{price}$</h3>
+	<div class:list={rarity.toLowerCase()}></div>
+	<div class:list={['aura', types.toLowerCase().split(',')]}></div>
+	<Image
+			src={imageUrl} alt={name} width="300"
+			height="420"
+	/>
+	<h2>{name}</h2>
+	<h3>{price}$</h3>
 </div>
 <style>
-    :root {
-        --grass: #78c850;
-        --fire: #ed4c30;
-        --lightning: #f8d030;
-        --metal: #a8a8c0;
-        --water: #6890f0;
-        --fighting: #e06d11;
-        --colorless: #a8a878;
-        --darkness: #595d62;
-        --psychic: #8e4b9e;
-        --fairy: #c6418a;
-        --dragon: #656531;
-    }
+	:root {
+		--grass: #78c850;
+		--fire: #ed4c30;
+		--lightning: #f8d030;
+		--metal: #a8a8c0;
+		--water: #6890f0;
+		--fighting: #e06d11;
+		--colorless: #a8a878;
+		--darkness: #595d62;
+		--psychic: #8e4b9e;
+		--fairy: #c6418a;
+		--dragon: #656531;
+	}
 
-    .fire {
-        --type-color: var(--fire);
-    }
+	.fire {
+		--type-color: var(--fire);
+	}
 
-    .water {
-        --type-color: var(--water);
-    }
+	.water {
+		--type-color: var(--water);
+	}
 
-    .grass {
-        --type-color: var(--grass);
-    }
+	.grass {
+		--type-color: var(--grass);
+	}
 
-    .lightning {
-        --type-color: var(--lightning);
-    }
+	.lightning {
+		--type-color: var(--lightning);
+	}
 
-    .metal {
-        --type-color: var(--metal);
-    }
+	.metal {
+		--type-color: var(--metal);
+	}
 
-    .fighting {
-        --type-color: var(--fighting);
-    }
+	.fighting {
+		--type-color: var(--fighting);
+	}
 
-    .colorless {
-        --type-color: var(--colorless);
-    }
+	.colorless {
+		--type-color: var(--colorless);
+	}
 
-    .darkness {
-        --type-color: var(--darkness);
-    }
+	.darkness {
+		--type-color: var(--darkness);
+	}
 
-    .psychic {
-        --type-color: var(--psychic);
-    }
+	.psychic {
+		--type-color: var(--psychic);
+	}
 
-    .fairy {
-        --type-color: var(--fairy);
-    }
+	.fairy {
+		--type-color: var(--fairy);
+	}
 
-    .dragon {
-        --type-color: var(--dragon);
-    }
+	.dragon {
+		--type-color: var(--dragon);
+	}
 
-    h2, h3 {
-        margin: 0;
-    }
+	h2, h3 {
+		margin: 0;
+	}
 
-    h2 {
-        font-weight: 800;
-        text-align: center;
-        margin: 0;
-        font-size: 1.75rem;
-        transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-    }
+	h2 {
+		font-weight: 800;
+		text-align: center;
+		margin: 0;
+		font-size: 1.75rem;
+		transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+	}
 
-    h3 {
-        font-weight: 400;
-    }
+	h3 {
+		font-weight: 400;
+	}
 
-    .card-pokestore {
-        position: relative;
-        width: fit-content;
-        padding: 2rem;
-        display: flex;
-        flex-flow: column;
-        align-items: center;
-    }
+	.card-pokestore {
+		align-items: center;
+		display: flex;
+		flex-flow: column;
+		padding: 2rem;
+		position: relative;
+		width: fit-content;
+	}
 
-    .card-pokestore:hover {
-        cursor: pointer;
-    }
+	.card-pokestore:hover {
+		cursor: pointer;
+	}
 
-    .aura {
-        left: 1.4rem;
-        z-index: -1;
-        width: 20rem;
-        height: 26rem;
-        position: absolute;
-        background: var(--type-color);
-        filter: blur(1.5rem);
-        border-radius: 15rem;
-        transition: filter 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-    }
+	.aura {
+		background: var(--type-color);
+		border-radius: 15rem;
+		filter: blur(1.5rem);
+		height: 26rem;
+		left: 1.4rem;
+		position: absolute;
+		transition: filter 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+		width: 20rem;
+		z-index: -1;
+	}
 
-    .card-pokestore:hover .aura {
-        filter: blur(2.5rem);
-    }
+	.card-pokestore:hover .aura {
+		filter: blur(2.5rem);
+	}
 
-    .card-pokestore img {
-        border-radius: 0.5rem;
-    }
+	.card-pokestore img {
+		border-radius: 0.5rem;
+	}
 
-    .holo::after {
-        background-image: url("https://assets.codepen.io/13471/sparkles.gif"), url(https://assets.codepen.io/13471/holo.png), linear-gradient(125deg, #ff008450 15%, #fca40040 30%, #ffff0030 40%, #00ff8a20 60%, #00cfff40 70%, #cc4cfa50 85%);
-        background-position: 50% 50%;
-        background-size: 160%;
-/*        background-blend-mode: overlay;*/
-        z-index: 2;
-        filter: brightness(1) contrast(1);
-        transition: all 0.33s ease;
-        mix-blend-mode: color-dodge;
-        opacity: 70%;
-    }
+	.holo::after {
+		background-image: url("https://assets.codepen.io/13471/sparkles.gif"), url(https://assets.codepen.io/13471/holo.png), linear-gradient(125deg, #ff008450 15%, #fca40040 30%, #ffff0030 40%, #00ff8a20 60%, #00cfff40 70%, #cc4cfa50 85%);
+		background-position: 50% 50%;
+		background-size: 160%;
+		filter: brightness(1) contrast(1);
+		mix-blend-mode: color-dodge;
+		opacity: 70%;
+		transition: all 0.33s ease;
+		z-index: 2;
+	}
 
-    .holo::before,
-    .holo::after {
-        content: "";
-        position: absolute;
-        background-repeat: no-repeat;
-        mix-blend-mode: color-dodge;
-        transition: all 0.33s ease;
-        width: 300px;
-        height: 420px;
-        top: 43%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
+	.holo::before,
+	.holo::after {
+		background-repeat: no-repeat;
+		content: "";
+		height: 420px;
+		left: 50%;
+		mix-blend-mode: color-dodge;
+		position: absolute;
+		top: 43%;
+		transform: translate(-50%, -50%);
+		transition: all 0.33s ease;
+		width: 300px;
+	}
 
-    @-webkit-keyframes holoSparkle {
-        0%, 100% {
-            opacity: 0.75;
-            background-position: 50% 50%;
-            filter: brightness(1.2) contrast(1.25);
-        }
-        5%, 8% {
-            opacity: 1;
-            background-position: 40% 40%;
-            filter: brightness(0.8) contrast(1.2);
-        }
-        13%, 16% {
-            opacity: 0.5;
-            background-position: 50% 50%;
-            filter: brightness(1.2) contrast(0.8);
-        }
-        35%, 38% {
-            opacity: 1;
-            background-position: 60% 60%;
-            filter: brightness(1) contrast(1);
-        }
-        55% {
-            opacity: 0.33;
-            background-position: 45% 45%;
-            filter: brightness(1.2) contrast(1.25);
-        }
-    }
+	@-webkit-keyframes holoSparkle {
+		0%, 100% {
+			opacity: 0.75;
+			background-position: 50% 50%;
+			filter: brightness(1.2) contrast(1.25);
+		}
+		5%, 8% {
+			opacity: 1;
+			background-position: 40% 40%;
+			filter: brightness(0.8) contrast(1.2);
+		}
+		13%, 16% {
+			opacity: 0.5;
+			background-position: 50% 50%;
+			filter: brightness(1.2) contrast(0.8);
+		}
+		35%, 38% {
+			opacity: 1;
+			background-position: 60% 60%;
+			filter: brightness(1) contrast(1);
+		}
+		55% {
+			opacity: 0.33;
+			background-position: 45% 45%;
+			filter: brightness(1.2) contrast(1.25);
+		}
+	}
 
-    @keyframes holoSparkle {
-        0%, 100% {
-            opacity: 0.75;
-            background-position: 50% 50%;
-            filter: brightness(1.2) contrast(1.25);
-        }
-        5%, 8% {
-            opacity: 1;
-            background-position: 40% 40%;
-            filter: brightness(0.8) contrast(1.2);
-        }
-        13%, 16% {
-            opacity: 0.5;
-            background-position: 50% 50%;
-            filter: brightness(1.2) contrast(0.8);
-        }
-        35%, 38% {
-            opacity: 1;
-            background-position: 60% 60%;
-            filter: brightness(1) contrast(1);
-        }
-        55% {
-            opacity: 0.33;
-            background-position: 45% 45%;
-            filter: brightness(1.2) contrast(1.25);
-        }
-    }
-    @-webkit-keyframes holoGradient {
-        0%, 100% {
-            opacity: 0.5;
-            background-position: 50% 50%;
-            filter: brightness(0.5) contrast(1);
-        }
-        5%, 9% {
-            background-position: 100% 100%;
-            opacity: 1;
-            filter: brightness(0.75) contrast(1.25);
-        }
-        13%, 17% {
-            background-position: 0 0;
-            opacity: 0.88;
-        }
-        35%, 39% {
-            background-position: 100% 100%;
-            opacity: 1;
-            filter: brightness(0.5) contrast(1);
-        }
-        55% {
-            background-position: 0 0;
-            opacity: 1;
-            filter: brightness(0.75) contrast(1.25);
-        }
-    }
-    @keyframes holoGradient {
-        0%, 100% {
-            opacity: 0.5;
-            background-position: 50% 50%;
-            filter: brightness(0.5) contrast(1);
-        }
-        5%, 9% {
-            background-position: 100% 100%;
-            opacity: 1;
-            filter: brightness(0.75) contrast(1.25);
-        }
-        13%, 17% {
-            background-position: 0 0;
-            opacity: 0.88;
-        }
-        35%, 39% {
-            background-position: 100% 100%;
-            opacity: 1;
-            filter: brightness(0.5) contrast(1);
-        }
-        55% {
-            background-position: 0 0;
-            opacity: 1;
-            filter: brightness(0.75) contrast(1.25);
-        }
-    }
-    @-webkit-keyframes holoCard {
-        0%, 100% {
-            transform: rotateZ(0deg) rotateX(0deg) rotateY(0deg);
-        }
-        5%, 8% {
-            transform: rotateZ(0deg) rotateX(6deg) rotateY(-20deg);
-        }
-        13%, 16% {
-            transform: rotateZ(0deg) rotateX(-9deg) rotateY(32deg);
-        }
-        35%, 38% {
-            transform: rotateZ(3deg) rotateX(12deg) rotateY(20deg);
-        }
-        55% {
-            transform: rotateZ(-3deg) rotateX(-12deg) rotateY(-27deg);
-        }
-    }
-    @keyframes holoCard {
-        0%, 100% {
-            transform: rotateZ(0deg) rotateX(0deg) rotateY(0deg);
-        }
-        5%, 8% {
-            transform: rotateZ(0deg) rotateX(6deg) rotateY(-20deg);
-        }
-        13%, 16% {
-            transform: rotateZ(0deg) rotateX(-9deg) rotateY(32deg);
-        }
-        35%, 38% {
-            transform: rotateZ(3deg) rotateX(12deg) rotateY(20deg);
-        }
-        55% {
-            transform: rotateZ(-3deg) rotateX(-12deg) rotateY(-27deg);
-        }
-    }
+	@keyframes holoSparkle {
+		0%, 100% {
+			opacity: 0.75;
+			background-position: 50% 50%;
+			filter: brightness(1.2) contrast(1.25);
+		}
+		5%, 8% {
+			opacity: 1;
+			background-position: 40% 40%;
+			filter: brightness(0.8) contrast(1.2);
+		}
+		13%, 16% {
+			opacity: 0.5;
+			background-position: 50% 50%;
+			filter: brightness(1.2) contrast(0.8);
+		}
+		35%, 38% {
+			opacity: 1;
+			background-position: 60% 60%;
+			filter: brightness(1) contrast(1);
+		}
+		55% {
+			opacity: 0.33;
+			background-position: 45% 45%;
+			filter: brightness(1.2) contrast(1.25);
+		}
+	}
 
-    @-webkit-keyframes rubberBand {
-        from {
-            transform: scale3d(1, 1, 1);
-        }
-        30% {
-            transform: scale3d(1.25, 0.75, 1);
-        }
-        40% {
-            transform: scale3d(0.75, 1.25, 1);
-        }
-        50% {
-            transform: scale3d(1.15, 0.85, 1);
-        }
-        65% {
-            transform: scale3d(0.95, 1.05, 1);
-        }
-        75% {
-            transform: scale3d(1.05, 0.95, 1);
-        }
-        to {
-            transform: scale3d(1, 1, 1);
-        }
-    }
+	@-webkit-keyframes holoGradient {
+		0%, 100% {
+			opacity: 0.5;
+			background-position: 50% 50%;
+			filter: brightness(0.5) contrast(1);
+		}
+		5%, 9% {
+			background-position: 100% 100%;
+			opacity: 1;
+			filter: brightness(0.75) contrast(1.25);
+		}
+		13%, 17% {
+			background-position: 0 0;
+			opacity: 0.88;
+		}
+		35%, 39% {
+			background-position: 100% 100%;
+			opacity: 1;
+			filter: brightness(0.5) contrast(1);
+		}
+		55% {
+			background-position: 0 0;
+			opacity: 1;
+			filter: brightness(0.75) contrast(1.25);
+		}
+	}
 
-    @keyframes rubberBand {
-        from {
-            transform: scale3d(1, 1, 1);
-        }
-        30% {
-            transform: scale3d(1.25, 0.75, 1);
-        }
-        40% {
-            transform: scale3d(0.75, 1.25, 1);
-        }
-        50% {
-            transform: scale3d(1.15, 0.85, 1);
-        }
-        65% {
-            transform: scale3d(0.95, 1.05, 1);
-        }
-        75% {
-            transform: scale3d(1.05, 0.95, 1);
-        }
-        to {
-            transform: scale3d(1, 1, 1);
-        }
-    }
+	@keyframes holoGradient {
+		0%, 100% {
+			opacity: 0.5;
+			background-position: 50% 50%;
+			filter: brightness(0.5) contrast(1);
+		}
+		5%, 9% {
+			background-position: 100% 100%;
+			opacity: 1;
+			filter: brightness(0.75) contrast(1.25);
+		}
+		13%, 17% {
+			background-position: 0 0;
+			opacity: 0.88;
+		}
+		35%, 39% {
+			background-position: 100% 100%;
+			opacity: 1;
+			filter: brightness(0.5) contrast(1);
+		}
+		55% {
+			background-position: 0 0;
+			opacity: 1;
+			filter: brightness(0.75) contrast(1.25);
+		}
+	}
+
+	@-webkit-keyframes holoCard {
+		0%, 100% {
+			transform: rotateZ(0deg) rotateX(0deg) rotateY(0deg);
+		}
+		5%, 8% {
+			transform: rotateZ(0deg) rotateX(6deg) rotateY(-20deg);
+		}
+		13%, 16% {
+			transform: rotateZ(0deg) rotateX(-9deg) rotateY(32deg);
+		}
+		35%, 38% {
+			transform: rotateZ(3deg) rotateX(12deg) rotateY(20deg);
+		}
+		55% {
+			transform: rotateZ(-3deg) rotateX(-12deg) rotateY(-27deg);
+		}
+	}
+
+	@keyframes holoCard {
+		0%, 100% {
+			transform: rotateZ(0deg) rotateX(0deg) rotateY(0deg);
+		}
+		5%, 8% {
+			transform: rotateZ(0deg) rotateX(6deg) rotateY(-20deg);
+		}
+		13%, 16% {
+			transform: rotateZ(0deg) rotateX(-9deg) rotateY(32deg);
+		}
+		35%, 38% {
+			transform: rotateZ(3deg) rotateX(12deg) rotateY(20deg);
+		}
+		55% {
+			transform: rotateZ(-3deg) rotateX(-12deg) rotateY(-27deg);
+		}
+	}
+
+	@-webkit-keyframes rubberBand {
+		from {
+			transform: scale3d(1, 1, 1);
+		}
+		30% {
+			transform: scale3d(1.25, 0.75, 1);
+		}
+		40% {
+			transform: scale3d(0.75, 1.25, 1);
+		}
+		50% {
+			transform: scale3d(1.15, 0.85, 1);
+		}
+		65% {
+			transform: scale3d(0.95, 1.05, 1);
+		}
+		75% {
+			transform: scale3d(1.05, 0.95, 1);
+		}
+		to {
+			transform: scale3d(1, 1, 1);
+		}
+	}
+
+	@keyframes rubberBand {
+		from {
+			transform: scale3d(1, 1, 1);
+		}
+		30% {
+			transform: scale3d(1.25, 0.75, 1);
+		}
+		40% {
+			transform: scale3d(0.75, 1.25, 1);
+		}
+		50% {
+			transform: scale3d(1.15, 0.85, 1);
+		}
+		65% {
+			transform: scale3d(0.95, 1.05, 1);
+		}
+		75% {
+			transform: scale3d(1.05, 0.95, 1);
+		}
+		to {
+			transform: scale3d(1, 1, 1);
+		}
+	}
 </style>
