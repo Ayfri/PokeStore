@@ -9,11 +9,15 @@ type GetParameters = APIRoute & {
 };
 
 export async function GET({params}: GetParameters) {
-	const pokemon = await prisma().cards.findUnique({
+	const cards = await prisma().cards.findUnique({
 		where: {
 			id: parseInt(params.id),
 		},
+		include: {
+			pokemon: true,
+			set: true,
+		}
 	});
 
-	return jsonResponse(pokemon);
+	return jsonResponse(cards);
 }
