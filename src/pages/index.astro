@@ -1,35 +1,32 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
-import Card from '../components/Card.astro';
+import CardList from "../components/CardList.astro";
+import PageTitle from "../components/PageTitle.astro";
 ---
 
 <Layout title="Pokéstore">
-    <main>
-        <Header cards_href="/cards"
-                username="anta"
-                cart_icon="/icons/cart.svg"
-                cart_href="/cart">
-        </Header>
-        <!--card_name: string;-->
-        <!--card_img: string;-->
-        <!--type: string;-->
-        <!--number: number;-->
-        <!--set: string;-->
-        <!--subtypes: string;-->
-        <!--supertype: string;-->
-        <!--rarity: string;-->
-        <Card card_name="Bulbasaur"
-              card_img="https://images.pokemontcg.io/swshp/SWSH303_hires.png"
-                type="Grass"
-                number="1"
-                set="swshp"
-                subtypes="basic"
-                supertype="pokémon"
-                rarity="promo">
-        </Card>
+	<main>
+		<Header cards_href="/cards"
+		        username="anta"
+		        cart_icon="/icons/cart.svg"
+		        cart_href="/cart">
+		</Header>
+		<!--card_name: string;-->
+		<!--card_img: string;-->
+		<!--type: string;-->
+		<!--number: number;-->
+		<!--set: string;-->
+		<!--subtypes: string;-->
+		<!--supertype: string;-->
+		<!--rarity: string;-->
+		<PageTitle title="Card List"></PageTitle>
+		<CardList
+				card_name="Bulbasaur"
+				card_img="https://images.pokemontcg.io/swshp/SWSH303_hires.png">
+		</CardList>
 
-    </main>
+	</main>
 </Layout>
 
 <style>
