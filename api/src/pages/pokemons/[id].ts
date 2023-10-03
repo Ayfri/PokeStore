@@ -1,5 +1,6 @@
 import type {APIRoute} from "astro";
 import prisma from '../../prisma.ts';
+import {jsonResponse} from "../../utils.ts";
 
 type GetParameters = APIRoute & {
 	params: {
@@ -14,5 +15,5 @@ export async function GET({params}: GetParameters) {
 		},
 	});
 
-	return new Response(JSON.stringify(pokemon));
+	return jsonResponse(pokemon);
 }

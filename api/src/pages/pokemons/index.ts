@@ -1,6 +1,7 @@
 import prisma from '../../prisma.ts';
+import {jsonResponse} from "../../utils.ts";
 
 export async function GET() {
 	const pokemons = await prisma().pokemons.findMany();
-	return new Response(JSON.stringify(pokemons));
+	return jsonResponse(pokemons);
 }
