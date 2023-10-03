@@ -12,7 +12,7 @@ async function getPokemon(index) {
     const cards = await pokemon.card.all({
         q: `nationalPokedexNumbers:${index}`,
         orderBy: 'nationalPokedexNumbers',
-        select: 'name,rarity,images,set,cardmarket'
+        select: 'name,rarity,images,set,cardmarket,types'
     })
 
     console.log(`Pokedex: ${index}/151, caught ${cards[0].name} ! (${cards.length} cards)`)
@@ -25,7 +25,8 @@ async function getPokemon(index) {
             set_name: card.set.name,
             price: card?.cardmarket?.prices?.averageSellPrice || card?.tcgplayer?.prices?.holofoil?.market
                 || card?.tcgplayer?.prices?.reverseHolofoil?.market || card?.tcgplayer?.prices?.normal?.market
-                || card?.tcgplayer?.prices?.["1stEditionHolofoil"]?.market || card?.tcgplayer?.prices?.["1stEditionNormal"]?.market
+                || card?.tcgplayer?.prices?.["1stEditionHolofoil"]?.market || card?.tcgplayer?.prices?.["1stEditionNormal"]?.market,
+            types: card.types.join(', ')
         }
     }).filter((_, index) => index <= 10).sort((a, b) => {
         return b.price - a.price
