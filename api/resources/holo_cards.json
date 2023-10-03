@@ -1,0 +1,2275 @@
+[
+  {
+    "name": "Celebi & Venusaur-GX",
+    "rarity": "Rare Holo GX",
+    "image": "https://images.pokemontcg.io/sm9/1_hires.png",
+    "set_name": "Team Up",
+    "price": 10.95
+  },
+  {
+    "name": "Venusaur & Snivy-GX",
+    "rarity": "Rare Holo GX",
+    "image": "https://images.pokemontcg.io/sm12/1_hires.png",
+    "set_name": "Cosmic Eclipse",
+    "price": 6.14
+  },
+  {
+    "name": "Venusaur V",
+    "rarity": "Rare Holo V",
+    "image": "https://images.pokemontcg.io/swsh35/1_hires.png",
+    "set_name": "Champion's Path",
+    "price": 3.65
+  },
+  {
+    "name": "Erika's Venusaur",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/gym2/4_hires.png",
+    "set_name": "Gym Challenge",
+    "price": 83.32
+  },
+  {
+    "name": "M Venusaur-EX",
+    "rarity": "Rare Holo EX",
+    "image": "https://images.pokemontcg.io/xy1/2_hires.png",
+    "set_name": "XY",
+    "price": 8.61
+  },
+  {
+    "name": "Venusaur-EX",
+    "rarity": "Rare Holo EX",
+    "image": "https://images.pokemontcg.io/g1/1_hires.png",
+    "set_name": "Generations",
+    "price": 6.79
+  },
+  {
+    "name": "M Venusaur-EX",
+    "rarity": "Rare Holo EX",
+    "image": "https://images.pokemontcg.io/xy12/2_hires.png",
+    "set_name": "Evolutions",
+    "price": 6.35
+  },
+  {
+    "name": "Venusaur-EX",
+    "rarity": "Rare Holo EX",
+    "image": "https://images.pokemontcg.io/xy12/1_hires.png",
+    "set_name": "Evolutions",
+    "price": 5.41
+  },
+  {
+    "name": "Venusaur-EX",
+    "rarity": "Rare Holo EX",
+    "image": "https://images.pokemontcg.io/xy1/1_hires.png",
+    "set_name": "XY",
+    "price": 5.17
+  },
+  {
+    "name": "Venusaur",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/bw5/3_hires.png",
+    "set_name": "Dark Explorers",
+    "price": 2.48
+  },
+  {
+    "name": "Charizard",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base4/4_hires.png",
+    "set_name": "Base Set 2",
+    "price": 180
+  },
+  {
+    "name": "Blaine's Charizard",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/gym2/2_hires.png",
+    "set_name": "Gym Challenge",
+    "price": 164.24
+  },
+  {
+    "name": "Charizard δ",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex14/4_hires.png",
+    "set_name": "Crystal Guardians",
+    "price": 134.49
+  },
+  {
+    "name": "Charizard",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base6/3_hires.png",
+    "set_name": "Legendary Collection",
+    "price": 92.5
+  },
+  {
+    "name": "Dark Charizard",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base5/4_hires.png",
+    "set_name": "Team Rocket",
+    "price": 84.3
+  },
+  {
+    "name": "Charizard",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/dp3/3_hires.png",
+    "set_name": "Secret Wonders",
+    "price": 31.42
+  },
+  {
+    "name": "Charizard",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/pl4/1_hires.png",
+    "set_name": "Arceus",
+    "price": 15.91
+  },
+  {
+    "name": "Charizard-GX",
+    "rarity": "Rare Holo GX",
+    "image": "https://images.pokemontcg.io/sm115/9_hires.png",
+    "set_name": "Hidden Fates",
+    "price": 5.98
+  },
+  {
+    "name": "Charizard",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/sm75/3_hires.png",
+    "set_name": "Dragon Majesty",
+    "price": 3.99
+  },
+  {
+    "name": "Charizard",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base1/4_hires.png",
+    "set_name": "Base"
+  },
+  {
+    "name": "Dark Blastoise",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base5/3_hires.png",
+    "set_name": "Team Rocket",
+    "price": 79.15
+  },
+  {
+    "name": "Blastoise",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base4/2_hires.png",
+    "set_name": "Base Set 2",
+    "price": 77.35
+  },
+  {
+    "name": "Blastoise",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base1/2_hires.png",
+    "set_name": "Base",
+    "price": 62.08
+  },
+  {
+    "name": "Blastoise",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard1/4_hires.png",
+    "set_name": "Expedition Base Set",
+    "price": 59.38
+  },
+  {
+    "name": "Blastoise",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/bw10/16_hires.png",
+    "set_name": "Plasma Blast",
+    "price": 40
+  },
+  {
+    "name": "Blastoise δ",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex14/2_hires.png",
+    "set_name": "Crystal Guardians",
+    "price": 14.84
+  },
+  {
+    "name": "Dark Blastoise",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base6/4_hires.png",
+    "set_name": "Legendary Collection",
+    "price": 13
+  },
+  {
+    "name": "Blastoise",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/dp3/2_hires.png",
+    "set_name": "Secret Wonders",
+    "price": 8.66
+  },
+  {
+    "name": "Blastoise",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/pl1/2_hires.png",
+    "set_name": "Platinum",
+    "price": 5.31
+  },
+  {
+    "name": "Butterfree",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard1/5_hires.png",
+    "set_name": "Expedition Base Set",
+    "price": 15
+  },
+  {
+    "name": "Butterfree",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex6/2_hires.png",
+    "set_name": "FireRed & LeafGreen",
+    "price": 4.72
+  },
+  {
+    "name": "Butterfree VMAX",
+    "rarity": "Rare Holo VMAX",
+    "image": "https://images.pokemontcg.io/swsh3/2_hires.png",
+    "set_name": "Darkness Ablaze",
+    "price": 3.99
+  },
+  {
+    "name": "Butterfree V",
+    "rarity": "Rare Holo V",
+    "image": "https://images.pokemontcg.io/swsh3/1_hires.png",
+    "set_name": "Darkness Ablaze",
+    "price": 1.37
+  },
+  {
+    "name": "Beedrill",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard3/H4_hires.png",
+    "set_name": "Skyridge",
+    "price": 37.95
+  },
+  {
+    "name": "Koga's Beedrill",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/gym2/9_hires.png",
+    "set_name": "Gym Challenge",
+    "price": 14.75
+  },
+  {
+    "name": "Beedrill δ",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex11/1_hires.png",
+    "set_name": "Delta Species",
+    "price": 10
+  },
+  {
+    "name": "Beedrill",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex6/1_hires.png",
+    "set_name": "FireRed & LeafGreen",
+    "price": 2.35
+  },
+  {
+    "name": "Pidgeot",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base2/8_hires.png",
+    "set_name": "Jungle",
+    "price": 19.14
+  },
+  {
+    "name": "Pidgeot",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard1/23_hires.png",
+    "set_name": "Expedition Base Set",
+    "price": 17.34
+  },
+  {
+    "name": "Pidgeot",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base4/14_hires.png",
+    "set_name": "Base Set 2",
+    "price": 12.5
+  },
+  {
+    "name": "Pidgeot δ",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex13/14_hires.png",
+    "set_name": "Holon Phantoms",
+    "price": 7.48
+  },
+  {
+    "name": "Pidgeot",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex6/10_hires.png",
+    "set_name": "FireRed & LeafGreen",
+    "price": 5.04
+  },
+  {
+    "name": "Lt. Surge's Fearow",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/gym1/7_hires.png",
+    "set_name": "Gym Heroes",
+    "price": 29.26
+  },
+  {
+    "name": "Fearow",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard1/11_hires.png",
+    "set_name": "Expedition Base Set",
+    "price": 8.96
+  },
+  {
+    "name": "Arbok",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard1/3_hires.png",
+    "set_name": "Expedition Base Set",
+    "price": 9
+  },
+  {
+    "name": "Dark Arbok",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base5/2_hires.png",
+    "set_name": "Team Rocket",
+    "price": 8.24
+  },
+  {
+    "name": "Lt. Surge's Raichu",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/gym2/11_hires.png",
+    "set_name": "Gym Challenge",
+    "price": 29.43
+  },
+  {
+    "name": "Raichu",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base3/14_hires.png",
+    "set_name": "Fossil",
+    "price": 21.54
+  },
+  {
+    "name": "Raichu",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base4/16_hires.png",
+    "set_name": "Base Set 2",
+    "price": 19.16
+  },
+  {
+    "name": "Raichu δ",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex13/15_hires.png",
+    "set_name": "Holon Phantoms",
+    "price": 13.42
+  },
+  {
+    "name": "Dark Raichu",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base6/7_hires.png",
+    "set_name": "Legendary Collection",
+    "price": 12.49
+  },
+  {
+    "name": "Raichu",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex6/12_hires.png",
+    "set_name": "FireRed & LeafGreen",
+    "price": 7
+  },
+  {
+    "name": "Raichu",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/hgss1/10_hires.png",
+    "set_name": "HeartGold & SoulSilver",
+    "price": 4.91
+  },
+  {
+    "name": "Raichu",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/dp7/8_hires.png",
+    "set_name": "Stormfront",
+    "price": 2.33
+  },
+  {
+    "name": "Raichu",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base1/14_hires.png",
+    "set_name": "Base"
+  },
+  {
+    "name": "Nidoqueen",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base2/7_hires.png",
+    "set_name": "Jungle",
+    "price": 15.55
+  },
+  {
+    "name": "Nidoqueen",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base4/12_hires.png",
+    "set_name": "Base Set 2",
+    "price": 12.66
+  },
+  {
+    "name": "Nidoqueen",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex6/9_hires.png",
+    "set_name": "FireRed & LeafGreen",
+    "price": 8.26
+  },
+  {
+    "name": "Nidoqueen δ",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex15/7_hires.png",
+    "set_name": "Dragon Frontiers",
+    "price": 7.45
+  },
+  {
+    "name": "Nidoqueen",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard3/H21_hires.png",
+    "set_name": "Skyridge"
+  },
+  {
+    "name": "Giovanni's Nidoking",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/gym2/7_hires.png",
+    "set_name": "Gym Challenge",
+    "price": 37.05
+  },
+  {
+    "name": "Nidoking",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base4/11_hires.png",
+    "set_name": "Base Set 2",
+    "price": 23
+  },
+  {
+    "name": "Nidoking δ",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex15/6_hires.png",
+    "set_name": "Dragon Frontiers",
+    "price": 6.34
+  },
+  {
+    "name": "Nidoking",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex6/8_hires.png",
+    "set_name": "FireRed & LeafGreen",
+    "price": 5.7
+  },
+  {
+    "name": "Nidoking",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/hgss4/6_hires.png",
+    "set_name": "HS—Triumphant",
+    "price": 1.58
+  },
+  {
+    "name": "Nidoking",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base1/11_hires.png",
+    "set_name": "Base"
+  },
+  {
+    "name": "Nidoking",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard2/H18_hires.png",
+    "set_name": "Aquapolis"
+  },
+  {
+    "name": "Clefairy",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base1/5_hires.png",
+    "set_name": "Base",
+    "price": 16.9
+  },
+  {
+    "name": "Clefairy",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base4/6_hires.png",
+    "set_name": "Base Set 2",
+    "price": 5.57
+  },
+  {
+    "name": "Clefable",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard1/7_hires.png",
+    "set_name": "Expedition Base Set",
+    "price": 52.5
+  },
+  {
+    "name": "Erika's Clefable",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/gym1/3_hires.png",
+    "set_name": "Gym Heroes",
+    "price": 14.28
+  },
+  {
+    "name": "Clefable",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base4/5_hires.png",
+    "set_name": "Base Set 2",
+    "price": 6.87
+  },
+  {
+    "name": "Clefable",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/col1/1_hires.png",
+    "set_name": "Call of Legends",
+    "price": 5.4
+  },
+  {
+    "name": "Clefable",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/hgss1/3_hires.png",
+    "set_name": "HeartGold & SoulSilver",
+    "price": 1.78
+  },
+  {
+    "name": "Clefable",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base2/1_hires.png",
+    "set_name": "Jungle"
+  },
+  {
+    "name": "Brock's Ninetales",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/gym2/3_hires.png",
+    "set_name": "Gym Challenge",
+    "price": 33.21
+  },
+  {
+    "name": "Ninetales",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard2/H19_hires.png",
+    "set_name": "Aquapolis",
+    "price": 25
+  },
+  {
+    "name": "Ninetales δ",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex15/8_hires.png",
+    "set_name": "Dragon Frontiers",
+    "price": 18.59
+  },
+  {
+    "name": "Ninetales",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/col1/17_hires.png",
+    "set_name": "Call of Legends",
+    "price": 14.4
+  },
+  {
+    "name": "Ninetales",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base4/13_hires.png",
+    "set_name": "Base Set 2",
+    "price": 14.1
+  },
+  {
+    "name": "Ninetales",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base1/12_hires.png",
+    "set_name": "Base",
+    "price": 10.47
+  },
+  {
+    "name": "Ninetales",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base6/17_hires.png",
+    "set_name": "Legendary Collection",
+    "price": 6.9
+  },
+  {
+    "name": "Ninetales",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/hgss1/7_hires.png",
+    "set_name": "HeartGold & SoulSilver",
+    "price": 5.17
+  },
+  {
+    "name": "Ninetales",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/bw6/19_hires.png",
+    "set_name": "Dragons Exalted",
+    "price": 4.57
+  },
+  {
+    "name": "Wigglytuff",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base2/16_hires.png",
+    "set_name": "Jungle",
+    "price": 15.14
+  },
+  {
+    "name": "Wigglytuff",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base4/19_hires.png",
+    "set_name": "Base Set 2",
+    "price": 6.21
+  },
+  {
+    "name": "Wigglytuff",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex14/13_hires.png",
+    "set_name": "Crystal Guardians",
+    "price": 4.1
+  },
+  {
+    "name": "Wigglytuff-GX",
+    "rarity": "Rare Holo GX",
+    "image": "https://images.pokemontcg.io/sm115/42_hires.png",
+    "set_name": "Hidden Fates",
+    "price": 1.33
+  },
+  {
+    "name": "Dark Golbat",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base5/7_hires.png",
+    "set_name": "Team Rocket",
+    "price": 19.12
+  },
+  {
+    "name": "Vileplume",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/bw7/3_hires.png",
+    "set_name": "Boundaries Crossed"
+  },
+  {
+    "name": "Dark Vileplume",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base5/13_hires.png",
+    "set_name": "Team Rocket",
+    "price": 35.95
+  },
+  {
+    "name": "Vileplume",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base2/15_hires.png",
+    "set_name": "Jungle",
+    "price": 15.13
+  },
+  {
+    "name": "Erika's Vileplume",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/gym1/5_hires.png",
+    "set_name": "Gym Heroes",
+    "price": 13.69
+  },
+  {
+    "name": "Vileplume δ",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex13/17_hires.png",
+    "set_name": "Holon Phantoms",
+    "price": 6.79
+  },
+  {
+    "name": "Vileplume-GX",
+    "rarity": "Rare Holo GX",
+    "image": "https://images.pokemontcg.io/sm12/4_hires.png",
+    "set_name": "Cosmic Eclipse",
+    "price": 4.67
+  },
+  {
+    "name": "Vileplume",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/sm10/8_hires.png",
+    "set_name": "Unbroken Bonds",
+    "price": 1.62
+  },
+  {
+    "name": "Vileplume",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/sm3/6_hires.png",
+    "set_name": "Burning Shadows",
+    "price": 0.59
+  },
+  {
+    "name": "Venomoth",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/hgss4/11_hires.png",
+    "set_name": "HS—Triumphant"
+  },
+  {
+    "name": "Venomoth",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base2/13_hires.png",
+    "set_name": "Jungle",
+    "price": 9.01
+  },
+  {
+    "name": "Venomoth-GX",
+    "rarity": "Rare Holo GX",
+    "image": "https://images.pokemontcg.io/sm10/12_hires.png",
+    "set_name": "Unbroken Bonds",
+    "price": 3.03
+  },
+  {
+    "name": "Dark Dugtrio",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base5/6_hires.png",
+    "set_name": "Team Rocket",
+    "price": 22.87
+  },
+  {
+    "name": "Dugtrio",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard1/10_hires.png",
+    "set_name": "Expedition Base Set",
+    "price": 11.13
+  },
+  {
+    "name": "Dugtrio",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex14/5_hires.png",
+    "set_name": "Crystal Guardians",
+    "price": 2.98
+  },
+  {
+    "name": "Giovanni's Persian",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/gym2/8_hires.png",
+    "set_name": "Gym Challenge",
+    "price": 17.52
+  },
+  {
+    "name": "Dark Persian",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base6/6_hires.png",
+    "set_name": "Legendary Collection",
+    "price": 2.84
+  },
+  {
+    "name": "Slowpoke & Psyduck-GX",
+    "rarity": "Rare Holo GX",
+    "image": "https://images.pokemontcg.io/sm11/35_hires.png",
+    "set_name": "Unified Minds",
+    "price": 10.99
+  },
+  {
+    "name": "Misty's Golduck",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/gym2/12_hires.png",
+    "set_name": "Gym Challenge",
+    "price": 28.74
+  },
+  {
+    "name": "Light Arcanine",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/neo4/12_hires.png",
+    "set_name": "Neo Destiny",
+    "price": 62.43
+  },
+  {
+    "name": "Arcanine",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard2/H2_hires.png",
+    "set_name": "Aquapolis",
+    "price": 59.91
+  },
+  {
+    "name": "Blaine's Arcanine",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/gym2/1_hires.png",
+    "set_name": "Gym Challenge",
+    "price": 51.18
+  },
+  {
+    "name": "Arcanine",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard3/H2_hires.png",
+    "set_name": "Skyridge",
+    "price": 47.66
+  },
+  {
+    "name": "Arcanine",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/pl2/1_hires.png",
+    "set_name": "Rising Rivals",
+    "price": 4.24
+  },
+  {
+    "name": "Arcanine",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/hgss1/1_hires.png",
+    "set_name": "HeartGold & SoulSilver",
+    "price": 3.77
+  },
+  {
+    "name": "Poliwrath",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard3/H24_hires.png",
+    "set_name": "Skyridge",
+    "price": 40
+  },
+  {
+    "name": "Poliwrath",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard1/24_hires.png",
+    "set_name": "Expedition Base Set",
+    "price": 16.68
+  },
+  {
+    "name": "Poliwrath",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base1/13_hires.png",
+    "set_name": "Base",
+    "price": 13.87
+  },
+  {
+    "name": "Poliwrath",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex10/11_hires.png",
+    "set_name": "Unseen Forces",
+    "price": 13.27
+  },
+  {
+    "name": "Poliwrath",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/neo2/9_hires.png",
+    "set_name": "Neo Discovery",
+    "price": 12.46
+  },
+  {
+    "name": "Poliwrath",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex6/11_hires.png",
+    "set_name": "FireRed & LeafGreen",
+    "price": 7.69
+  },
+  {
+    "name": "Poliwrath",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base4/15_hires.png",
+    "set_name": "Base Set 2",
+    "price": 6.57
+  },
+  {
+    "name": "Poliwrath",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/xy12/25_hires.png",
+    "set_name": "Evolutions",
+    "price": 3.04
+  },
+  {
+    "name": "Poliwrath",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/sm1/32_hires.png",
+    "set_name": "Sun & Moon",
+    "price": 0.93
+  },
+  {
+    "name": "Poliwrath",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/xy3/17_hires.png",
+    "set_name": "Furious Fists",
+    "price": 0.8
+  },
+  {
+    "name": "Alakazam",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard3/H1_hires.png",
+    "set_name": "Skyridge",
+    "price": 105
+  },
+  {
+    "name": "Alakazam",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base1/1_hires.png",
+    "set_name": "Base",
+    "price": 100
+  },
+  {
+    "name": "Dark Alakazam",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base5/1_hires.png",
+    "set_name": "Team Rocket",
+    "price": 34.28
+  },
+  {
+    "name": "Alakazam",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base4/1_hires.png",
+    "set_name": "Base Set 2",
+    "price": 25.05
+  },
+  {
+    "name": "Sabrina's Alakazam",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/gym2/16_hires.png",
+    "set_name": "Gym Challenge",
+    "price": 18.6
+  },
+  {
+    "name": "Alakazam",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/dp2/2_hires.png",
+    "set_name": "Mysterious Treasures",
+    "price": 14.45
+  },
+  {
+    "name": "Alakazam",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base6/1_hires.png",
+    "set_name": "Legendary Collection",
+    "price": 8
+  },
+  {
+    "name": "Alakazam",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard1/1_hires.png",
+    "set_name": "Expedition Base Set"
+  },
+  {
+    "name": "Alakazam-EX",
+    "rarity": "Rare Holo EX",
+    "image": "https://images.pokemontcg.io/xy10/25_hires.png",
+    "set_name": "Fates Collide",
+    "price": 11.05
+  },
+  {
+    "name": "M Alakazam-EX",
+    "rarity": "Rare Holo EX",
+    "image": "https://images.pokemontcg.io/xy10/26_hires.png",
+    "set_name": "Fates Collide",
+    "price": 5.31
+  },
+  {
+    "name": "Machamp",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard3/H15_hires.png",
+    "set_name": "Skyridge",
+    "price": 52.45
+  },
+  {
+    "name": "Giovanni's Machamp",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/gym2/6_hires.png",
+    "set_name": "Gym Challenge",
+    "price": 26.01
+  },
+  {
+    "name": "Machamp",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex12/9_hires.png",
+    "set_name": "Legend Maker",
+    "price": 3.2
+  },
+  {
+    "name": "Machamp",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base1/8_hires.png",
+    "set_name": "Base"
+  },
+  {
+    "name": "Dark Machamp",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base5/10_hires.png",
+    "set_name": "Team Rocket",
+    "price": 34.46
+  },
+  {
+    "name": "Machamp",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base6/15_hires.png",
+    "set_name": "Legendary Collection",
+    "price": 29.95
+  },
+  {
+    "name": "Machamp",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex5/9_hires.png",
+    "set_name": "Hidden Legends",
+    "price": 3.2
+  },
+  {
+    "name": "Machamp",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex16/11_hires.png",
+    "set_name": "Power Keepers",
+    "price": 3.17
+  },
+  {
+    "name": "Machamp",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard1/16_hires.png",
+    "set_name": "Expedition Base Set"
+  },
+  {
+    "name": "Victreebel",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base2/14_hires.png",
+    "set_name": "Jungle",
+    "price": 14.94
+  },
+  {
+    "name": "Victreebel",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard2/H30_hires.png",
+    "set_name": "Aquapolis",
+    "price": 9.45
+  },
+  {
+    "name": "Victreebel",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex6/17_hires.png",
+    "set_name": "FireRed & LeafGreen",
+    "price": 3.58
+  },
+  {
+    "name": "Victreebel",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex12/13_hires.png",
+    "set_name": "Legend Maker",
+    "price": 1.75
+  },
+  {
+    "name": "Victreebel",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/hgss4/12_hires.png",
+    "set_name": "HS—Triumphant",
+    "price": 1.46
+  },
+  {
+    "name": "Victreebel",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/sm7/3_hires.png",
+    "set_name": "Celestial Storm",
+    "price": 0.93
+  },
+  {
+    "name": "Victreebel",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/xy3/3_hires.png",
+    "set_name": "Furious Fists",
+    "price": 0.75
+  },
+  {
+    "name": "Tentacruel",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard2/H26_hires.png",
+    "set_name": "Aquapolis",
+    "price": 10
+  },
+  {
+    "name": "Misty's Tentacruel",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/gym1/10_hires.png",
+    "set_name": "Gym Heroes",
+    "price": 8.11
+  },
+  {
+    "name": "Golem",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex3/5_hires.png",
+    "set_name": "Dragon",
+    "price": 8.57
+  },
+  {
+    "name": "Golem",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex12/6_hires.png",
+    "set_name": "Legend Maker"
+  },
+  {
+    "name": "Golem",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard1/14_hires.png",
+    "set_name": "Expedition Base Set",
+    "price": 17.45
+  },
+  {
+    "name": "Rapidash",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex6/13_hires.png",
+    "set_name": "FireRed & LeafGreen",
+    "price": 12
+  },
+  {
+    "name": "Rapidash",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard1/26_hires.png",
+    "set_name": "Expedition Base Set",
+    "price": 7.13
+  },
+  {
+    "name": "Rapidash",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/hgss4/8_hires.png",
+    "set_name": "HS—Triumphant",
+    "price": 3.53
+  },
+  {
+    "name": "Slowpoke & Psyduck-GX",
+    "rarity": "Rare Holo GX",
+    "image": "https://images.pokemontcg.io/sm11/35_hires.png",
+    "set_name": "Unified Minds",
+    "price": 10.99
+  },
+  {
+    "name": "Dark Slowbro",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base5/12_hires.png",
+    "set_name": "Team Rocket",
+    "price": 28.16
+  },
+  {
+    "name": "Dark Slowbro",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base6/8_hires.png",
+    "set_name": "Legendary Collection",
+    "price": 6.5
+  },
+  {
+    "name": "M Slowbro-EX",
+    "rarity": "Rare Holo EX",
+    "image": "https://images.pokemontcg.io/xy12/27_hires.png",
+    "set_name": "Evolutions",
+    "price": 4.82
+  },
+  {
+    "name": "Slowbro",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex6/14_hires.png",
+    "set_name": "FireRed & LeafGreen",
+    "price": 4.47
+  },
+  {
+    "name": "Slowbro",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex10/13_hires.png",
+    "set_name": "Unseen Forces",
+    "price": 2.98
+  },
+  {
+    "name": "Slowbro-EX",
+    "rarity": "Rare Holo EX",
+    "image": "https://images.pokemontcg.io/xy12/26_hires.png",
+    "set_name": "Evolutions",
+    "price": 1.9
+  },
+  {
+    "name": "Magnemite",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/neo2/7_hires.png",
+    "set_name": "Neo Discovery",
+    "price": 10.96
+  },
+  {
+    "name": "Dark Magneton",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base5/11_hires.png",
+    "set_name": "Team Rocket",
+    "price": 21.81
+  },
+  {
+    "name": "Magneton",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard2/H16_hires.png",
+    "set_name": "Aquapolis",
+    "price": 15
+  },
+  {
+    "name": "Lt. Surge's Magneton",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/gym1/8_hires.png",
+    "set_name": "Gym Heroes",
+    "price": 14.9
+  },
+  {
+    "name": "Magneton",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/neo3/10_hires.png",
+    "set_name": "Neo Revelation",
+    "price": 12.72
+  },
+  {
+    "name": "Magneton",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base1/9_hires.png",
+    "set_name": "Base",
+    "price": 12.36
+  },
+  {
+    "name": "Magneton",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base4/9_hires.png",
+    "set_name": "Base Set 2",
+    "price": 10.47
+  },
+  {
+    "name": "Magneton",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base3/11_hires.png",
+    "set_name": "Fossil",
+    "price": 10.41
+  },
+  {
+    "name": "Magneton",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard3/H18_hires.png",
+    "set_name": "Skyridge"
+  },
+  {
+    "name": "Dewgong",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard3/H6_hires.png",
+    "set_name": "Skyridge",
+    "price": 28.3
+  },
+  {
+    "name": "Dewgong",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex6/3_hires.png",
+    "set_name": "FireRed & LeafGreen",
+    "price": 4.29
+  },
+  {
+    "name": "Muk",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base3/13_hires.png",
+    "set_name": "Fossil",
+    "price": 6.28
+  },
+  {
+    "name": "Muk",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex12/11_hires.png",
+    "set_name": "Legend Maker",
+    "price": 3.87
+  },
+  {
+    "name": "Team Aqua's Muk",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/dc1/8_hires.png",
+    "set_name": "Double Crisis",
+    "price": 2.18
+  },
+  {
+    "name": "Muk",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base6/16_hires.png",
+    "set_name": "Legendary Collection"
+  },
+  {
+    "name": "Muk",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard2/H17_hires.png",
+    "set_name": "Aquapolis"
+  },
+  {
+    "name": "Cloyster",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard1/8_hires.png",
+    "set_name": "Expedition Base Set",
+    "price": 25.38
+  },
+  {
+    "name": "Haunter",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base3/6_hires.png",
+    "set_name": "Fossil",
+    "price": 17.95
+  },
+  {
+    "name": "Gengar",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard3/H9_hires.png",
+    "set_name": "Skyridge",
+    "price": 159.99
+  },
+  {
+    "name": "Sabrina's Gengar",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/gym1/14_hires.png",
+    "set_name": "Gym Heroes",
+    "price": 92.05
+  },
+  {
+    "name": "Gengar",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard1/13_hires.png",
+    "set_name": "Expedition Base Set",
+    "price": 81
+  },
+  {
+    "name": "Dark Gengar",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/neo4/6_hires.png",
+    "set_name": "Neo Destiny",
+    "price": 43.38
+  },
+  {
+    "name": "Gengar",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base3/5_hires.png",
+    "set_name": "Fossil",
+    "price": 43.29
+  },
+  {
+    "name": "Gengar",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base6/11_hires.png",
+    "set_name": "Legendary Collection",
+    "price": 24.75
+  },
+  {
+    "name": "Gengar",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex12/5_hires.png",
+    "set_name": "Legend Maker",
+    "price": 6.02
+  },
+  {
+    "name": "Onix-GX",
+    "rarity": "Rare Holo GX",
+    "image": "https://images.pokemontcg.io/sm115/36_hires.png",
+    "set_name": "Hidden Fates",
+    "price": 1.4
+  },
+  {
+    "name": "Dark Hypno",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base5/9_hires.png",
+    "set_name": "Team Rocket",
+    "price": 24.16
+  },
+  {
+    "name": "Hypno",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base3/8_hires.png",
+    "set_name": "Fossil",
+    "price": 19.05
+  },
+  {
+    "name": "Dark Hypno",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex7/6_hires.png",
+    "set_name": "Team Rocket Returns",
+    "price": 7.75
+  },
+  {
+    "name": "Hypno",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard2/H12_hires.png",
+    "set_name": "Aquapolis"
+  },
+  {
+    "name": "Kingler",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard1/15_hires.png",
+    "set_name": "Expedition Base Set",
+    "price": 13.74
+  },
+  {
+    "name": "Kingler VMAX",
+    "rarity": "Rare Holo VMAX",
+    "image": "https://images.pokemontcg.io/swsh9/29_hires.png",
+    "set_name": "Brilliant Stars",
+    "price": 1.98
+  },
+  {
+    "name": "Kingler V",
+    "rarity": "Rare Holo V",
+    "image": "https://images.pokemontcg.io/swsh9/28_hires.png",
+    "set_name": "Brilliant Stars",
+    "price": 0.98
+  },
+  {
+    "name": "Dark Electrode",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex7/4_hires.png",
+    "set_name": "Team Rocket Returns"
+  },
+  {
+    "name": "Electrode",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard2/H7_hires.png",
+    "set_name": "Aquapolis",
+    "price": 19
+  },
+  {
+    "name": "Electrode",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base2/2_hires.png",
+    "set_name": "Jungle",
+    "price": 13.15
+  },
+  {
+    "name": "Electrode",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex5/5_hires.png",
+    "set_name": "Hidden Legends",
+    "price": 2.24
+  },
+  {
+    "name": "Exeggutor",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard2/H10_hires.png",
+    "set_name": "Aquapolis",
+    "price": 23.32
+  },
+  {
+    "name": "Exeggutor",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex6/5_hires.png",
+    "set_name": "FireRed & LeafGreen",
+    "price": 5.97
+  },
+  {
+    "name": "Rowlet & Alolan Exeggutor-GX",
+    "rarity": "Rare Holo GX",
+    "image": "https://images.pokemontcg.io/sm11/1_hires.png",
+    "set_name": "Unified Minds",
+    "price": 4.56
+  },
+  {
+    "name": "Marowak δ",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex11/10_hires.png",
+    "set_name": "Delta Species",
+    "price": 6.68
+  },
+  {
+    "name": "Marowak",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex6/7_hires.png",
+    "set_name": "FireRed & LeafGreen",
+    "price": 3.78
+  },
+  {
+    "name": "Dark Marowak",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex7/7_hires.png",
+    "set_name": "Team Rocket Returns",
+    "price": 3.43
+  },
+  {
+    "name": "Alolan Marowak",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/sm4/12_hires.png",
+    "set_name": "Crimson Invasion",
+    "price": 2.02
+  },
+  {
+    "name": "Hitmonlee",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base3/7_hires.png",
+    "set_name": "Fossil",
+    "price": 21.79
+  },
+  {
+    "name": "Hitmonlee",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base6/13_hires.png",
+    "set_name": "Legendary Collection"
+  },
+  {
+    "name": "Hitmonchan",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base1/7_hires.png",
+    "set_name": "Base"
+  },
+  {
+    "name": "Rocket's Hitmonchan",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/gym1/11_hires.png",
+    "set_name": "Gym Heroes",
+    "price": 35.64
+  },
+  {
+    "name": "Hitmonchan",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base4/8_hires.png",
+    "set_name": "Base Set 2",
+    "price": 13.18
+  },
+  {
+    "name": "Hitmonchan",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/xy12/62_hires.png",
+    "set_name": "Evolutions",
+    "price": 2.05
+  },
+  {
+    "name": "Dark Weezing",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base5/14_hires.png",
+    "set_name": "Team Rocket",
+    "price": 10.99
+  },
+  {
+    "name": "Weezing",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard1/32_hires.png",
+    "set_name": "Expedition Base Set",
+    "price": 9.69
+  },
+  {
+    "name": "Brock's Rhydon",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/gym1/2_hires.png",
+    "set_name": "Gym Heroes",
+    "price": 16.87
+  },
+  {
+    "name": "Team Magma's Rhydon",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex4/11_hires.png",
+    "set_name": "Team Magma vs Team Aqua",
+    "price": 5.64
+  },
+  {
+    "name": "Rhydon",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard3/H27_hires.png",
+    "set_name": "Skyridge"
+  },
+  {
+    "name": "Chansey",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base1/3_hires.png",
+    "set_name": "Base",
+    "price": 18.15
+  },
+  {
+    "name": "Chansey",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base4/3_hires.png",
+    "set_name": "Base Set 2",
+    "price": 10.41
+  },
+  {
+    "name": "Chansey",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/xy12/70_hires.png",
+    "set_name": "Evolutions",
+    "price": 4.33
+  },
+  {
+    "name": "Kangaskhan",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base2/5_hires.png",
+    "set_name": "Jungle",
+    "price": 6
+  },
+  {
+    "name": "Kangaskhan",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex6/6_hires.png",
+    "set_name": "FireRed & LeafGreen",
+    "price": 3.4
+  },
+  {
+    "name": "Misty's Seadra",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/gym1/9_hires.png",
+    "set_name": "Gym Heroes",
+    "price": 11.11
+  },
+  {
+    "name": "Starmie",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard3/H28_hires.png",
+    "set_name": "Skyridge",
+    "price": 145
+  },
+  {
+    "name": "Starmie δ",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex11/15_hires.png",
+    "set_name": "Delta Species",
+    "price": 7.84
+  },
+  {
+    "name": "Starmie-GX",
+    "rarity": "Rare Holo GX",
+    "image": "https://images.pokemontcg.io/sm115/14_hires.png",
+    "set_name": "Hidden Fates",
+    "price": 1.35
+  },
+  {
+    "name": "Mr. Mime",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base2/6_hires.png",
+    "set_name": "Jungle",
+    "price": 14.6
+  },
+  {
+    "name": "Rocket's Scyther",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/gym1/13_hires.png",
+    "set_name": "Gym Heroes",
+    "price": 20.58
+  },
+  {
+    "name": "Scyther",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base2/10_hires.png",
+    "set_name": "Jungle",
+    "price": 15.79
+  },
+  {
+    "name": "Scyther",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base4/17_hires.png",
+    "set_name": "Base Set 2",
+    "price": 7.66
+  },
+  {
+    "name": "Lt. Surge's Electabuzz",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/gym1/6_hires.png",
+    "set_name": "Gym Heroes",
+    "price": 23.62
+  },
+  {
+    "name": "Pinsir",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base2/9_hires.png",
+    "set_name": "Jungle",
+    "price": 13.79
+  },
+  {
+    "name": "Pinsir δ",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex15/9_hires.png",
+    "set_name": "Dragon Frontiers",
+    "price": 5.8
+  },
+  {
+    "name": "Pinsir",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex5/13_hires.png",
+    "set_name": "Hidden Legends",
+    "price": 2.8
+  },
+  {
+    "name": "Pinsir-GX",
+    "rarity": "Rare Holo GX",
+    "image": "https://images.pokemontcg.io/sm115/6_hires.png",
+    "set_name": "Hidden Fates",
+    "price": 1.1
+  },
+  {
+    "name": "Tauros",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex6/16_hires.png",
+    "set_name": "FireRed & LeafGreen",
+    "price": 3.9
+  },
+  {
+    "name": "Tauros",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex14/12_hires.png",
+    "set_name": "Crystal Guardians",
+    "price": 3
+  },
+  {
+    "name": "Giovanni's Gyarados",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/gym2/5_hires.png",
+    "set_name": "Gym Challenge",
+    "price": 60.72
+  },
+  {
+    "name": "Misty's Gyarados",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/gym2/13_hires.png",
+    "set_name": "Gym Challenge",
+    "price": 49.04
+  },
+  {
+    "name": "Dark Gyarados",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base5/8_hires.png",
+    "set_name": "Team Rocket",
+    "price": 36.59
+  },
+  {
+    "name": "Gyarados",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base4/7_hires.png",
+    "set_name": "Base Set 2",
+    "price": 32.34
+  },
+  {
+    "name": "Gyarados",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/col1/7_hires.png",
+    "set_name": "Call of Legends",
+    "price": 26.1
+  },
+  {
+    "name": "Gyarados δ",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex13/8_hires.png",
+    "set_name": "Holon Phantoms",
+    "price": 23.82
+  },
+  {
+    "name": "Gyarados",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base6/12_hires.png",
+    "set_name": "Legendary Collection",
+    "price": 15.68
+  },
+  {
+    "name": "Gyarados",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex8/8_hires.png",
+    "set_name": "Deoxys",
+    "price": 14.25
+  },
+  {
+    "name": "Gyarados",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base1/6_hires.png",
+    "set_name": "Base",
+    "price": 10.98
+  },
+  {
+    "name": "Gyarados",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/hgss1/4_hires.png",
+    "set_name": "HeartGold & SoulSilver",
+    "price": 6.66
+  },
+  {
+    "name": "Lapras",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex12/8_hires.png",
+    "set_name": "Legend Maker",
+    "price": 7
+  },
+  {
+    "name": "Lapras",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base3/10_hires.png",
+    "set_name": "Fossil",
+    "price": 6.71
+  },
+  {
+    "name": "Koga's Ditto",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/gym2/10_hires.png",
+    "set_name": "Gym Challenge",
+    "price": 32.88
+  },
+  {
+    "name": "Ditto",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base3/3_hires.png",
+    "set_name": "Fossil",
+    "price": 18.06
+  },
+  {
+    "name": "Ditto",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex6/4_hires.png",
+    "set_name": "FireRed & LeafGreen",
+    "price": 6.28
+  },
+  {
+    "name": "Eevee",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/sm115/48_hires.png",
+    "set_name": "Hidden Fates",
+    "price": 0.46
+  },
+  {
+    "name": "Dark Vaporeon",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base6/9_hires.png",
+    "set_name": "Legendary Collection",
+    "price": 78.5
+  },
+  {
+    "name": "Vaporeon",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex10/19_hires.png",
+    "set_name": "Unseen Forces",
+    "price": 19.29
+  },
+  {
+    "name": "Vaporeon δ",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex11/18_hires.png",
+    "set_name": "Delta Species",
+    "price": 18.13
+  },
+  {
+    "name": "Vaporeon",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base2/12_hires.png",
+    "set_name": "Jungle",
+    "price": 7.91
+  },
+  {
+    "name": "Vaporeon",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/sm115/18_hires.png",
+    "set_name": "Hidden Fates",
+    "price": 0.39
+  },
+  {
+    "name": "Jolteon",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard3/H12_hires.png",
+    "set_name": "Skyridge",
+    "price": 69
+  },
+  {
+    "name": "Jolteon",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base2/4_hires.png",
+    "set_name": "Jungle",
+    "price": 28.17
+  },
+  {
+    "name": "Jolteon",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base6/14_hires.png",
+    "set_name": "Legendary Collection",
+    "price": 24.95
+  },
+  {
+    "name": "Jolteon",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex10/8_hires.png",
+    "set_name": "Unseen Forces",
+    "price": 22.79
+  },
+  {
+    "name": "Jolteon δ",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex11/7_hires.png",
+    "set_name": "Delta Species",
+    "price": 13.75
+  },
+  {
+    "name": "Jolteon",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex2/6_hires.png",
+    "set_name": "Sandstorm",
+    "price": 10.63
+  },
+  {
+    "name": "Jolteon",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/xy7/26_hires.png",
+    "set_name": "Ancient Origins",
+    "price": 2.79
+  },
+  {
+    "name": "Flareon",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard3/H7_hires.png",
+    "set_name": "Skyridge",
+    "price": 109.48
+  },
+  {
+    "name": "Flareon",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex2/5_hires.png",
+    "set_name": "Sandstorm",
+    "price": 34.72
+  },
+  {
+    "name": "Flareon δ",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex11/5_hires.png",
+    "set_name": "Delta Species",
+    "price": 30
+  },
+  {
+    "name": "Flareon",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base2/3_hires.png",
+    "set_name": "Jungle",
+    "price": 21.77
+  },
+  {
+    "name": "Flareon",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex10/5_hires.png",
+    "set_name": "Unseen Forces",
+    "price": 20.18
+  },
+  {
+    "name": "Flareon",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base6/10_hires.png",
+    "set_name": "Legendary Collection",
+    "price": 12.16
+  },
+  {
+    "name": "Omastar δ",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex13/13_hires.png",
+    "set_name": "Holon Phantoms",
+    "price": 2.47
+  },
+  {
+    "name": "Kabutops",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard3/H13_hires.png",
+    "set_name": "Skyridge",
+    "price": 35
+  },
+  {
+    "name": "Kabutops",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base3/9_hires.png",
+    "set_name": "Fossil",
+    "price": 23.38
+  },
+  {
+    "name": "Kabutops",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/neo2/6_hires.png",
+    "set_name": "Neo Discovery",
+    "price": 22.59
+  },
+  {
+    "name": "Kabutops",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex12/7_hires.png",
+    "set_name": "Legend Maker",
+    "price": 7.68
+  },
+  {
+    "name": "Kabutops δ",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex13/9_hires.png",
+    "set_name": "Holon Phantoms",
+    "price": 6.93
+  },
+  {
+    "name": "Kabutops",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/dp5/6_hires.png",
+    "set_name": "Majestic Dawn",
+    "price": 6
+  },
+  {
+    "name": "Kabutops",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/pl4/4_hires.png",
+    "set_name": "Arceus",
+    "price": 5.84
+  },
+  {
+    "name": "Kabutops",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex16/10_hires.png",
+    "set_name": "Power Keepers",
+    "price": 4.67
+  },
+  {
+    "name": "Aerodactyl",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base3/1_hires.png",
+    "set_name": "Fossil",
+    "price": 22.25
+  },
+  {
+    "name": "Aerodactyl",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex12/1_hires.png",
+    "set_name": "Legend Maker",
+    "price": 8.06
+  },
+  {
+    "name": "Snorlax δ",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex15/10_hires.png",
+    "set_name": "Dragon Frontiers",
+    "price": 21.65
+  },
+  {
+    "name": "Snorlax",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base2/11_hires.png",
+    "set_name": "Jungle",
+    "price": 19.64
+  },
+  {
+    "name": "Eevee & Snorlax-GX",
+    "rarity": "Rare Holo GX",
+    "image": "https://images.pokemontcg.io/sm9/120_hires.png",
+    "set_name": "Team Up",
+    "price": 16.82
+  },
+  {
+    "name": "Snorlax",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex6/15_hires.png",
+    "set_name": "FireRed & LeafGreen",
+    "price": 5.17
+  },
+  {
+    "name": "Articuno",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base3/2_hires.png",
+    "set_name": "Fossil",
+    "price": 33.72
+  },
+  {
+    "name": "Articuno",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base6/2_hires.png",
+    "set_name": "Legendary Collection"
+  },
+  {
+    "name": "Articuno",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ecard3/H3_hires.png",
+    "set_name": "Skyridge",
+    "price": 59.98
+  },
+  {
+    "name": "Articuno-EX",
+    "rarity": "Rare Holo EX",
+    "image": "https://images.pokemontcg.io/bw8/25_hires.png",
+    "set_name": "Plasma Storm",
+    "price": 12.48
+  },
+  {
+    "name": "Articuno",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/dp5/1_hires.png",
+    "set_name": "Majestic Dawn",
+    "price": 9.12
+  },
+  {
+    "name": "Articuno",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/bw4/27_hires.png",
+    "set_name": "Next Destinies",
+    "price": 3.5
+  },
+  {
+    "name": "Rocket's Zapdos",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/gym2/15_hires.png",
+    "set_name": "Gym Challenge",
+    "price": 31.45
+  },
+  {
+    "name": "Zapdos",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base3/15_hires.png",
+    "set_name": "Fossil",
+    "price": 30.24
+  },
+  {
+    "name": "Zapdos",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base4/20_hires.png",
+    "set_name": "Base Set 2",
+    "price": 22.31
+  },
+  {
+    "name": "Zapdos",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base1/16_hires.png",
+    "set_name": "Base",
+    "price": 19.39
+  },
+  {
+    "name": "Moltres & Zapdos & Articuno-GX",
+    "rarity": "Rare Holo GX",
+    "image": "https://images.pokemontcg.io/sm115/44_hires.png",
+    "set_name": "Hidden Fates",
+    "price": 8.08
+  },
+  {
+    "name": "Zapdos G",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/pl4/12_hires.png",
+    "set_name": "Arceus",
+    "price": 3.15
+  },
+  {
+    "name": "Zapdos",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base6/19_hires.png",
+    "set_name": "Legendary Collection"
+  },
+  {
+    "name": "Moltres",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base3/12_hires.png",
+    "set_name": "Fossil",
+    "price": 41.54
+  },
+  {
+    "name": "Blaine's Moltres",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/gym1/1_hires.png",
+    "set_name": "Gym Heroes",
+    "price": 38.71
+  },
+  {
+    "name": "Rocket's Moltres",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/gym1/12_hires.png",
+    "set_name": "Gym Heroes",
+    "price": 30.22
+  },
+  {
+    "name": "Moltres & Zapdos & Articuno-GX",
+    "rarity": "Rare Holo GX",
+    "image": "https://images.pokemontcg.io/sm115/44_hires.png",
+    "set_name": "Hidden Fates",
+    "price": 8.08
+  },
+  {
+    "name": "Moltres-EX",
+    "rarity": "Rare Holo EX",
+    "image": "https://images.pokemontcg.io/bw8/14_hires.png",
+    "set_name": "Plasma Storm",
+    "price": 7.86
+  },
+  {
+    "name": "Moltres",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/bw4/14_hires.png",
+    "set_name": "Next Destinies",
+    "price": 1.99
+  },
+  {
+    "name": "Moltres",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/sm9/19_hires.png",
+    "set_name": "Team Up",
+    "price": 1.87
+  },
+  {
+    "name": "Dratini",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/dv1/2_hires.png",
+    "set_name": "Dragon Vault",
+    "price": 3.85
+  },
+  {
+    "name": "Dratini",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/dv1/1_hires.png",
+    "set_name": "Dragon Vault",
+    "price": 2.1
+  },
+  {
+    "name": "Erika's Dragonair",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/gym1/4_hires.png",
+    "set_name": "Gym Heroes",
+    "price": 50.32
+  },
+  {
+    "name": "Dragonair",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/dv1/4_hires.png",
+    "set_name": "Dragon Vault",
+    "price": 4.05
+  },
+  {
+    "name": "Dragonair",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/dv1/3_hires.png",
+    "set_name": "Dragon Vault",
+    "price": 2.69
+  },
+  {
+    "name": "Dark Dragonite",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base5/5_hires.png",
+    "set_name": "Team Rocket",
+    "price": 64.84
+  },
+  {
+    "name": "Dragonite",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base3/4_hires.png",
+    "set_name": "Fossil",
+    "price": 50.1
+  },
+  {
+    "name": "Light Dragonite",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/neo4/14_hires.png",
+    "set_name": "Neo Destiny",
+    "price": 31.48
+  },
+  {
+    "name": "Dark Dragonite",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base6/5_hires.png",
+    "set_name": "Legendary Collection",
+    "price": 15.1
+  },
+  {
+    "name": "Dragonite",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/dp6/2_hires.png",
+    "set_name": "Legends Awakened",
+    "price": 13.6
+  },
+  {
+    "name": "Dragonite δ",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex11/3_hires.png",
+    "set_name": "Delta Species",
+    "price": 11.25
+  },
+  {
+    "name": "Dragonite",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/dv1/5_hires.png",
+    "set_name": "Dragon Vault",
+    "price": 3.07
+  },
+  {
+    "name": "Rocket's Mewtwo",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/gym2/14_hires.png",
+    "set_name": "Gym Challenge",
+    "price": 83
+  },
+  {
+    "name": "Mewtwo",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base4/10_hires.png",
+    "set_name": "Base Set 2",
+    "price": 44.12
+  },
+  {
+    "name": "Mewtwo δ",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex11/12_hires.png",
+    "set_name": "Delta Species",
+    "price": 18.95
+  },
+  {
+    "name": "Mewtwo",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/dp6/11_hires.png",
+    "set_name": "Legends Awakened",
+    "price": 10.67
+  },
+  {
+    "name": "Mewtwo",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/base1/10_hires.png",
+    "set_name": "Base"
+  },
+  {
+    "name": "Mewtwo",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/dp5/9_hires.png",
+    "set_name": "Majestic Dawn",
+    "price": 5.85
+  },
+  {
+    "name": "Mewtwo & Mew-GX",
+    "rarity": "Rare Holo GX",
+    "image": "https://images.pokemontcg.io/sm11/71_hires.png",
+    "set_name": "Unified Minds",
+    "price": 21.81
+  },
+  {
+    "name": "Mew",
+    "rarity": "Rare Holo",
+    "image": "https://images.pokemontcg.io/ex12/10_hires.png",
+    "set_name": "Legend Maker",
+    "price": 13.8
+  }
+]
