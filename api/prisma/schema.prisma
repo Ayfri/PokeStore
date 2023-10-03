@@ -1,0 +1,35 @@
+generator client {
+	provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL")
+}
+
+model Pokemons {
+    id          Int    @id
+    description String
+    name        String
+    numero      Int
+    type        String
+    cards       Cards[]
+}
+
+model Sets {
+    id       Int    @id
+    name     String
+    imageUrl String
+    cards    Cards[]
+}
+
+model Cards {
+    id        Int     @id
+    pokemon   Pokemons @relation(fields: [pokemonId], references: [id])
+    pokemonId Int
+    set       Sets     @relation(fields: [setId], references: [id])
+    setId     Int
+    price     Float
+    imageUrl  String?
+    holofoil  Boolean
+}
