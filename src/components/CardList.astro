@@ -1,0 +1,62 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+	card_name: string;
+	card_img: string;
+}
+
+const { card_name, card_img, card_price } = Astro.props;
+---
+
+<div class="card">
+	<div class="aura"></div>
+	<Image src={card_img} alt={card_name} width="300em" height="420em"/>
+	<h2>{card_name}</h2>
+</div>
+<style>
+	.card {
+		position: relative;
+		width: fit-content;
+		padding: 2rem;
+	}
+
+	.card:hover	{
+		cursor: pointer;
+	}
+
+	.aura {
+		left: 1.4rem;
+		z-index: -1;
+		width: 20rem;
+		height: 26rem;
+		position: absolute;
+		background: #3e8c38;
+		filter: blur(1.5rem);
+		border-radius: 15rem;
+		transition: filter 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	.card:hover .aura {
+		filter: blur(2.5rem);
+	}
+
+	.card img {
+		border-radius: 0.5rem;
+	}
+
+	h2 {
+		text-align: center;
+		margin: 0;
+		font-size: 1.75rem;
+		transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+	}
+	p {
+		margin-top: 0.5rem;
+		margin-bottom: 0;
+	}
+	.link-card:is(:hover, :focus-within) {
+		background-position: 0;
+		background-image: var(--accent-gradient);
+	}
+</style>
