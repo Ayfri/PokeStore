@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import {Image} from "astro:assets";
 
 export interface Props {
 	card: {
@@ -19,7 +19,7 @@ const name = 'test';
 ---
 <div class="card">
 	<div class="aura"></div>
-	<Image src={imageUrl} alt={name} class={types.toLowerCase().replace(',', ' ')} width="300" height="420"/>
+	<Image src={imageUrl} alt={name} class:list={types.toLowerCase().split(',')} width="300" height="420"/>
 	<h2>{name}</h2>
 </div>
 <style>
