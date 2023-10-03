@@ -6,25 +6,35 @@ import PageTitle from "../components/PageTitle.astro";
 
 
 interface Card {
-	name: string;
-	imageUrl: string;
-	types: string;
+    name: string;
+    imageUrl: string;
+    types: string;
+    rarity: string;
+    price: number;
+    pokemon: {
+        numero: number;
+    }
 }
 
 const response = await fetch(`${import.meta.env.API_URL}/cards`)
-const cards = await response.json() as Card[];
+let cards = await response.json() as Card[];
+cards = cards.sort((a, b) => a.pokemon.numero - b.pokemon.numero || b.price - a.price);
+cards = cards.filter((card, index, self) => self.findIndex(c => c.pokemon.numero === card.pokemon.numero) === index)
 ---
 
 <Layout title="Pokéstore">
-	<main>
-		<Header cards_href="/cards"
-		        username="anta"
-		        cart_icon="/icons/cart.svg"
-		        cart_href="/cart">
-		</Header>
-		<PageTitle title="Card List"></PageTitle>
-		{cards.map(card => <CardList card={card}/>)} <!--todo: add types-->
-	</main>
+    <main>
+        <Header cards_href="/cards"
+                username="anta"
+                cart_icon="/icons/cart.svg"
+                cart_href="/cart">
+        </Header>
+        <PageTitle title="Card List"></PageTitle>
+        <div class="cards-grid">
+            {cards.map(card =>
+                    <CardList card={card}/>)}
+        </div>
+    </main>
 </Layout>
 
 <style>
@@ -36,5 +46,11 @@ const cards = await response.json() as Card[];
         line-height: 1.6;
         max-width: 100vw;
         max-height: 100vh;
+    }
+
+    .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit,minmax(30rem,1fr));
+        place-items: center;
     }
 </style>
