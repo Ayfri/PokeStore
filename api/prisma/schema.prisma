@@ -1,35 +1,35 @@
-generator client {
-	provider = "prisma-client-js"
-}
-
 datasource db {
     provider = "mysql"
     url      = env("DATABASE_URL")
 }
 
+generator client {
+    provider = "prisma-client-js"
+}
+
 model Pokemons {
-    id          Int    @id
-    description String
-    name        String
+    id          BigInt  @id @db.UnsignedBigInt
+    description String  @db.VarChar(1000)
+    name        String  @db.VarChar(100)
     numero      Int
-    type        String
+    type        String  @db.VarChar(100)
     cards       Cards[]
 }
 
 model Sets {
-    id       Int    @id
-    name     String
-    imageUrl String
+    id       BigInt  @id @db.UnsignedBigInt
+    name     String  @db.VarChar(100)
+    imageUrl String  @map("image_url") @db.VarChar(100)
     cards    Cards[]
 }
 
 model Cards {
-    id        Int     @id
+    id        BigInt   @id @db.UnsignedBigInt
     pokemon   Pokemons @relation(fields: [pokemonId], references: [id])
-    pokemonId Int
+    pokemonId BigInt   @map("pokemon_id") @db.UnsignedBigInt
     set       Sets     @relation(fields: [setId], references: [id])
-    setId     Int
-    price     Float
-    imageUrl  String?
-    holofoil  Boolean
+    setId     BigInt   @map("set_id") @db.UnsignedBigInt
+    price     Float?
+    imageUrl  String?  @map("image_url") @db.VarChar(100)
+    rarity    String   @db.VarChar(100)
 }
