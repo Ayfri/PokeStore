@@ -2,11 +2,8 @@ import {PrismaClient} from '@prisma/client';
 
 let _prisma: PrismaClient | null = null;
 
-// export only one getter
-
-
 export default function prisma() {
-	if (_prisma !== null) return _prisma;
+	if (_prisma) return _prisma;
 
 	_prisma = new PrismaClient({
 		datasources: {
