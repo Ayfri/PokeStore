@@ -2,30 +2,10 @@
 import Layout from '../layouts/Layout.astro';
 import CardList from "../components/CardList.astro";
 import PageTitle from "../components/PageTitle.astro";
+import type {Card, Set} from "../types";
 
 
-export interface Card {
-	name: string;
-	imageUrl: string;
-	types: string;
-	rarity: string;
-	price: number;
-	pokemon: Pokemon;
-	set: Set;
-}
 
-export interface Pokemon {
-	numero: number;
-	name: string;
-	description: string;
-	imageUrl: string;
-	types: string;
-}
-
-export interface Set {
-	name: string;
-	imageUrl: string;
-}
 
 const filters = ['numero', 'types', 'rarity', 'set', 'name'];
 
