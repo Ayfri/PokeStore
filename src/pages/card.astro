@@ -1,0 +1,250 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import PageTitle from "../components/PageTitle.astro";
+import PokemonType from "../components/PokemonType.astro";
+import "../styles/colors.css";
+import {Image} from "astro:assets";
+
+
+export interface Card {
+    name: string;
+    imageUrl: string;
+    types: string;
+    rarity: string;
+    price: number;
+    pokemon: Pokemon;
+}
+
+export interface Pokemon {
+    numero: number;
+    name: string;
+    description: string;
+    imageUrl: string;
+    types: string;
+}
+---
+
+<Layout title="Pokéstore">
+	<main>
+		<div class="filter"></div>
+
+		<div class="main-container">
+			<div class="top-container">
+				<div class="card-container">
+					<div class="left-card"></div>
+					<div class="center-card">
+						<div class="card-aura fire"></div>
+						<Image
+								src="https://images.pokemontcg.io/base4/4_hires.png" alt="Charizard"
+								width="300"
+								height="420"
+						/>
+					</div>
+					<div class="right-card"></div>
+				</div>
+			</div>
+			<div class="bottom-container">
+				<PageTitle title="Charizard"></PageTitle>
+				<div class="bottom-half-bottom">
+					<div class="left-space"></div>
+					<div class="pokemon-info">
+						<PokemonType type="fire"></PokemonType>
+						<p>
+							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad blanditiis commodi facere
+							fugiat
+							in maiores natus omnis placeat quo rem!
+						</p>
+					</div>
+					<div class="purchase-button">
+						<p>
+							$ 10.00
+						</p>
+						<button>
+							Add to cart
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="main-container">
+			<div class="top-container">
+				<div class="card-container">
+					<div class="left-card"></div>
+					<div class="center-card">
+						<div class="card-aura fire"></div>
+						<Image
+								src="https://images.pokemontcg.io/base4/4_hires.png" alt="Charizard"
+								width="300"
+								height="420"
+						/>
+					</div>
+					<div class="right-card"></div>
+				</div>
+			</div>
+			<div class="bottom-container">
+				<PageTitle title="Charizard"></PageTitle>
+				<div class="bottom-half-bottom">
+					<div class="left-space"></div>
+					<div class="pokemon-info">
+						<PokemonType type="fire"></PokemonType>
+						<p>
+							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad blanditiis commodi facere
+							fugiat
+							in maiores natus omnis placeat quo rem!
+						</p>
+					</div>
+					<div class="purchase-button">
+						<p>
+							$ 10.00
+						</p>
+						<button>
+							Add to cart
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="back-button"></div>
+	</main>
+</Layout>
+<style>
+    main {
+        margin: auto;
+        padding: .6rem;
+        color: white;
+        font-size: 20px;
+        line-height: 1.6;
+        max-width: 100vw;
+        max-height: 100vh;
+    }
+
+    .filter {
+        background-image: url("/public/particles.png");
+        background-repeat: no-repeat;
+        width: -webkit-fill-available;
+        height: -webkit-fill-available;
+        z-index: -2;
+        position: absolute;
+    }
+
+    .main-container {
+        margin: 5rem auto 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        width: 90%;
+        z-index: -1;
+    }
+
+    .top-container {
+        height: 33rem;
+    }
+
+    .card-container {
+        height: 100%;
+        width: 40%;
+        margin: auto;
+        display: flex;
+        gap: 1rem;
+    }
+
+    .left-card {
+        border: 1px solid yellow;
+        height: 100%;
+        width: 50%;
+    }
+
+    .center-card {
+        position: relative;
+    }
+
+    .center-card > .card-aura {
+        position: absolute;
+        background-color: var(--type-color);
+        width: 43rem;
+        height: 43rem;
+        z-index: -1;
+        border-radius: 50%;
+        filter: blur(5rem) opacity(0.5);
+        left: 50%;
+        top: 50%;
+        transform: translateX(-50%) translateY(-50%);
+    }
+
+    .center-card > img {
+        width: 24rem;
+        height: 34rem;
+        border-radius: 0.5rem;
+    }
+
+    .right-card {
+        border: 1px solid yellow;
+        height: 100%;
+        width: 50%;
+    }
+
+    .bottom-container {
+        height: 15rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+    }
+
+    .bottom-half-bottom {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        gap: 10rem;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .left-space {
+        width: 15%;
+    }
+
+    .pokemon-info {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+    }
+
+    .pokemon-info > p {
+        margin: 0;
+        text-align: center;
+    }
+
+    .purchase-button {
+        background-color: #232323;
+        border-radius: 2rem;
+        width: 15%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem 0;
+    }
+
+    .purchase-button > p {
+        margin: 0;
+    }
+
+    .purchase-button > button {
+        background-color: #ffb444;
+        font-size: 1.2rem;
+        padding: 1rem;
+        border-radius: 1rem;
+    }
+
+    .back-button {
+        background-color: #232323;
+        border-radius: 2rem;
+        height: 5rem;
+        width: 5rem;
+        position: fixed;
+        bottom: 1rem;
+    }
+</style>
