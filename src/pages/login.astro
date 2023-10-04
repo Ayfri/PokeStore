@@ -9,7 +9,10 @@ interface User {
 }
 
 const fields = {
-	username: {label: "Username", required: true, type: "text", placeholder: "Jérome"}, password: {label: "Password", required: true, placeholder: "My-Passw0rd", type: "password"},
+	username: {label: "Username", required: true, autocomplete: true, type: "text", placeholder: "Jérome"}, password: {
+		label: "Password", required: true,
+		autocomplete: true, placeholder: "My-Passw0rd", type: "password"
+	},
 };
 ---
 <Layout title="login">
@@ -38,7 +41,7 @@ const fields = {
 
 	.content {
 		height: 50vh;
-		width: 30%;
+		width: 25rem;
 		padding-top: 10rem;
 	}
 </style>

@@ -11,6 +11,16 @@ interface Props {
 const {fields: fieldObject, submitLabel = "Submit", route, title = undefined} = Astro.props;
 const fields = Object.entries(fieldObject);
 const path = route.startsWith('/') ? `${import.meta.env.API_URL}${route}` : route;
+
+function calculateAutocomplete(name: string, field: Input) {
+	if (field.autocomplete) {
+		if (typeof field.autocomplete === 'string') return field.autocomplete;
+
+		return field.autocomplete ? name : 'off';
+	}
+
+	return 'off';
+}
 ---
 <form action={path} method="post">
 	{title &&
@@ -18,7 +28,7 @@ const path = route.startsWith('/') ? `${import.meta.env.API_URL}${route}` : rout
 	{fields.map(([name, field]) =>
 		<div class="input">
 			<label for={name} hidden={field.label ? '' : 'hidden'}>{field.label}</label>
-			<input type={field.type} name={name} placeholder={field.placeholder}/>
+			<input autocomplete={calculateAutocomplete(name, field)} name={name} placeholder={field.placeholder} type={field.type}/>
 		</div>)}
 
 	<button type="submit">{submitLabel}</button>
@@ -38,6 +48,7 @@ const path = route.startsWith('/') ? `${import.meta.env.API_URL}${route}` : rout
 		height: 100%;
 		position: relative;
 		width: 100%;
+		min-width: 20rem;
 	}
 
 	.input:nth-of-type(2) {
@@ -57,8 +68,8 @@ const path = route.startsWith('/') ? `${import.meta.env.API_URL}${route}` : rout
 		font-size: 1rem;
 		font-family: inherit;
 		font-weight: 500;
-		padding: 0.4rem;
-		width: 10rem;
+		padding: 0.4rem 0.8rem;
+		width: 12rem;
 		box-sizing: content-box;
 	}
 
@@ -69,6 +80,20 @@ const path = route.startsWith('/') ? `${import.meta.env.API_URL}${route}` : rout
 	button {
 		padding: 0.5rem;
 		margin-top: 2.5rem;
+		cursor: pointer;
+		position: relative;
+		overflow: hidden;
+		background-image: linear-gradient(to right, #FFF, #FFF);
+		background-position: 0 100%;
+		background-repeat: no-repeat;
+		background-size: 100% 0;
+		transition: background-size 0.1s ease-in-out, color 0.1s ease-in-out;
+	}
+
+	button:hover {
+		color: #000;
+		background-size: 100% 100%;
+		font-weight: 500;
 	}
 
 	.input {

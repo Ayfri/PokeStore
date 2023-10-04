@@ -1,6 +1,7 @@
 export type InputType = "date" | "datetime-local" | "email" | "number" | "password" | "range" | "text" | "url" | "week"
 
 export interface Input {
+	autocomplete?: string | boolean;
 	label?: string;
 	placeholder: string;
 	required?: boolean;
