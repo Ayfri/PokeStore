@@ -9,30 +9,31 @@ interface Props {
 const {cards_href, username, cart_icon, logo_href} = Astro.props;
 ---
 
-<div class="fixed_container">
-
-    <header>
-        <a href={cards_href} class="cards_link">
-            Cards
-        </a>
-        <a href={logo_href} class="logo_link">
-            <img class="logo" src="public/pokestore.png" alt="logo"/>
-        </a>
-        <a href="/cart">
-            <img src={cart_icon} alt="cart"/>
-        </a>
-        <a href="/account">
-            {username}
-        </a>
-    </header>
-</div>
+<header>
+    <a href={cards_href} class="cards_link">
+        Cards
+    </a>
+    <a href={logo_href} class="logo_link">
+        <img class="logo" src="public/pokestore.png" alt="logo"/>
+    </a>
+    <a href="/cart">
+        <img src={cart_icon} alt="cart"/>
+    </a>
+    <a href="/account">
+        {username}
+    </a>
+</header>
 <style>
+    :root {
+        --header-color: #232323;
+    }
+
     header {
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding: 1rem 2rem;
-        background-color: #232323c2;
+        background-color: var(--header-color);
         border-radius: 30px;
         position: relative;
         gap: 2rem;
@@ -60,16 +61,10 @@ const {cards_href, username, cart_icon, logo_href} = Astro.props;
         padding: .6rem;
         border-radius: 50%;
         translate: -50% -50%;
-        background-image: linear-gradient(transparent 50%, #232323c2 50%);
+        background-image: linear-gradient(transparent 50%, var(--header-color) 50%);
     }
 
     .cards_link {
         flex: 1;
-    }
-
-    .fixed_container {
-        position: fixed;
-        z-index: 99999;
-        width: 100%;
     }
 </style>
