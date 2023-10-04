@@ -58,8 +58,11 @@ if (setParam && (setParam === 'all' || !sets.map(set => set.name.toLowerCase()).
 
 const response = await fetch(`${import.meta.env.API_URL}/cards?${searchParams.toString()}`);
 let cards = await response.json() as Card[];
+
 cards = cards.sort((a, b) => a.pokemon.numero - b.pokemon.numero || b.price - a.price);
-cards = cards.filter((card, index, self) => self.findIndex(c => c.pokemon.numero === card.pokemon.numero) === index);
+if (!new Map(searchParams.entries()).size > 0) {
+	cards = cards.filter((card, index, self) => self.findIndex(c => c.pokemon.numero === card.pokemon.numero) === index);
+}
 ---
 
 <Layout title="Pokéstore">
