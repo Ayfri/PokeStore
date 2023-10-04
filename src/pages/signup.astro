@@ -16,12 +16,14 @@ const fields = {
 		autocomplete: true, placeholder: "My-Passw0rd", type: "password"
 	},
 };
+
+export const prerender = true;
 ---
 <Layout title="login">
 	<main>
 		<div class="content">
 			<Form route="/auth/signup" fields={fields} submitLabel="Sign Up" title="Sign Up">
-				<a href="/login/">Already have an account ?</a>
+				<a href="/login">Already have an account ?</a>
 			</Form>
 		</div>
 	</main>
