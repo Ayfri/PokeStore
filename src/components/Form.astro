@@ -28,9 +28,10 @@ function calculateAutocomplete(name: string, field: Input) {
 	{fields.map(([name, field]) =>
 		<div class="input">
 			<label for={name} hidden={field.label ? '' : 'hidden'}>{field.label}</label>
-			<input autocomplete={calculateAutocomplete(name, field)} name={name} placeholder={field.placeholder} type={field.type}/>
+			<input autocomplete={calculateAutocomplete(name, field)} id={name} name={name} placeholder={field.placeholder} type={field.type}/>
 		</div>)}
 
+	<p class="error"></p>
 	<button type="submit">{submitLabel}</button>
 
 	<slot/>
@@ -102,6 +103,21 @@ function calculateAutocomplete(name: string, field: Input) {
 		flex-direction: column;
 		align-items: center;
 		gap: 0.5rem;
+	}
+
+	.error {
+		color: #ff4c4c;
+		margin: 0;
+		height: 0;
+		transition: opacity 0.2s ease-in-out;
+	}
+
+	.error:empty {
+		opacity: 0;
+	}
+
+	.error:not(:empty) {
+		opacity: 1;
 	}
 </style>
 

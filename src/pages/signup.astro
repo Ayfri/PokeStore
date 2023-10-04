@@ -9,7 +9,9 @@ interface User {
 }
 
 const fields = {
-	username: {label: "Username", required: true, autocomplete: true, type: "text", placeholder: "Jérome"}, password: {
+	username: {label: "Username", required: true, autocomplete: true, type: "text", placeholder: "Jérome"},
+	email: {label: "Email", required: true, autocomplete: true, type: "email", placeholder: "jerome.jouan@ynov.com"},
+	password: {
 		label: "Password", required: true,
 		autocomplete: true, placeholder: "My-Passw0rd", type: "password"
 	},
@@ -18,8 +20,8 @@ const fields = {
 <Layout title="login">
 	<main>
 		<div class="content">
-			<Form route="/auth/login" fields={fields} submitLabel="Login" title="Login">
-				<a href="/auth/register">Don't have an account yet ?</a>
+			<Form route="/auth/signup" fields={fields} submitLabel="Sign Up" title="Sign Up">
+				<a href="/login/">Already have an account ?</a>
 			</Form>
 		</div>
 	</main>
@@ -30,8 +32,7 @@ const fields = {
 
 	handleForm<User>(async (user, response, form) => {
 		if (response.status === 200) window.location.href = '/';
-		else if (response.status === 401) displayError(await response.text(), form);
-		else displayError('An error occurred, please try again later', form);
+		else if (response.status in [400, 409, 500]) displayError(await response.text(), form);
 	}, false);
 </script>
 
@@ -48,7 +49,7 @@ const fields = {
 	}
 
 	.content {
-		height: 50vh;
+		height: 52vh;
 		width: 25rem;
 		padding-top: 10rem;
 	}

@@ -8,6 +8,11 @@ export interface Input {
 	type: InputType;
 }
 
+export function displayError(error: string, form: HTMLFormElement = document.querySelector('form') as HTMLFormElement) {
+	const errorElement = form.querySelector('.error') as HTMLDivElement;
+	errorElement.innerText = error;
+}
+
 export function handleForm<T = any>(onResult: (result: T, response: Response, form: HTMLFormElement) => void = () => {
 	console.log('Form submitted');
 }, getAsJson: boolean = true, form: HTMLFormElement = document.querySelector('form') as HTMLFormElement) {

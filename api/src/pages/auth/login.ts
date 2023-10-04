@@ -1,6 +1,6 @@
-import prisma from '../../prisma.ts';
 import type {APIContext} from 'astro';
-import {errorResponse, parameters} from '../../utils.ts';
+import prisma from '../../prisma.ts';
+import {errorResponse, formData, jsonResponse} from '../../utils.ts';
 
 interface Credentials {
 	username: string;
@@ -9,8 +9,8 @@ interface Credentials {
 
 const prismaClient = prisma();
 
-export async function POST({url}: APIContext) {
-	const credentials = parameters<Credentials>(url);
+export async function POST({request}: APIContext) {
+	const credentials = formData<Credentials>(request);
 
 	const user = await prismaClient.users.findFirst({
 		where: {
@@ -22,5 +22,5 @@ export async function POST({url}: APIContext) {
 
 	if (!user) return errorResponse('Invalid username or password.', 401);
 
-	return user;
+	return jsonResponse(user);
 }

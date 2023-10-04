@@ -1,7 +1,7 @@
-import prisma from '../../prisma.ts';
 import type {APIContext} from 'astro';
-import {errorResponse, parameters} from '../../utils.ts';
+import prisma from '../../prisma.ts';
 import {newId} from '../../random.ts';
+import {errorResponse, formData, jsonResponse} from '../../utils.ts';
 
 interface Credentials {
 	email: string;
@@ -17,11 +17,23 @@ function checkValue(value: string, regex: RegExp, min: number, max: number, name
 	if (value.length > max) return errorResponse(`${name} must be at most ${max} characters long.`);
 }
 
-export async function POST({url}: APIContext) {
-	const {password, email, username} = parameters<Credentials>(url);
+export async function POST({request}: APIContext) {
+	const {password, email, username} = await formData<Credentials>(request);
+
 	checkValue(password, /^[a-zA-Z0-9]{8,}$/, 8, 40, 'Password', 'Password must be at least 8 characters long and contain only letters and numbers.');
 	checkValue(username, /^[a-zA-Z0-9]{3,}$/, 3, 32, 'Username');
 	checkValue(email, /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 5, 500, 'Email', 'Invalid email address.');
+
+	const existingUser = await prismaClient.users.findFirst({
+		where: {
+			OR: [
+				{email},
+				{username},
+			],
+		}
+	});
+
+	if (existingUser) return errorResponse('User already exists.', 409);
 
 	const user = await prismaClient.users.create({
 		data: {
@@ -30,5 +42,5 @@ export async function POST({url}: APIContext) {
 	});
 
 	if (!user) return errorResponse('Unknown error.');
-	return user;
+	return jsonResponse(user);
 }

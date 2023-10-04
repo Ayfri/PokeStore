@@ -14,8 +14,8 @@ export function errorResponse(message: string, status: number = 400) {
 	});
 }
 
-export function parameters<T = Record<string, any>>(url: URL): T {
-	return Object.fromEntries(url.searchParams.entries()) as T;
+export async function formData<T = Record<string, any>>(request: Request): Promise<T> {
+	return Object.fromEntries((await request.formData()).entries()) as T;
 }
 
 export async function sleep(ms: number) {
