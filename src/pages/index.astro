@@ -27,6 +27,8 @@ export interface Set {
 	imageUrl: string;
 }
 
+const filters = ['numero', 'types', 'rarity', 'set'];
+
 const typesList = await fetch(`${import.meta.env.API_URL}/types`);
 const types = await typesList.json() as string[];
 
@@ -39,7 +41,8 @@ const sets = await setsList.json() as Set[];
 const searchParams = Astro.url.searchParams;
 const typesParam = searchParams.has('types') ? searchParams.get('types') : null;
 const rarityParam = searchParams.has('rarity') ? searchParams.get('rarity') : null;
-const setParam = searchParams.has('sets') ? searchParams.get('sets') : null;
+const setParam = searchParams.has('set') ? searchParams.get('set') : null;
+const numeroParam = searchParams.has('numero') ? searchParams.get('numero') : null;
 
 if (typesParam && (typesParam === 'all' || !types.map(type => type.toLowerCase()).includes(typesParam))) {
 	Astro.url.searchParams.delete('types');
@@ -52,8 +55,20 @@ if (rarityParam && (rarityParam === 'all' || !rarity.map(rarity => rarity.toLowe
 }
 
 if (setParam && (setParam === 'all' || !sets.map(set => set.name.toLowerCase()).includes(setParam))) {
-	Astro.url.searchParams.delete('sets');
+	Astro.url.searchParams.delete('set');
 	return Astro.redirect(Astro.url.href);
+}
+
+if (numeroParam && !(numeroParam >= 1 && numeroParam <= 151)) {
+	Astro.url.searchParams.delete('numero');
+	return Astro.redirect(Astro.url.href);
+}
+
+for (const [key, _] of searchParams.entries()) {
+	if (!filters.includes(key)) {
+		Astro.url.searchParams.delete(key);
+		return Astro.redirect(Astro.url.href);
+	}
 }
 
 const response = await fetch(`${import.meta.env.API_URL}/cards?${searchParams.toString()}`);
@@ -74,8 +89,8 @@ if (!new Map(searchParams.entries()).size > 0) {
 				<div class="filters-container">
 					<div class="filters-top">
 						<!--todo: add a button to reset filters-->
-						<input type="text" placeholder="ID" class="filter">
-						<input type="text" placeholder="Name" class="filter">
+						<input type="text" placeholder="ID" name="numero" class="filter">
+						<input type="text" placeholder="Name" name="name" class="filter">
 					</div>
 					<div class="filters-bottom">
 						<select name="set" id="set" class="filter">
@@ -139,6 +154,24 @@ if (!new Map(searchParams.entries()).size > 0) {
 		selectSet.value = currentSet || 'all';
 
 		addFilterToUrl(selectSet, 'set');
+
+		/*NUMERO FILTER*/
+		const inputNumero = document.querySelector('input[name="numero"]') as HTMLInputElement;
+		let currentNumero = new URL(window.location.href).searchParams.get('numero');
+		if (currentNumero && !(currentNumero >= 1 && currentNumero <= 151)) {
+			currentNumero = null;
+		}
+		inputNumero.value = currentNumero || '';
+
+		inputNumero.addEventListener('change', (event) => {
+			const target = event.target as HTMLInputElement;
+			const url = new URL(window.location.href);
+			url.searchParams.set('numero', target.value);
+			if (target.value === '') {
+				url.searchParams.delete('numero');
+			}
+			window.location.href = url.toString();
+		});
 
 		/*SCROLL BUTTON*/
 		const scrollBtn = document.querySelector('#scroll-btn') as HTMLButtonElement;
