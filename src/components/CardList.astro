@@ -18,6 +18,7 @@ const {
 <div class="card-pokestore">
 	<div class:list={rarity.toLowerCase()}></div>
 	<div class:list={['aura', types.toLowerCase().split(',')]}></div>
+	<div class="loader"></div>
 	<Image
 			src={imageUrl} alt={name} width="300"
 			height="420"
@@ -349,6 +350,31 @@ const {
 		}
 		to {
 			transform: scale3d(1, 1, 1);
+		}
+	}
+
+	.loader {
+		animation-duration: 4s;
+		animation-fill-mode: forwards;
+		animation-iteration-count: infinite;
+		animation-name: placeHolderShimmer;
+		animation-timing-function: linear;
+		background: #f6f7f8;
+		background: linear-gradient(to right, #afafaf 8%, #9a9999 38%, #afafaf 54%);
+		background-size: auto;
+		position: absolute;
+		width: 300px;
+		height: 420px;
+		z-index: -1;
+		border-radius: 0.5rem;
+	}
+
+	@keyframes placeHolderShimmer{
+		0%{
+			background-position: -468px 0
+		}
+		100%{
+			background-position: 468px 0
 		}
 	}
 </style>
