@@ -35,7 +35,6 @@ let cards = await response.json() as Card[];
 cards = cards.sort((a, b) => a.pokemon.numero - b.pokemon.numero || b.price - a.price);
 console.log(cards);
 
-// get the 5 first cards set logo
 const setLogoFirstHalf = cards.slice(0, 5).map(card => card.set.imageUrl);
 const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 ---
@@ -43,13 +42,13 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 <Layout title="Pokéstore">
 	<main>
 		<div class="filter"></div>
-
 		<div class="main-container">
 			<div class="top-container">
 				<div class="card-container">
 					<div class="left-card">
-						{setLogoFirstHalf.map(card =>
+                        {setLogoFirstHalf.map((card, index) =>
 								<Image
+										class:list={[`set ${index}`]}
 										src={card} alt="Charizard"
 										width="75"
 										height="105"
@@ -64,12 +63,14 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 						/>
 					</div>
 					<div class="right-card">
-						{setLogoSecondHalf.map(card =>
-							<Image
-								src={card} alt="Charizard"
-								width="75"
-								height="105"
-							/>)}
+                        {setLogoSecondHalf.map((card, index) =>
+								<Image
+									class:list={[`set ${index+5}`]}
+
+									src={card} alt="Charizard"
+										width="75"
+										height="105"
+								/>)}
 					</div>
 				</div>
 			</div>
@@ -90,7 +91,7 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 					</div>
 					<div class="purchase-button">
 						<p>
-							{cards[0].price} $
+                            {cards[0].price} $
 						</p>
 						<button>
 							Add to cart
@@ -102,6 +103,16 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 		<div class="back-button"></div>
 	</main>
 </Layout>
+<script>
+const sets = document.querySelectorAll('.set');
+sets.forEach(set => {
+	set.addEventListener('click', () => {
+		console.log(set.classList[1])
+	})
+});
+console.log(sets)
+</script>
+
 <style>
     main {
         margin: auto;
@@ -146,20 +157,20 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
     .left-card, .right-card {
         height: 100%;
         width: 60%;
-		display: flex;
-		align-items: center;
-		justify-content: space-evenly;
-		flex-direction: column;
-		background-color: rgba(35, 35, 35, 0.75);
-		border-radius: 1rem;
-		border: #f3d02c solid 6px;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        flex-direction: column;
+        background-color: rgba(35, 35, 35, 0.75);
+        border-radius: 1rem;
+        border: #f3d02c solid 6px;
     }
 
-	.left-card > img, .right-card > img {
-		width: 8.5rem;
-		height: 5.5rem;
-		object-fit: contain;
-	}
+    .left-card > img, .right-card > img {
+        width: 8.5rem;
+        height: 5.5rem;
+        object-fit: contain;
+    }
 
 
     .center-card {
