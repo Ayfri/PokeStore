@@ -21,8 +21,8 @@ const {
 	<div class:list={['aura', types.toLowerCase().split(',')]}></div>
 	<div class="loader"></div>
 	<Image
-			src={imageUrl} alt={name} width="300"
-			height="420"
+		src={imageUrl} alt={name} width="300"
+		height="420"
 	/>
 	<h2>{name}</h2>
 	<h3>{price}$</h3>
@@ -47,15 +47,17 @@ const {
 
 	.card-pokestore {
 		align-items: center;
+		cursor: pointer;
 		display: flex;
 		flex-flow: column;
 		padding: 2rem;
 		position: relative;
+		transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 		width: fit-content;
 	}
 
 	.card-pokestore:hover {
-		cursor: pointer;
+		transform: scale(1.05);
 	}
 
 	.aura {
@@ -313,11 +315,11 @@ const {
 		border-radius: 0.5rem;
 	}
 
-	@keyframes placeHolderShimmer{
-		0%{
+	@keyframes placeHolderShimmer {
+		0% {
 			background-position: -468px 0
 		}
-		100%{
+		100% {
 			background-position: 468px 0
 		}
 	}
