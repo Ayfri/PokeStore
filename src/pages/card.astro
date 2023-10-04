@@ -233,11 +233,18 @@ export interface Pokemon {
     }
 
     .purchase-button > button {
-        background-color: #ffb444;
+        background-color: #ff9e00;
         font-size: 1.2rem;
         padding: 1rem;
         border-radius: 1rem;
+		border: none;
+		transition: all 0.2s ease-in-out;
     }
+
+	.purchase-button > button:hover {
+		background-color: #ffb444;
+		cursor: pointer;
+	}
 
     .back-button {
         background-color: #232323;
