@@ -63,7 +63,13 @@ if (!new Map(searchParams.entries()).size > 0) {
 
 <Layout title="Pokéstore">
 	<main>
-		<button id="scroll-btn" class="scroll-btn">↓</button>
+		<button id="scroll-btn" class="scroll-btn">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+				<path
+					d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
+				/>
+			</svg>
+		</button>
 		<div class="fixed-container">
 			<div class="top-container">
 				<PageTitle title="Card List"></PageTitle>
@@ -272,16 +278,16 @@ if (!new Map(searchParams.entries()).size > 0) {
 		border-radius: 4px;
 		border: 3px solid #FFF;
 		color: white;
-		font-family: "Clash Display",serif;
+		font-family: "Clash Display", serif;
 		font-weight: 500;
 		padding: 0.2rem;
 		width: 10rem;
 		box-sizing: content-box;
-		background-image: linear-gradient(to right,#FFF,#FFF);
+		background-image: linear-gradient(to right, #FFF, #FFF);
 		background-position: 0 100%;
 		background-repeat: no-repeat;
 		background-size: 100% 0;
-		transition: background-size 0.1s ease-in-out,color 0.1s ease-in-out;
+		transition: background-size 0.1s ease-in-out, color 0.1s ease-in-out;
 		background-color: transparent;
 	}
 
@@ -294,19 +300,19 @@ if (!new Map(searchParams.entries()).size > 0) {
 	}
 
 	#scroll-btn {
-		position: absolute;
-		z-index: 9999999999999999999999999999999999999;
-		top: 90vh;
-		left: 95vw;
-		border: none;
-		border-radius: 100%;
-		padding: 1rem;
-		width: 3rem;
-		height: 3rem;
-		opacity: 60%;
 		background-color: #232323;
-		color: #aeaeae;
+		border-radius: 100%;
+		border: none;
+		fill: #aeaeae;
+		height: 3rem;
+		left: calc(100vw - 4.5rem);
+		opacity: 60%;
+		padding: 0.8rem;
+		position: absolute;
+		top: calc(100vh - 5rem);
 		transition: all .4s;
+		width: 3rem;
+		z-index: 9999999999999;
 	}
 
 	#scroll-btn:hover {
