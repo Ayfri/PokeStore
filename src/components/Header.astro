@@ -6,22 +6,17 @@ interface Props {
 	logo_href: string;
 }
 
-const {cards_href, username, cart_icon, logo_href} = Astro.props;
+const {username} = Astro.props;
 ---
-
 <header>
-	<a href={cards_href} class="cards_link">
-		Cards
-	</a>
-	<a href={logo_href} class="logo_link">
-		<img class="logo" src="public/pokestore.png" alt="logo"/>
+	<a href="/" class="cards-link">Cards</a>
+	<a href="/" class="logo-link">
+		<img alt="logo" class="logo" src="public/pokestore.png"/>
 	</a>
 	<a href="/cart">
-		<img src={cart_icon} alt="cart"/>
+		<img alt="cart" src=""/>
 	</a>
-	<a href="/account">
-		{username}
-	</a>
+	<a href="/account">{username}</a>
 </header>
 <style>
 	:root {
@@ -50,12 +45,12 @@ const {cards_href, username, cart_icon, logo_href} = Astro.props;
 		aspect-ratio: 1/1;
 	}
 
-	.logo_link, .logo {
+	.logo-link, .logo {
 		width: 4rem;
 		height: 4rem;
 	}
 
-	.logo_link {
+	.logo-link {
 		position: absolute;
 		top: 100%;
 		left: 50%;
@@ -65,7 +60,7 @@ const {cards_href, username, cart_icon, logo_href} = Astro.props;
 		background-image: linear-gradient(transparent 50%, var(--header-color) 50%);
 	}
 
-	.cards_link {
+	.cards-link {
 		flex: 1;
 	}
 </style>

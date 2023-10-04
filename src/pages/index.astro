@@ -68,7 +68,7 @@ if (!new Map(searchParams.entries()).size > 0) {
 <Layout title="Pokéstore">
 	<main>
 		<button id="scroll-btn" class="scroll-btn">↓</button>
-		<div class="fixed_container">
+		<div class="fixed-container">
 			<div class="top-container">
 				<PageTitle title="Card List"></PageTitle>
 				<div class="filters-container">
@@ -100,6 +100,7 @@ if (!new Map(searchParams.entries()).size > 0) {
 				</div>
 			</div>
 		</div>
+
 		<div class="cards-grid">
 			{cards.map(card =>
 				<CardList card={card}/>)}
@@ -161,6 +162,7 @@ if (!new Map(searchParams.entries()).size > 0) {
 </Layout>
 <style>
 	:root {
+		--card-margin: 1rem;
 		--header-padding: 0.6rem;
 	}
 
@@ -173,14 +175,14 @@ if (!new Map(searchParams.entries()).size > 0) {
 		color: white;
 		font-size: 20px;
 		line-height: 1.6;
-		max-width: 100vw;
-		max-height: 100vh;
+		display: flex;
+		flex-direction: column;
+		height: calc(100vh - 5rem);
+		gap: 1rem;
 		margin-bottom: 10rem;
 	}
 
-	.fixed_container {
-		position: fixed;
-		z-index: 99999;
+	.fixed-container {
 		width: calc(100% - var(--header-padding) * 2);
 	}
 
@@ -188,9 +190,7 @@ if (!new Map(searchParams.entries()).size > 0) {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
 		place-items: center;
-		margin-top: 12.5rem;
 		overflow-y: scroll;
-		height: 76vh;
 		scroll-behavior: smooth;
 	}
 

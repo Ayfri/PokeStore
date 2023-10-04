@@ -20,12 +20,7 @@ const {title} = Astro.props;
 		<title>{title}</title>
 	</head>
 	<body>
-		<Header
-			cards_href="/cards"
-			username="anta"
-			cart_icon="/icons/cart.svg"
-			cart_href="/cart"
-		/>
+		<Header username="anta"/>
 		<slot/>
 		<div class="background">
 			<Fragment set:html={pokeballSvg}/>
