@@ -39,15 +39,20 @@ async function pushCards() {
 			const set = await prismaClient.sets.findFirst({
 				where: {
 					name: {
-						contains: card.set_name,
+						equals: card.set_name,
 					}
 				},
 			});
 
-			const pokemon = pokemons.find((pokemon) => card.name.toLowerCase().includes(pokemon.name.toLowerCase()));
+			const pokemon = pokemons.find((pokemon) => {
+				const pokemonName = pokemon.name.toLowerCase().replace(/\(male\)/, ' ♂').replace(/\(female\)/, ' ♀').trim();
+				const cardName = card.name.toLowerCase().trim();
+
+				return cardName.includes(pokemonName);
+			});
 
 			if (set === null || !pokemon) {
-				console.log(`Missing set or pokemon for card '${card.name}', set '${card.set_name}', pokemon '${card.name}', found set '${set?.name}', found pokemon '${pokemon?.name}'`);
+				console.log(`Missing set or pokemon for card '${card.name}', set '${card.set_name}', found set '${set?.name}', found pokemon '${pokemon?.name}'`);
 				return null;
 			}
 
