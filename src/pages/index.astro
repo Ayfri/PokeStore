@@ -25,10 +25,20 @@ export interface Pokemon {
 const typesList = await fetch(`${import.meta.env.API_URL}/types`);
 const types = await typesList.json() as string[];
 
+const rarityList = await fetch(`${import.meta.env.API_URL}/rarity`);
+const rarity = await rarityList.json() as string[];
+
 const searchParams = Astro.url.searchParams;
 const typesParam = searchParams.has('types') ? searchParams.get('types') : null;
+const rarityParam = searchParams.has('rarity') ? searchParams.get('rarity') : null;
+
 if (typesParam && (typesParam === 'all' || !types.map(type => type.toLowerCase()).includes(typesParam))) {
 	Astro.url.searchParams.delete('types');
+	return Astro.redirect(Astro.url.href);
+}
+
+if (rarityParam && (rarityParam === 'all' || !rarity.map(rarity => rarity.toLowerCase()).includes(rarityParam))) {
+	Astro.url.searchParams.delete('rarity');
 	return Astro.redirect(Astro.url.href);
 }
 
@@ -42,10 +52,18 @@ cards = cards.filter((card, index, self) => self.findIndex(c => c.pokemon.numero
 	<main>
 		<button id="scroll-btn" class="scroll-btn">↓</button>
 		<div class="fixed_container">
+			<Header
+				cards_href="/cards"
+				username="anta"
+				cart_icon="/icons/cart.svg"
+				cart_href="/cart"
+			>
+			</Header>
 			<div class="top-container">
 				<PageTitle title="Card List"></PageTitle>
 				<div class="filters-container">
 					<div class="filters-top">
+						<!--todo: add a button to reset filters-->
 						<input type="text" placeholder="ID" class="filter">
 						<input type="text" placeholder="Name" class="filter">
 					</div>
@@ -57,12 +75,14 @@ cards = cards.filter((card, index, self) => self.findIndex(c => c.pokemon.numero
 						<select name="type" id="type" class="filter">
 							<option value="all">All types</option>
 							{types.sort((a, b) => a.localeCompare(b))
-							      .map(type =>
-								      <option value={type.toLowerCase()}>{type}</option>)}
+								.map(type =>
+									<option value={type.toLowerCase()}>{type}</option>)}
 						</select>
 						<select name="rarity" id="rarity" class="filter">
-							<option value="fire" name="fire">holo</option>
-							<option value="water" name="water">rare</option>
+							<option value="all">All rarities</option>
+							{rarity.sort((a, b) => a.localeCompare(b))
+								.map(rarity =>
+									<option value={rarity.toLowerCase()}>{rarity}</option>)}
 						</select>
 					</div>
 				</div>
@@ -74,6 +94,7 @@ cards = cards.filter((card, index, self) => self.findIndex(c => c.pokemon.numero
 		</div>
 	</main>
 	<script>
+		/*TYPE FILTER*/
 		const selectType = document.querySelector('#type') as HTMLSelectElement;
 		let currentType = new URL(window.location.href).searchParams.get('types');
 		const options = Array.from(selectType.options).map(option => option.value.toLowerCase());
@@ -82,25 +103,44 @@ cards = cards.filter((card, index, self) => self.findIndex(c => c.pokemon.numero
 		}
 		selectType.value = currentType || 'all';
 
-		selectType.addEventListener('change', (event) => {
-			//if selected value is "all", remove the type parameter from the url
-			const target = event.target as HTMLSelectElement;
-			const url = new URL(window.location.href);
-			url.searchParams.set('types', target.value);
-			if (target.value === 'all') {
-				url.searchParams.delete('types');
-			}
-			window.location.href = url.toString();
-		});
+		addFilterToUrl(selectType, 'types');
 
+		/*RARITY FILTER*/
+		const selectRarity = document.querySelector('#rarity') as HTMLSelectElement;
+		let currentRarity = new URL(window.location.href).searchParams.get('rarity');
+		const optionsRarity = Array.from(selectRarity.options).map(option => option.value.toLowerCase());
+		if (!optionsRarity.includes(currentRarity)) {
+			currentRarity = 'all';
+		}
+		selectRarity.value = currentRarity || 'all';
+
+		addFilterToUrl(selectRarity, 'rarity');
+
+		/*SCROLL BUTTON*/
 		const scrollBtn = document.querySelector('#scroll-btn') as HTMLButtonElement;
 		scrollBtn.addEventListener('click', () => {
 			const cardsGrid = document.querySelector('.cards-grid') as HTMLDivElement;
 			cardsGrid.scrollTo({top: cardsGrid.scrollHeight, behavior: 'smooth'});
 		});
+
+		function addFilterToUrl(element, paramName) {
+			element.addEventListener('change', (event) => {
+				const target = event.target as HTMLSelectElement;
+				const url = new URL(window.location.href);
+				url.searchParams.set(paramName, target.value);
+				if (target.value === 'all') {
+					url.searchParams.delete(paramName);
+				}
+				window.location.href = url.toString();
+			});
+		}
 	</script>
 </Layout>
 <style>
+	:root {
+		--header-padding: 0.6rem;
+	}
+
 	body {
 		overflow: hidden;
 	}
