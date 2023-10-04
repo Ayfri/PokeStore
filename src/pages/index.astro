@@ -89,7 +89,7 @@ if (!new Map(searchParams.entries()).size > 0) {
 				<PageTitle title="Card List"></PageTitle>
 				<div class="filters-container">
 					<div class="filters-top">
-						<!--todo: add a button to reset filters-->
+						<button class="reset-btn filter">Reset filters</button>
 						<input type="text" placeholder="ID" name="numero" class="filter">
 						<input type="text" placeholder="Name" name="name" class="filter">
 					</div>
@@ -173,6 +173,13 @@ if (!new Map(searchParams.entries()).size > 0) {
 
 		addFilterToUrl(inputName, 'name', '');
 
+		/*RESET BUTTON*/
+		const resetBtn = document.querySelector('.reset-btn') as HTMLButtonElement;
+
+		resetBtn.addEventListener('click', () => {
+			window.location.href = new URL(window.location.href).origin;
+		});
+
 		/*SCROLL BUTTON*/
 		const scrollBtn = document.querySelector('#scroll-btn') as HTMLButtonElement;
 		scrollBtn.addEventListener('click', () => {
@@ -251,6 +258,10 @@ if (!new Map(searchParams.entries()).size > 0) {
 		gap: 1rem;
 	}
 
+	select:hover {
+		cursor: pointer;
+	}
+
 	input::placeholder {
 		color: white;
 		opacity: 1;
@@ -275,6 +286,31 @@ if (!new Map(searchParams.entries()).size > 0) {
 	.filters-top, .filters-bottom {
 		gap: 1rem;
 		display: flex;
+	}
+
+	.reset-btn {
+		border-radius: 4px;
+		border: 3px solid #FFF;
+		color: white;
+		font-family: "Clash Display",serif;
+		font-weight: 500;
+		padding: 0.2rem;
+		width: 10rem;
+		box-sizing: content-box;
+		background-image: linear-gradient(to right,#FFF,#FFF);
+		background-position: 0 100%;
+		background-repeat: no-repeat;
+		background-size: 100% 0;
+		transition: background-size 0.1s ease-in-out,color 0.1s ease-in-out;
+		background-color: transparent;
+	}
+
+	.reset-btn:hover {
+		cursor: pointer;
+		color: #000;
+		background-size: 100% 100%;
+		font-weight: 500;
+
 	}
 
 	#scroll-btn {
