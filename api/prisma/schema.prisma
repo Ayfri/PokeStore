@@ -34,3 +34,17 @@ model Cards {
     setId     BigInt   @map("set_id") @db.UnsignedBigInt
     types     String   @db.VarChar(50)
 }
+
+model Users {
+    id       BigInt @id @db.UnsignedBigInt
+    email    String @db.VarChar(500)
+    password String @db.VarChar(40)
+    username String @db.VarChar(32)
+}
+
+model Users {
+    id       BigInt @id @db.UnsignedBigInt
+    email    String @db.VarChar(500)
+    password String @db.VarChar(40)
+    username String @db.VarChar(32)
+}

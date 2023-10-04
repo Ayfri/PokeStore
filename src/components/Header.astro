@@ -1,70 +1,71 @@
 ---
 interface Props {
-    cards_href: string;
-    username: string;
-    cart_icon: string;
-    logo_href: string;
+	cards_href: string;
+	username: string;
+	cart_icon: string;
+	logo_href: string;
 }
 
 const {cards_href, username, cart_icon, logo_href} = Astro.props;
 ---
 
 <header>
-    <a href={cards_href} class="cards_link">
-        Cards
-    </a>
-    <a href={logo_href} class="logo_link">
-        <img class="logo" src="public/pokestore.png" alt="logo"/>
-    </a>
-    <a href="/cart">
-        <img src={cart_icon} alt="cart"/>
-    </a>
-    <a href="/account">
-        {username}
-    </a>
+	<a href={cards_href} class="cards_link">
+		Cards
+	</a>
+	<a href={logo_href} class="logo_link">
+		<img class="logo" src="public/pokestore.png" alt="logo"/>
+	</a>
+	<a href="/cart">
+		<img src={cart_icon} alt="cart"/>
+	</a>
+	<a href="/account">
+		{username}
+	</a>
 </header>
 <style>
-    :root {
-        --header-color: #232323;
-    }
+	:root {
+		--header-color: #232323;
+	}
 
-    header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1rem 2rem;
-        background-color: var(--header-color);
-        border-radius: 30px;
-        position: relative;
-        gap: 2rem;
-    }
+	header {
+		align-items: center;
+		background-color: var(--header-color);
+		border-radius: 30px;
+		display: flex;
+		gap: 2rem;
+		justify-content: space-between;
+		margin: var(--header-padding);
+		padding: 1rem 2rem;
+		position: relative;
+	}
 
-    header a {
-        text-decoration: none;
-        color: #aeaeae;
-    }
+	header a {
+		text-decoration: none;
+		color: #aeaeae;
+	}
 
-    .logo {
-        object-fit: contain;
-        aspect-ratio: 1/1;
-    }
+	.logo {
+		object-fit: contain;
+		aspect-ratio: 1/1;
+	}
 
-    .logo_link, .logo {
-        width: 4rem;
-        height: 4rem;
-    }
+	.logo_link, .logo {
+		width: 4rem;
+		height: 4rem;
+	}
 
-    .logo_link {
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        padding: .6rem;
-        border-radius: 50%;
-        translate: -50% -50%;
-        background-image: linear-gradient(transparent 50%, var(--header-color) 50%);
-    }
+	.logo_link {
+		position: absolute;
+		top: 100%;
+		left: 50%;
+		padding: .6rem;
+		border-radius: 50%;
+		translate: -50% -50%;
+		background-image: linear-gradient(transparent 50%, var(--header-color) 50%);
+	}
 
-    .cards_link {
-        flex: 1;
-    }
+	.cards_link {
+		flex: 1;
+	}
 </style>

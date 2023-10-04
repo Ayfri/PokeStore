@@ -19,6 +19,7 @@
 -- Table structure for table `cards`
 --
 
+DROP TABLE IF EXISTS `cards`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cards` (
@@ -41,6 +42,7 @@ CREATE TABLE `cards` (
 -- Table structure for table `pokemons`
 --
 
+DROP TABLE IF EXISTS `pokemons`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pokemons` (
@@ -57,6 +59,7 @@ CREATE TABLE `pokemons` (
 -- Table structure for table `sets`
 --
 
+DROP TABLE IF EXISTS `sets`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sets` (
@@ -65,6 +68,22 @@ CREATE TABLE `sets` (
   `image_url` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users` (
+  `id` bigint(20) unsigned NOT NULL,
+  `email` varchar(500) NOT NULL,
+  `password` varchar(40) NOT NULL,
+  `username` varchar(32) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -76,4 +95,4 @@ CREATE TABLE `sets` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-03 21:11:14
+-- Dump completed on 2023-10-04 17:25:57

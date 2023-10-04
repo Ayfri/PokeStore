@@ -1,0 +1,44 @@
+---
+import Form from '../components/Form.astro';
+import Layout from '../layouts/Layout.astro';
+
+interface User {
+	username: string;
+	email: string;
+	password: string;
+}
+
+const fields = {
+	username: {label: "Username", required: true, type: "text", placeholder: "Jérome"}, password: {label: "Password", required: true, placeholder: "My-Passw0rd", type: "password"},
+};
+---
+<Layout title="login">
+	<main>
+		<div class="content">
+			<Form route="/auth/login" fields={fields} submitLabel="Login" title="Login"/>
+		</div>
+	</main>
+</Layout>
+
+<script>
+	import {handleForm} from '../utils/form';
+
+	handleForm<User>((a, b) => {
+		console.log(a, b);
+	}, false);
+</script>
+
+<style>
+	main {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 100%;
+	}
+
+	.content {
+		height: 50vh;
+		width: 30%;
+		padding-top: 10rem;
+	}
+</style>
