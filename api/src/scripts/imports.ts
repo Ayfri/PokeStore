@@ -31,51 +31,67 @@ async function pushPokemons() {
 	});
 }
 
+type Card = {
+	name: string; rarity?: string; image: string; numero: string; set_name: string; price?: number; types: string;
+};
+
+type Pokemon = {
+	id: any;
+	description?: string;
+	name: any;
+	numero: any;
+	type?: string;
+};
+
+async function getCard(card: Card, pokemon: Pokemon) {
+	const set = await prismaClient.sets.findFirst({
+		where: {
+			name: {
+				equals: card.set_name,
+			}
+		},
+	});
+
+	if (set === null || !pokemon) {
+		console.log(`Missing set or pokemon for card '${card.name}', set '${card.set_name}', found set '${set?.name}', found pokemon '${pokemon?.name}'`);
+		return null;
+	}
+
+	if (!card.rarity) {
+		console.log(`Missing rarity for card '${card.name}', set '${card.set_name}', pokemon '${card.name}'`);
+	}
+
+	return {
+		id: newId(),
+		imageUrl: card.image,
+		pokemonId: pokemon.id,
+		price: card.price || null,
+		rarity: card.rarity || "Unknown",
+		setId: set.id,
+		types: card.types.replace(' ', ''),
+	};
+}
+
 async function pushCards() {
 	console.log(`Pushing ${cards.length} cards`);
 	const pokemons = await prismaClient.pokemons.findMany();
-	const [data] = await Promise.all([
-		cards.flat().map(async (card) => {
-			const set = await prismaClient.sets.findFirst({
-				where: {
-					name: {
-						equals: card.set_name,
-					}
-				},
-			});
+	const values = pokemons.sort((a, b) => a.numero - b.numero).map(async (pokemon) => {
+		return cards.flat().filter((card) => {
+			const cardNumbers = card.numero.replaceAll(' ', '').split(',');
+			return cardNumbers.includes(pokemon.numero.toString());
+		}).map((card) => getCard(card, pokemon));
+	});
 
-			const pokemon = pokemons.find((pokemon) => {
-				const pokemonName = pokemon.name.toLowerCase().replace(/\(male\)/, ' ♂').replace(/\(female\)/, ' ♀').trim();
-				const cardName = card.name.toLowerCase().trim();
+	const data = await Promise.all(values);
+	const result = (await Promise.all(data.flat())).filter((card) => card !== null) as Array<Prisma.CardsCreateManyInput>;
 
-				return cardName.includes(pokemonName);
-			});
-
-			if (set === null || !pokemon) {
-				console.log(`Missing set or pokemon for card '${card.name}', set '${card.set_name}', found set '${set?.name}', found pokemon '${pokemon?.name}'`);
-				return null;
-			}
-
-			if (!card.rarity) {
-				console.log(`Missing rarity for card '${card.name}', set '${card.set_name}', pokemon '${card.name}'`);
-			}
-
-			return ({
-				id: newId(),
-				imageUrl: card.image,
-				pokemonId: pokemon.id,
-				price: card.price || null,
-				rarity: card.rarity || "Unknown",
-				setId: set.id,
-				types: card.types.replace(' ', ''),
-			});
-		})
-	]);
-
-	const result = (await Promise.all(data)).filter((card) => card !== null) as Array<Prisma.CardsCreateManyInput>;
+	// remove duplicates
+	const filtered = result.filter((card, index, self) =>
+		index === self.findIndex((t) => t.pokemonId === card.pokemonId && t.setId === card.setId)
+	);
 
 	await prismaClient.cards.createMany({
-		data: result,
+		data: filtered,
 	});
 }
 
