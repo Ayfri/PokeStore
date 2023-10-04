@@ -5,24 +5,39 @@ import PageTitle from "../components/PageTitle.astro";
 import PokemonType from "../components/PokemonType.astro";
 import "../styles/colors.css";
 import {Image} from "astro:assets";
+import CardList from "../components/CardList.astro";
+import type {Card, Pokemon, Set} from "../types"
 
 
-export interface Card {
-    name: string;
-    imageUrl: string;
-    types: string;
-    rarity: string;
-    price: number;
-    pokemon: Pokemon;
+
+const filters = ['numero'];
+
+const setsList = await fetch(`${import.meta.env.API_URL}/sets`);
+const sets = await setsList.json() as Set[];
+
+const searchParams = Astro.url.searchParams;
+const numeroParam = searchParams.has('numero') ? searchParams.get('numero') : null;
+
+if (numeroParam && !(numeroParam >= 1 && numeroParam <= 151)) {
+    Astro.url.searchParams.delete('numero');
+    return Astro.redirect("/");
 }
 
-export interface Pokemon {
-    numero: number;
-    name: string;
-    description: string;
-    imageUrl: string;
-    types: string;
+for (const [key, _] of searchParams.entries()) {
+    if (!filters.includes(key)) {
+        Astro.url.searchParams.delete(key);
+        return Astro.redirect(Astro.url.href);
+    }
 }
+
+const response = await fetch(`${import.meta.env.API_URL}/cards?${searchParams.toString()}`);
+let cards = await response.json() as Card[];
+cards = cards.sort((a, b) => a.pokemon.numero - b.pokemon.numero || b.price - a.price);
+console.log(cards);
+
+// get the 5 first cards set logo
+const setLogoFirstHalf = cards.slice(0, 5).map(card => card.set.imageUrl);
+const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 ---
 
 <Layout title="Pokéstore">
@@ -32,33 +47,50 @@ export interface Pokemon {
 		<div class="main-container">
 			<div class="top-container">
 				<div class="card-container">
-					<div class="left-card"></div>
+					<div class="left-card">
+						{setLogoFirstHalf.map(card =>
+								<Image
+										src={card} alt="Charizard"
+										width="75"
+										height="105"
+								/>)}
+					</div>
 					<div class="center-card">
-						<div class="card-aura fire"></div>
+						<div class:list={['card-aura', cards[0].types.toLowerCase().split(',')[0]]}></div>
 						<Image
-								src="https://images.pokemontcg.io/base4/4_hires.png" alt="Charizard"
+								src={cards[0].imageUrl} alt="Charizard"
 								width="300"
 								height="420"
 						/>
 					</div>
-					<div class="right-card"></div>
+					<div class="right-card">
+						{setLogoSecondHalf.map(card =>
+							<Image
+								src={card} alt="Charizard"
+								width="75"
+								height="105"
+							/>)}
+					</div>
 				</div>
 			</div>
 			<div class="bottom-container">
-				<PageTitle title="Charizard"></PageTitle>
+				<PageTitle
+						title={cards[0].pokemon.name}
+				></PageTitle>
 				<div class="bottom-half-bottom">
 					<div class="left-space"></div>
 					<div class="pokemon-info">
-						<PokemonType type="fire"></PokemonType>
+						<div class="types">
+                            {cards[0].types.toLowerCase().split(',').map(type =>
+									<PokemonType type={type}></PokemonType>)}
+						</div>
 						<p>
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad blanditiis commodi facere
-							fugiat
-							in maiores natus omnis placeat quo rem!
+                            {cards[0].pokemon.description}
 						</p>
 					</div>
 					<div class="purchase-button">
 						<p>
-							$ 10.00
+							{cards[0].price} $
 						</p>
 						<button>
 							Add to cart
@@ -67,45 +99,10 @@ export interface Pokemon {
 				</div>
 			</div>
 		</div>
-		<div class="main-container">
-			<div class="top-container">
-				<div class="card-container">
-					<div class="left-card"></div>
-					<div class="center-card">
-						<div class="card-aura fire"></div>
-						<Image
-								src="https://images.pokemontcg.io/base4/4_hires.png" alt="Charizard"
-								width="300"
-								height="420"
-						/>
-					</div>
-					<div class="right-card"></div>
-				</div>
-			</div>
-			<div class="bottom-container">
-				<PageTitle title="Charizard"></PageTitle>
-				<div class="bottom-half-bottom">
-					<div class="left-space"></div>
-					<div class="pokemon-info">
-						<PokemonType type="fire"></PokemonType>
-						<p>
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad blanditiis commodi facere
-							fugiat
-							in maiores natus omnis placeat quo rem!
-						</p>
-					</div>
-					<div class="purchase-button">
-						<p>
-							$ 10.00
-						</p>
-						<button>
-							Add to cart
-						</button>
-					</div>
-				</div>
-			</div>
+		<div>
+            {cards.map(card =>
+					<CardList card={card}/>)}
 		</div>
-
 		<div class="back-button"></div>
 	</main>
 </Layout>
@@ -144,17 +141,30 @@ export interface Pokemon {
 
     .card-container {
         height: 100%;
-        width: 40%;
+        width: 50%;
         margin: auto;
         display: flex;
-        gap: 1rem;
+        gap: 3rem;
     }
 
-    .left-card {
-        border: 1px solid yellow;
+    .left-card, .right-card {
         height: 100%;
-        width: 50%;
+        width: 60%;
+		display: flex;
+		align-items: center;
+		justify-content: space-evenly;
+		flex-direction: column;
+		background-color: rgba(35, 35, 35, 0.75);
+		border-radius: 1rem;
+		border: #f3d02c solid 6px;
     }
+
+	.left-card > img, .right-card > img {
+		width: 8.5rem;
+		height: 5.5rem;
+		object-fit: contain;
+	}
+
 
     .center-card {
         position: relative;
@@ -177,12 +187,6 @@ export interface Pokemon {
         width: 24rem;
         height: 34rem;
         border-radius: 0.5rem;
-    }
-
-    .right-card {
-        border: 1px solid yellow;
-        height: 100%;
-        width: 50%;
     }
 
     .bottom-container {
@@ -213,6 +217,12 @@ export interface Pokemon {
         align-items: center;
     }
 
+    .types {
+        display: flex;
+        gap: 1rem;
+        flex-direction: row;
+    }
+
     .pokemon-info > p {
         margin: 0;
         text-align: center;
@@ -237,14 +247,14 @@ export interface Pokemon {
         font-size: 1.2rem;
         padding: 1rem;
         border-radius: 1rem;
-		border: none;
-		transition: all 0.2s ease-in-out;
+        border: none;
+        transition: all 0.2s ease-in-out;
     }
 
-	.purchase-button > button:hover {
-		background-color: #ffb444;
-		cursor: pointer;
-	}
+    .purchase-button > button:hover {
+        background-color: #ffb444;
+        cursor: pointer;
+    }
 
     .back-button {
         background-color: #232323;
