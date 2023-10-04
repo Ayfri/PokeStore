@@ -35,7 +35,7 @@ async function pushCards() {
 	console.log(`Pushing ${cards.length} cards`);
 	const pokemons = await prismaClient.pokemons.findMany();
 	const [data] = await Promise.all([
-		cards.map((pokemonCards) => pokemonCards.map(async (card) => {
+		cards.flat().map(async (card) => {
 			const set = await prismaClient.sets.findFirst({
 				where: {
 					name: {
@@ -64,7 +64,7 @@ async function pushCards() {
 				setId: set.id,
 				types: card.types.replace(' ', ''),
 			});
-		})).flat(),
+		})
 	]);
 
 	const result = (await Promise.all(data)).filter((card) => card !== null) as Array<Prisma.CardsCreateManyInput>;
