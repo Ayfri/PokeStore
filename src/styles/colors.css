@@ -1,0 +1,57 @@
+:root {
+    --grass: #78c850;
+    --fire: #ed4c30;
+    --lightning: #f8d030;
+    --metal: #a8a8c0;
+    --water: #6890f0;
+    --fighting: #e06d11;
+    --colorless: #a8a878;
+    --darkness: #595d62;
+    --psychic: #8e4b9e;
+    --fairy: #c6418a;
+    --dragon: #656531;
+}
+
+.fire {
+    --type-color: var(--fire);
+}
+
+.water {
+    --type-color: var(--water);
+}
+
+.grass {
+    --type-color: var(--grass);
+}
+
+.lightning {
+    --type-color: var(--lightning);
+}
+
+.metal {
+    --type-color: var(--metal);
+}
+
+.fighting {
+    --type-color: var(--fighting);
+}
+
+.colorless {
+    --type-color: var(--colorless);
+}
+
+.darkness {
+    --type-color: var(--darkness);
+}
+
+.psychic {
+    --type-color: var(--psychic);
+}
+
+.fairy {
+    --type-color: var(--fairy);
+}
+
+.dragon {
+    --type-color: var(--dragon);
+}

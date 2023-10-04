@@ -1,5 +1,6 @@
 ---
 import Card from "../pages/index.astro";
+import "../styles/colors.css";
 import {Image} from "astro:assets";
 
 export interface Props {
@@ -27,63 +28,6 @@ const {
 	<h3>{price}$</h3>
 </div>
 <style>
-	:root {
-		--grass: #78c850;
-		--fire: #ed4c30;
-		--lightning: #f8d030;
-		--metal: #a8a8c0;
-		--water: #6890f0;
-		--fighting: #e06d11;
-		--colorless: #a8a878;
-		--darkness: #595d62;
-		--psychic: #8e4b9e;
-		--fairy: #c6418a;
-		--dragon: #656531;
-	}
-
-	.fire {
-		--type-color: var(--fire);
-	}
-
-	.water {
-		--type-color: var(--water);
-	}
-
-	.grass {
-		--type-color: var(--grass);
-	}
-
-	.lightning {
-		--type-color: var(--lightning);
-	}
-
-	.metal {
-		--type-color: var(--metal);
-	}
-
-	.fighting {
-		--type-color: var(--fighting);
-	}
-
-	.colorless {
-		--type-color: var(--colorless);
-	}
-
-	.darkness {
-		--type-color: var(--darkness);
-	}
-
-	.psychic {
-		--type-color: var(--psychic);
-	}
-
-	.fairy {
-		--type-color: var(--fairy);
-	}
-
-	.dragon {
-		--type-color: var(--dragon);
-	}
 
 	h2, h3 {
 		margin: 0;
