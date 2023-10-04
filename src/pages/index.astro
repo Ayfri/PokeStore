@@ -6,20 +6,20 @@ import PageTitle from "../components/PageTitle.astro";
 
 
 export interface Card {
-	name: string;
-	imageUrl: string;
-	types: string;
-	rarity: string;
-	price: number;
-	pokemon: Pokemon;
+    name: string;
+    imageUrl: string;
+    types: string;
+    rarity: string;
+    price: number;
+    pokemon: Pokemon;
 }
 
 export interface Pokemon {
-	numero: number;
-	name: string;
-	description: string;
-	imageUrl: string;
-	types: string;
+    numero: number;
+    name: string;
+    description: string;
+    imageUrl: string;
+    types: string;
 }
 
 const typesList = await fetch(`${import.meta.env.API_URL}/types`);
@@ -28,8 +28,8 @@ const types = await typesList.json() as string[];
 const searchParams = Astro.url.searchParams;
 const typesParam = searchParams.has('types') ? searchParams.get('types') : null;
 if (typesParam && (typesParam === 'all' || !types.map(type => type.toLowerCase()).includes(typesParam))) {
-	Astro.url.searchParams.delete('types');
-	return Astro.redirect(Astro.url.href);
+    Astro.url.searchParams.delete('types');
+    return Astro.redirect(Astro.url.href);
 }
 
 const response = await fetch(`${import.meta.env.API_URL}/cards?${searchParams.toString()}`);
@@ -39,177 +39,177 @@ cards = cards.filter((card, index, self) => self.findIndex(c => c.pokemon.numero
 ---
 
 <Layout title="Pokéstore">
-	<main>
-		<button id="scroll-btn" class="scroll-btn">↓</button>
-		<div class="fixed_container">
-			<Header
-				cards_href="/cards"
-				username="anta"
-				cart_icon="/icons/cart.svg"
-				cart_href="/cart"
-			>
-			</Header>
-			<div class="top-container">
-				<PageTitle title="Card List"></PageTitle>
-				<div class="filters-container">
-					<div class="filters-top">
-						<input type="text" placeholder="ID" class="filter">
-						<input type="text" placeholder="Name" class="filter">
-					</div>
-					<div class="filters-bottom">
-						<select name="set" id="set" class="filter">
-							<option value="fire">sws</option>
-							<option value="water">xy</option>
-						</select>
-						<select name="type" id="type" class="filter">
-							<option value="all">All types</option>
-							{types.map(type =>
-								<option value={type.toLowerCase()}>{type}</option>)}
-						</select>
-						<select name="rarity" id="rarity" class="filter">
-							<option value="fire" name="fire">holo</option>
-							<option value="water" name="water">rare</option>
-						</select>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="cards-grid">
-			{cards.map(card =>
-				<CardList card={card}/>)}
-		</div>
-	</main>
-	<script>
-		const selectType = document.querySelector('#type') as HTMLSelectElement;
-		let currentType = new URL(window.location.href).searchParams.get('types');
-		const options = Array.from(selectType.options).map(option => option.value.toLowerCase());
-		if (!options.includes(currentType)) {
-			currentType = 'all';
-		}
-		selectType.value = currentType || 'all';
+    <main>
+        <button id="scroll-btn" class="scroll-btn">↓</button>
+        <div class="fixed_container">
+            <Header
+                    cards_href="/cards"
+                    username="anta"
+                    cart_icon="/icons/cart.svg"
+                    cart_href="/cart"
+            >
+            </Header>
+            <div class="top-container">
+                <PageTitle title="Card List"></PageTitle>
+                <div class="filters-container">
+                    <div class="filters-top">
+                        <input type="text" placeholder="ID" class="filter">
+                        <input type="text" placeholder="Name" class="filter">
+                    </div>
+                    <div class="filters-bottom">
+                        <select name="set" id="set" class="filter">
+                            <option value="fire">sws</option>
+                            <option value="water">xy</option>
+                        </select>
+                        <select name="type" id="type" class="filter">
+                            <option value="all">All types</option>
+                            {types.sort((a, b) => a.localeCompare(b))
+                                .map(type => <option value={type.toLowerCase()}>{type}</option>)}
+                        </select>
+                        <select name="rarity" id="rarity" class="filter">
+                            <option value="fire" name="fire">holo</option>
+                            <option value="water" name="water">rare</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cards-grid">
+            {cards.map(card =>
+                    <CardList card={card}/>)}
+        </div>
+    </main>
+    <script>
+        const selectType = document.querySelector('#type') as HTMLSelectElement;
+        let currentType = new URL(window.location.href).searchParams.get('types');
+        const options = Array.from(selectType.options).map(option => option.value.toLowerCase());
+        if (!options.includes(currentType)) {
+            currentType = 'all';
+        }
+        selectType.value = currentType || 'all';
 
-		selectType.addEventListener('change', (event) => {
-			//if selected value is "all", remove the type parameter from the url
-			const target = event.target as HTMLSelectElement;
-			const url = new URL(window.location.href);
-			url.searchParams.set('types', target.value);
-			if (target.value === 'all') {
-				url.searchParams.delete('types');
-			}
-			window.location.href = url.toString();
-		});
+        selectType.addEventListener('change', (event) => {
+            //if selected value is "all", remove the type parameter from the url
+            const target = event.target as HTMLSelectElement;
+            const url = new URL(window.location.href);
+            url.searchParams.set('types', target.value);
+            if (target.value === 'all') {
+                url.searchParams.delete('types');
+            }
+            window.location.href = url.toString();
+        });
 
-		const scrollBtn = document.querySelector('#scroll-btn') as HTMLButtonElement;
-		scrollBtn.addEventListener('click', () => {
-			const cardsGrid = document.querySelector('.cards-grid') as HTMLDivElement;
-			cardsGrid.scrollTo({top: cardsGrid.scrollHeight, behavior: 'smooth'});
-		});
-	</script>
+        const scrollBtn = document.querySelector('#scroll-btn') as HTMLButtonElement;
+        scrollBtn.addEventListener('click', () => {
+            const cardsGrid = document.querySelector('.cards-grid') as HTMLDivElement;
+            cardsGrid.scrollTo({top: cardsGrid.scrollHeight, behavior: 'smooth'});
+        });
+    </script>
 </Layout>
 <style>
-	:root {
-		--header-padding: 0.6rem;
-	}
+    :root {
+        --header-padding: 0.6rem;
+    }
 
-	body {
-		overflow: hidden;
-	}
+    body {
+        overflow: hidden;
+    }
 
-	main {
-		padding: var(--header-padding);
-		color: white;
-		font-size: 20px;
-		line-height: 1.6;
-		max-width: 100vw;
-		max-height: 100vh;
-		margin-bottom: 10rem;
-	}
+    main {
+        padding: var(--header-padding);
+        color: white;
+        font-size: 20px;
+        line-height: 1.6;
+        max-width: 100vw;
+        max-height: 100vh;
+        margin-bottom: 10rem;
+    }
 
-	.fixed_container {
-		position: fixed;
-		z-index: 99999;
-		width: calc(100% - var(--header-padding) * 2);
-	}
+    .fixed_container {
+        position: fixed;
+        z-index: 99999;
+        width: calc(100% - var(--header-padding) * 2);
+    }
 
-	.cards-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
-		place-items: center;
-		margin-top: 12.5rem;
-		overflow-y: scroll;
-		height: 32rem;
-		scroll-behavior: smooth;
-	}
+    .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+        place-items: center;
+        margin-top: 12.5rem;
+        overflow-y: scroll;
+        height: 32rem;
+        scroll-behavior: smooth;
+    }
 
-	.cards-grid::-webkit-scrollbar, html::-webkit-scrollbar, body::-webkit-scrollbar {
-		display: none;
-	}
+    .cards-grid::-webkit-scrollbar, html::-webkit-scrollbar, body::-webkit-scrollbar {
+        display: none;
+    }
 
-	.cards-grid, html, body {
-		scrollbar-width: none;
-	}
+    .cards-grid, html, body {
+        scrollbar-width: none;
+    }
 
-	.top-container {
-		display: flex;
-		justify-content: space-between;
-		margin-left: 7rem;
-		margin-right: 7rem;
-		align-items: center;
-		border-bottom: white solid 6px;
-	}
+    .top-container {
+        display: flex;
+        justify-content: space-between;
+        margin-left: 7rem;
+        margin-right: 7rem;
+        align-items: center;
+        border-bottom: white solid 6px;
+    }
 
-	.filters-container {
-		display: flex;
-		flex-flow: column;
-		align-items: flex-end;
-		gap: 1rem;
-	}
+    .filters-container {
+        display: flex;
+        flex-flow: column;
+        align-items: flex-end;
+        gap: 1rem;
+    }
 
-	input::placeholder {
-		color: white;
-		opacity: 1;
-	}
+    input::placeholder {
+        color: white;
+        opacity: 1;
+    }
 
-	input, select {
-		border-radius: 4px;
-		border: 3px solid #FFF;
-		background: transparent;
-		color: white;
-		font-family: "Clash Display", serif;
-		font-weight: 500;
-		padding: 0.2rem;
-		width: 10rem;
-		box-sizing: content-box;
-	}
+    input, select {
+        border-radius: 4px;
+        border: 3px solid #FFF;
+        background: transparent;
+        color: white;
+        font-family: "Clash Display", serif;
+        font-weight: 500;
+        padding: 0.2rem;
+        width: 10rem;
+        box-sizing: content-box;
+    }
 
-	input:focus {
-		outline: none;
-	}
+    input:focus {
+        outline: none;
+    }
 
-	.filters-top, .filters-bottom {
-		gap: 1rem;
-		display: flex;
-	}
+    .filters-top, .filters-bottom {
+        gap: 1rem;
+        display: flex;
+    }
 
-	#scroll-btn {
-		position: absolute;
-		z-index: 9999999999999999999999999999999999999;
-		top: 90vh;
-		left: 95vw;
-		border: none;
-		border-radius: 100%;
-		padding: 1rem;
-		width: 3rem;
-		height: 3rem;
-		opacity: 60%;
-		background-color: #232323;
-		color: #aeaeae;
-		transition: all .4s;
-	}
+    #scroll-btn {
+        position: absolute;
+        z-index: 9999999999999999999999999999999999999;
+        top: 90vh;
+        left: 95vw;
+        border: none;
+        border-radius: 100%;
+        padding: 1rem;
+        width: 3rem;
+        height: 3rem;
+        opacity: 60%;
+        background-color: #232323;
+        color: #aeaeae;
+        transition: all .4s;
+    }
 
-	#scroll-btn:hover {
-		opacity: 100%;
-		cursor: pointer;
-		transform: scale(1.1);
-	}
+    #scroll-btn:hover {
+        opacity: 100%;
+        cursor: pointer;
+        transform: scale(1.1);
+    }
 </style>
