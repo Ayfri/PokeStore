@@ -27,7 +27,7 @@ export interface Set {
 	imageUrl: string;
 }
 
-const filters = ['numero', 'types', 'rarity', 'set'];
+const filters = ['numero', 'types', 'rarity', 'set', 'name'];
 
 const typesList = await fetch(`${import.meta.env.API_URL}/types`);
 const types = await typesList.json() as string[];
@@ -43,6 +43,7 @@ const typesParam = searchParams.has('types') ? searchParams.get('types') : null;
 const rarityParam = searchParams.has('rarity') ? searchParams.get('rarity') : null;
 const setParam = searchParams.has('set') ? searchParams.get('set') : null;
 const numeroParam = searchParams.has('numero') ? searchParams.get('numero') : null;
+const nameParam = searchParams.has('name') ? searchParams.get('name') : null;
 
 if (typesParam && (typesParam === 'all' || !types.map(type => type.toLowerCase()).includes(typesParam))) {
 	Astro.url.searchParams.delete('types');
@@ -131,7 +132,7 @@ if (!new Map(searchParams.entries()).size > 0) {
 		}
 		selectType.value = currentType || 'all';
 
-		addFilterToUrl(selectType, 'types');
+		addFilterToUrl(selectType, 'types', 'all');
 
 		/*RARITY FILTER*/
 		const selectRarity = document.querySelector('#rarity') as HTMLSelectElement;
@@ -142,7 +143,7 @@ if (!new Map(searchParams.entries()).size > 0) {
 		}
 		selectRarity.value = currentRarity || 'all';
 
-		addFilterToUrl(selectRarity, 'rarity');
+		addFilterToUrl(selectRarity, 'rarity', 'all');
 
 		/*SET FILTER*/
 		const selectSet = document.querySelector('#set') as HTMLSelectElement;
@@ -153,7 +154,7 @@ if (!new Map(searchParams.entries()).size > 0) {
 		}
 		selectSet.value = currentSet || 'all';
 
-		addFilterToUrl(selectSet, 'set');
+		addFilterToUrl(selectSet, 'set', 'all');
 
 		/*NUMERO FILTER*/
 		const inputNumero = document.querySelector('input[name="numero"]') as HTMLInputElement;
@@ -163,15 +164,14 @@ if (!new Map(searchParams.entries()).size > 0) {
 		}
 		inputNumero.value = currentNumero || '';
 
-		inputNumero.addEventListener('change', (event) => {
-			const target = event.target as HTMLInputElement;
-			const url = new URL(window.location.href);
-			url.searchParams.set('numero', target.value);
-			if (target.value === '') {
-				url.searchParams.delete('numero');
-			}
-			window.location.href = url.toString();
-		});
+		addFilterToUrl(inputNumero, 'numero', '');
+
+		/*NAME FILTER*/
+		const inputName = document.querySelector('input[name="name"]') as HTMLInputElement;
+		let currentName = new URL(window.location.href).searchParams.get('name');
+		inputName.value = currentName || '';
+
+		addFilterToUrl(inputName, 'name', '');
 
 		/*SCROLL BUTTON*/
 		const scrollBtn = document.querySelector('#scroll-btn') as HTMLButtonElement;
@@ -180,12 +180,12 @@ if (!new Map(searchParams.entries()).size > 0) {
 			cardsGrid.scrollTo({top: cardsGrid.scrollHeight, behavior: 'smooth'});
 		});
 
-		function addFilterToUrl(element, paramName) {
+		function addFilterToUrl(element, paramName, removeName) {
 			element.addEventListener('change', (event) => {
 				const target = event.target as HTMLSelectElement;
 				const url = new URL(window.location.href);
 				url.searchParams.set(paramName, target.value);
-				if (target.value === 'all') {
+				if (target.value === removeName) {
 					url.searchParams.delete(paramName);
 				}
 				window.location.href = url.toString();
