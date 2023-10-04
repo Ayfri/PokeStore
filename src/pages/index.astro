@@ -1,6 +1,5 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
 import CardList from "../components/CardList.astro";
 import PageTitle from "../components/PageTitle.astro";
 
@@ -12,6 +11,7 @@ export interface Card {
 	rarity: string;
 	price: number;
 	pokemon: Pokemon;
+	set: Set;
 }
 
 export interface Pokemon {
@@ -22,15 +22,24 @@ export interface Pokemon {
 	types: string;
 }
 
+export interface Set {
+	name: string;
+	imageUrl: string;
+}
+
 const typesList = await fetch(`${import.meta.env.API_URL}/types`);
 const types = await typesList.json() as string[];
 
 const rarityList = await fetch(`${import.meta.env.API_URL}/rarity`);
 const rarity = await rarityList.json() as string[];
 
+const setsList = await fetch(`${import.meta.env.API_URL}/sets`);
+const sets = await setsList.json() as Set[];
+
 const searchParams = Astro.url.searchParams;
 const typesParam = searchParams.has('types') ? searchParams.get('types') : null;
 const rarityParam = searchParams.has('rarity') ? searchParams.get('rarity') : null;
+const setParam = searchParams.has('sets') ? searchParams.get('sets') : null;
 
 if (typesParam && (typesParam === 'all' || !types.map(type => type.toLowerCase()).includes(typesParam))) {
 	Astro.url.searchParams.delete('types');
@@ -39,6 +48,11 @@ if (typesParam && (typesParam === 'all' || !types.map(type => type.toLowerCase()
 
 if (rarityParam && (rarityParam === 'all' || !rarity.map(rarity => rarity.toLowerCase()).includes(rarityParam))) {
 	Astro.url.searchParams.delete('rarity');
+	return Astro.redirect(Astro.url.href);
+}
+
+if (setParam && (setParam === 'all' || !sets.map(set => set.name.toLowerCase()).includes(setParam))) {
+	Astro.url.searchParams.delete('sets');
 	return Astro.redirect(Astro.url.href);
 }
 
@@ -52,13 +66,6 @@ cards = cards.filter((card, index, self) => self.findIndex(c => c.pokemon.numero
 	<main>
 		<button id="scroll-btn" class="scroll-btn">↓</button>
 		<div class="fixed_container">
-			<Header
-				cards_href="/cards"
-				username="anta"
-				cart_icon="/icons/cart.svg"
-				cart_href="/cart"
-			>
-			</Header>
 			<div class="top-container">
 				<PageTitle title="Card List"></PageTitle>
 				<div class="filters-container">
@@ -69,8 +76,10 @@ cards = cards.filter((card, index, self) => self.findIndex(c => c.pokemon.numero
 					</div>
 					<div class="filters-bottom">
 						<select name="set" id="set" class="filter">
-							<option value="fire">sws</option>
-							<option value="water">xy</option>
+							<option value="all">All sets</option>
+							{sets.sort((a, b) => a.name.localeCompare(b.name))
+								.map(set =>
+									<option value={set.name.toLowerCase()}>{set.name}</option>)}
 						</select>
 						<select name="type" id="type" class="filter">
 							<option value="all">All types</option>
@@ -115,6 +124,17 @@ cards = cards.filter((card, index, self) => self.findIndex(c => c.pokemon.numero
 		selectRarity.value = currentRarity || 'all';
 
 		addFilterToUrl(selectRarity, 'rarity');
+
+		/*SET FILTER*/
+		const selectSet = document.querySelector('#set') as HTMLSelectElement;
+		let currentSet = new URL(window.location.href).searchParams.get('set');
+		const optionsSet = Array.from(selectSet.options).map(option => option.value.toLowerCase());
+		if (!optionsSet.includes(currentSet)) {
+			currentSet = 'all';
+		}
+		selectSet.value = currentSet || 'all';
+
+		addFilterToUrl(selectSet, 'set');
 
 		/*SCROLL BUTTON*/
 		const scrollBtn = document.querySelector('#scroll-btn') as HTMLButtonElement;

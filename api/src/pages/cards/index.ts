@@ -20,17 +20,27 @@ export async function GET({url}: GetParameters) {
     console.log(url)
     const params = Object.fromEntries(url.searchParams.entries());
 
-    const object: Record<string, any> = {};
-    if (params.types) object.types = {contains: params.types}
-    if (params.name) object.name = {contains: params.name}
-    if (params.rarity) object.rarity = {contains: params.rarity}
-    if (params.set) object.set = {contains: params.set}
+    const cardFilter: Record<string, any> = {};
+    if (params.types) cardFilter.types = {contains: params.types}
+    if (params.rarity) cardFilter.rarity = {contains: params.rarity}
+
+    const pokemonFilter: Record<string, any> = {};
+    if (params.name) pokemonFilter.name = {contains: params.name}
+    if (params.numero) pokemonFilter.numero = {contains: params.numero}
+
+    const setFilter: Record<string, any> = {};
+    if (params.set) setFilter.name = {contains: params.set}
     const cards = await prisma().cards.findMany({
         include: {
             pokemon: true,
             set: true,
         },
-        where: object,
+        where: {
+            pokemon: pokemonFilter,
+            set: setFilter,
+            ...cardFilter,
+        }
+        /*where: cardFilter*/
     });
     return jsonResponse(cards);
 }
