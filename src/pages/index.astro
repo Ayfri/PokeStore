@@ -374,6 +374,10 @@ switch (sortParam) {
 		box-sizing: content-box;
 	}
 
+	select option {
+		background-color: black;
+	}
+
 	input:focus {
 		outline: none;
 	}
@@ -397,7 +401,7 @@ switch (sortParam) {
 		background-position: 0 100%;
 		background-repeat: no-repeat;
 		background-size: 100% 0;
-		transition: background-size 0.1s ease-in-out, color 0.1s ease-in-out;
+		transition: background-size 0.4s cubic-bezier(0.22, 1, 0.36, 1), color 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 		background-color: transparent;
 	}
 
