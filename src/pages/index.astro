@@ -80,6 +80,7 @@ if (!new Map(searchParams.entries()).size > 0) {
 						<input type="text" placeholder="Name" name="name" class="filter">
 					</div>
 					<div class="filters-bottom">
+						<output class="filters-result">Cards : {cards.length}</output>
 						<select name="set" id="set" class="filter">
 							<option value="all">All sets</option>
 							{sets.sort((a, b) => a.name.localeCompare(b.name))
@@ -244,6 +245,12 @@ if (!new Map(searchParams.entries()).size > 0) {
 		gap: 1rem;
 	}
 
+	.filters-result {
+		color: #fbc54a;
+		font-weight: 600;
+		font-size: 1rem;
+	}
+
 	select:hover {
 		cursor: pointer;
 	}
@@ -272,6 +279,7 @@ if (!new Map(searchParams.entries()).size > 0) {
 	.filters-top, .filters-bottom {
 		gap: 1rem;
 		display: flex;
+		align-items: center;
 	}
 
 	.reset-btn {
