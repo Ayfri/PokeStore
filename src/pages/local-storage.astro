@@ -1,69 +1,61 @@
 ---
-import type {App} from '../env';
-import PageTitle from "../components/PageTitle.astro";
 import type {Card, Pokemon, Set, PokemonStats} from "../types";
 import CartCard from "../components/CartCard.astro";
 import PurchaseItem from "../components/PurchaseItem.astro";
 
 export const prerender = false;
 
-if (Astro.request.method !== 'POST') {
-    return "Bad route";
-}
+if (Astro.request.method !== 'POST') return "Bad route";
+
 const body = await Astro.request.json() as Card[];
-console.log(body);
-
 const outputJson = [] as PokemonStats[];
-
 const pokemonStats = {};
 
 body.forEach((item) => {
-    const pokemonName = item.pokemon.name;
-    const pokemonPrice = item.price;
+	const pokemonName = item.pokemon.name;
+	const pokemonPrice = item.price;
 
-    if (pokemonStats[pokemonName]) {
-        pokemonStats[pokemonName].number++;
-        pokemonStats[pokemonName].price += pokemonPrice;
-    } else {
-        pokemonStats[pokemonName] = {
-            number: 1,
-            price: pokemonPrice,
-        };
-    }
+	if (pokemonStats[pokemonName]) {
+		pokemonStats[pokemonName].number++;
+		pokemonStats[pokemonName].price += pokemonPrice;
+	} else {
+		pokemonStats[pokemonName] = {
+			number: 1,
+			price: pokemonPrice,
+		};
+	}
 });
 
 
 for (const pokemonName in pokemonStats) {
-    if (pokemonStats.hasOwnProperty(pokemonName)) {
-        const stats = pokemonStats[pokemonName];
-        outputJson.push({
-            name: pokemonName,
-            number: stats.number,
-            price: stats.price,
-        });
-    }
+	if (pokemonStats.hasOwnProperty(pokemonName)) {
+		const stats = pokemonStats[pokemonName];
+		outputJson.push({
+			name: pokemonName,
+			number: stats.number,
+			price: stats.price,
+		});
+	}
 }
-
-console.log(outputJson);
 ---
 <div class="cards">
-    {body.map((card) => (
-			<CartCard
-					name={card.pokemon.name}
-					imageUrl={card.imageUrl}
-					set={card.set.name}
-					rarity={card.rarity}
-					price={card.price}
-			></CartCard>
-    ))}
+	{body.map((card) => (
+		<CartCard
+			name={card.pokemon.name}
+			imageUrl={card.imageUrl}
+			set={card.set.name}
+			rarity={card.rarity}
+			price={card.price}
+		/>
+	))}
 </div>
 
 <div class="cart-stats">
-    {outputJson.map((item) => (
-       <PurchaseItem
-                name={item.name}
-                number={item.number}
-                price={item.price}
-       ></PurchaseItem>
-    ))}
+	{outputJson.map((item) => (
+		<PurchaseItem
+			name={item.name}
+			number={item.number}
+			price={item.price}
+		/>
+	))}
 </div>
