@@ -1,33 +1,30 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
 import PageTitle from "../components/PageTitle.astro";
 import PokemonType from "../components/PokemonType.astro";
 import "../styles/colors.css";
 import {Image} from "astro:assets";
-import CardList from "../components/CardList.astro";
 import type {Card, Pokemon, Set} from "../types"
 
+const filters = ['numero', 'index'];
+const searchParams = Astro.url.searchParams;
+const numeroParam = searchParams.has('numero') ? searchParams.get('numero') : null;
 
-
-const filters = ['numero'];
+let centeredCardId = Astro.url.searchParams.get('index') ? parseInt(Astro.url.searchParams.get('index')) : 0;
 
 const setsList = await fetch(`${import.meta.env.API_URL}/sets`);
 const sets = await setsList.json() as Set[];
 
-const searchParams = Astro.url.searchParams;
-const numeroParam = searchParams.has('numero') ? searchParams.get('numero') : null;
-
 if (numeroParam && !(numeroParam >= 1 && numeroParam <= 151)) {
-    Astro.url.searchParams.delete('numero');
-    return Astro.redirect("/");
+	Astro.url.searchParams.delete('numero');
+	return Astro.redirect("/");
 }
 
 for (const [key, _] of searchParams.entries()) {
-    if (!filters.includes(key)) {
-        Astro.url.searchParams.delete(key);
-        return Astro.redirect(Astro.url.href);
-    }
+	if (!filters.includes(key)) {
+		Astro.url.searchParams.delete(key);
+		return Astro.redirect(Astro.url.href);
+	}
 }
 
 const response = await fetch(`${import.meta.env.API_URL}/cards?${searchParams.toString()}`);
@@ -46,52 +43,52 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 			<div class="top-container">
 				<div class="card-container">
 					<div class="left-card">
-                        {setLogoFirstHalf.map((card, index) =>
-								<Image
-										class:list={[`set ${index}`]}
-										src={card} alt="Charizard"
-										width="75"
-										height="105"
-								/>)}
+						{setLogoFirstHalf.map((card, index) =>
+							<Image
+								class:list={[`set ${index}`]}
+								src={card} alt="Charizard"
+								width="75"
+								height="105"
+							/>)}
 					</div>
 					<div class="center-card">
-						<div class:list={['card-aura', cards[0].types.toLowerCase().split(',')[0]]}></div>
+						<div class:list={['card-aura', cards[centeredCardId].types.toLowerCase().split(',')[0]]}></div>
 						<Image
-								src={cards[0].imageUrl} alt="Charizard"
-								width="300"
-								height="420"
+							src={cards[centeredCardId].imageUrl} alt="Charizard"
+							width="300"
+							height="420"
 						/>
 					</div>
 					<div class="right-card">
-                        {setLogoSecondHalf.map((card, index) =>
-								<Image
-									class:list={[`set ${index+5}`]}
+						{setLogoSecondHalf.map((card, index) =>
+							<Image
+								class:list={[`set ${index + 5}`]}
 
-									src={card} alt="Charizard"
-										width="75"
-										height="105"
-								/>)}
+								src={card} alt="Charizard"
+								width="75"
+								height="105"
+							/>)}
 					</div>
 				</div>
 			</div>
 			<div class="bottom-container">
 				<PageTitle
-						title={cards[0].pokemon.name}
+					title={cards[0].pokemon.name}
 				></PageTitle>
 				<div class="bottom-half-bottom">
 					<div class="left-space"></div>
 					<div class="pokemon-info">
 						<div class="types">
-                            {cards[0].types.toLowerCase().split(',').map(type =>
-									<PokemonType type={type}></PokemonType>)}
+							{cards[centeredCardId].types.toLowerCase().split(',').map(type =>
+								<PokemonType type={type}></PokemonType>)}
 						</div>
 						<p>
-                            {cards[0].pokemon.description}
+							{cards[0].pokemon.description}
 						</p>
 					</div>
 					<div class="purchase-button">
 						<p>
-                            {cards[0].price} $
+							{cards[centeredCardId].price} $
 						</p>
 						<button>
 							Add to cart
@@ -104,171 +101,173 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 	</main>
 </Layout>
 <script>
-const sets = document.querySelectorAll('.set');
-sets.forEach(set => {
-	set.addEventListener('click', () => {
-		console.log(set.classList[1])
-	})
-});
-console.log(sets)
+	const sets = document.querySelectorAll('.set');
+	sets.forEach(set => {
+		set.addEventListener('click', () => {
+			const index = set.classList[1];
+			const url = new URL(window.location.href);
+			url.searchParams.set('index', index);
+			window.location.href = url.toString();
+		})
+	});
 </script>
 
 <style>
-    main {
-        margin: auto;
-        padding: .6rem;
-        color: white;
-        font-size: 20px;
-        line-height: 1.6;
-        max-width: 100vw;
-        max-height: 100vh;
-    }
+	main {
+		margin: auto;
+		padding: .6rem;
+		color: white;
+		font-size: 20px;
+		line-height: 1.6;
+		max-width: 100vw;
+		max-height: 100vh;
+	}
 
-    .filter {
-        background-image: url("/public/particles.png");
-        background-repeat: no-repeat;
-        width: -webkit-fill-available;
-        height: -webkit-fill-available;
-        z-index: -2;
-        position: absolute;
-    }
+	.filter {
+		background-image: url("/public/particles.png");
+		background-repeat: no-repeat;
+		width: -webkit-fill-available;
+		height: -webkit-fill-available;
+		z-index: -2;
+		position: absolute;
+	}
 
-    .main-container {
-        margin: 5rem auto 0 auto;
-        display: flex;
-        flex-direction: column;
-        gap: 2rem;
-        width: 90%;
-        z-index: -1;
-    }
+	.main-container {
+		margin: 5rem auto 0 auto;
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+		width: 90%;
+		z-index: -1;
+	}
 
-    .top-container {
-        height: 33rem;
-    }
+	.top-container {
+		height: 33rem;
+	}
 
-    .card-container {
-        height: 100%;
-        width: 50%;
-        margin: auto;
-        display: flex;
-        gap: 3rem;
-    }
+	.card-container {
+		height: 100%;
+		width: 50%;
+		margin: auto;
+		display: flex;
+		gap: 3rem;
+	}
 
-    .left-card, .right-card {
-        height: 100%;
-        width: 60%;
-        display: flex;
-        align-items: center;
-        justify-content: space-evenly;
-        flex-direction: column;
-        background-color: rgba(35, 35, 35, 0.75);
-        border-radius: 1rem;
-        border: #f3d02c solid 6px;
-    }
+	.left-card, .right-card {
+		height: 100%;
+		width: 60%;
+		display: flex;
+		align-items: center;
+		justify-content: space-evenly;
+		flex-direction: column;
+		background-color: rgba(35, 35, 35, 0.75);
+		border-radius: 1rem;
+		border: #f3d02c solid 6px;
+	}
 
-    .left-card > img, .right-card > img {
-        width: 8.5rem;
-        height: 5.5rem;
-        object-fit: contain;
-    }
+	.left-card > img, .right-card > img {
+		width: 8.5rem;
+		height: 5.5rem;
+		object-fit: contain;
+	}
 
 
-    .center-card {
-        position: relative;
-    }
+	.center-card {
+		position: relative;
+	}
 
-    .center-card > .card-aura {
-        position: absolute;
-        background-color: var(--type-color);
-        width: 43rem;
-        height: 43rem;
-        z-index: -1;
-        border-radius: 50%;
-        filter: blur(5rem) opacity(0.5);
-        left: 50%;
-        top: 50%;
-        transform: translateX(-50%) translateY(-50%);
-    }
+	.center-card > .card-aura {
+		position: absolute;
+		background-color: var(--type-color);
+		width: 43rem;
+		height: 43rem;
+		z-index: -1;
+		border-radius: 50%;
+		filter: blur(5rem) opacity(0.5);
+		left: 50%;
+		top: 50%;
+		transform: translateX(-50%) translateY(-50%);
+	}
 
-    .center-card > img {
-        width: 24rem;
-        height: 34rem;
-        border-radius: 0.5rem;
-    }
+	.center-card > img {
+		width: 24rem;
+		height: 34rem;
+		border-radius: 0.5rem;
+	}
 
-    .bottom-container {
-        height: 15rem;
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        align-items: center;
-    }
+	.bottom-container {
+		height: 15rem;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		align-items: center;
+	}
 
-    .bottom-half-bottom {
-        height: 100%;
-        width: 100%;
-        display: flex;
-        gap: 10rem;
-        flex-direction: row;
-        justify-content: space-between;
-    }
+	.bottom-half-bottom {
+		height: 100%;
+		width: 100%;
+		display: flex;
+		gap: 10rem;
+		flex-direction: row;
+		justify-content: space-between;
+	}
 
-    .left-space {
-        width: 15%;
-    }
+	.left-space {
+		width: 15%;
+	}
 
-    .pokemon-info {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        align-items: center;
-    }
+	.pokemon-info {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		align-items: center;
+	}
 
-    .types {
-        display: flex;
-        gap: 1rem;
-        flex-direction: row;
-    }
+	.types {
+		display: flex;
+		gap: 1rem;
+		flex-direction: row;
+	}
 
-    .pokemon-info > p {
-        margin: 0;
-        text-align: center;
-    }
+	.pokemon-info > p {
+		margin: 0;
+		text-align: center;
+	}
 
-    .purchase-button {
-        background-color: #232323;
-        border-radius: 2rem;
-        width: 15%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 1rem 0;
-    }
+	.purchase-button {
+		background-color: #232323;
+		border-radius: 2rem;
+		width: 15%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 1rem 0;
+	}
 
-    .purchase-button > p {
-        margin: 0;
-    }
+	.purchase-button > p {
+		margin: 0;
+	}
 
-    .purchase-button > button {
-        background-color: #ff9e00;
-        font-size: 1.2rem;
-        padding: 1rem;
-        border-radius: 1rem;
-        border: none;
-        transition: all 0.2s ease-in-out;
-    }
+	.purchase-button > button {
+		background-color: #ff9e00;
+		font-size: 1.2rem;
+		padding: 1rem;
+		border-radius: 1rem;
+		border: none;
+		transition: all 0.2s ease-in-out;
+	}
 
-    .purchase-button > button:hover {
-        background-color: #ffb444;
-        cursor: pointer;
-    }
+	.purchase-button > button:hover {
+		background-color: #ffb444;
+		cursor: pointer;
+	}
 
-    .back-button {
-        background-color: #232323;
-        border-radius: 2rem;
-        height: 5rem;
-        width: 5rem;
-        position: fixed;
-        bottom: 1rem;
-    }
+	.back-button {
+		background-color: #232323;
+		border-radius: 2rem;
+		height: 5rem;
+		width: 5rem;
+		position: fixed;
+		bottom: 1rem;
+	}
 </style>
