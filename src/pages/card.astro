@@ -15,9 +15,6 @@ const numeroParam = searchParams.has('numero') ? searchParams.get('numero') : nu
 
 const centeredCardId = Astro.url.searchParams.get('index') ? parseInt(Astro.url.searchParams.get('index')) : 0;
 
-const setsList = await fetch(`${import.meta.env.API_URL}/sets`);
-const sets = await setsList.json() as Set[];
-
 if (numeroParam && !(numeroParam >= 1 && numeroParam <= 151)) {
 	Astro.url.searchParams.delete('numero');
 	return Astro.redirect("/");
@@ -34,10 +31,10 @@ const response = await fetch(`${import.meta.env.API_URL}/cards?${searchParams.to
 let cards = await response.json() as Card[];
 cards = cards.sort((a, b) => a.pokemon.numero - b.pokemon.numero || b.price - a.price);
 
-const setLogoFirstHalf = cards.slice(0, 5).map(card => card.set.imageUrl);
-const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
+const setLogoFirstHalf = cards.slice(0, 5).map(card => card.set);
+const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set);
+const centeredCard = cards[centeredCardId];
 ---
-
 <Layout title="Pokéstore">
 	<main>
 		<div class:list={[`filter ${cards[centeredCardId].types.toLowerCase().split(',')[0]}`]}></div>
@@ -45,61 +42,58 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 			<div class="top-container">
 				<div class="card-container">
 					<div class="left-card">
-						{setLogoFirstHalf.map((card, index) =>
+						{setLogoFirstHalf.map((set, index) =>
 							<Image
+								alt={set.name}
 								class:list={[`set ${index}`]}
-								src={card} alt="Charizard"
-								width="75"
 								height="105"
+								src={set.imageUrl}
+								width="75"
 							/>)}
 					</div>
-					<div class:list={[`center-card ${cards[centeredCardId].types.toLowerCase().split(',')[0]} ${cards[centeredCardId].rarity.toLowerCase()}`]}>
-						<!--<div class:list={cards[centeredCardId].rarity.toLowerCase()}></div>-->
+					<div class="center-card">
+						<div class:list={centeredCard.rarity.toLowerCase()}></div>
 						<div
 							class:list={[
 								'card-aura',
-								cards[centeredCardId].types.toLowerCase().split(',')[0],
+								centeredCard.types.toLowerCase().split(',')[0],
 							]}
 						></div>
 						<Image
-							class="center-card-image"
-							src={cards[centeredCardId].imageUrl} alt="Charizard"
-							width="300"
+							alt={centeredCard.pokemon.name}
 							height="420"
+							src={centeredCard.imageUrl}
+							width="300"
 						/>
 					</div>
 					<div class="right-card">
-						{setLogoSecondHalf.map((card, index) =>
+						{setLogoSecondHalf.map((set, index) =>
 							<Image
+								alt={set.name}
 								class:list={[`set ${index + 5}`]}
-
-								src={card} alt="Charizard"
-								width="75"
 								height="105"
+								src={set.imageUrl}
+								width="75"
 							/>)}
 					</div>
 				</div>
 			</div>
 			<div class="bottom-container">
-				<PageTitle
-					title={cards[0].pokemon.name}
-				></PageTitle>
+				<PageTitle title={centeredCard.pokemon.name}/>
 				<div class="bottom-half-bottom">
 					<div class="left-space"></div>
 					<div class="pokemon-info">
 						<div class="types">
-							{cards[centeredCardId].types.toLowerCase().split(',').map(type =>
+							{centeredCard.types.toLowerCase().split(',').map(type =>
 								<PokemonType type={type}></PokemonType>)}
 						</div>
-						<p>
-							{cards[0].pokemon.description}
-						</p>
+						<p>{centeredCard.pokemon.description}</p>
 					</div>
 					<div class="purchase-button">
-						<p>{cards[centeredCardId].price} $</p>
+						<p>{centeredCard.price} $</p>
 						<button
+							data-route={`${import.meta.env.API_URL}/cards/${centeredCard.id}`}
 							id="add-to-card"
-							data-route={`${import.meta.env.API_URL}/cards/${cards[centeredCardId].id}`}
 						>
 							Add to cart
 						</button>
@@ -153,15 +147,16 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 	}
 
 	/*CARD EFFECT*/
-	//make the div center-card rotating when the mouse is over it
 	const card = document.querySelector('.center-card') as HTMLDivElement;
 	const style = document.getElementById('card') as HTMLStyleElement;
 	const sheet = style.sheet;
-	console.log(sheet)
 
 	card.addEventListener('mousemove', (e) => {
 		card.classList.remove('inactive');
-		const pos = [e.offsetX, e.offsetY];
+		const pos = [
+			e.offsetX,
+			e.offsetY,
+		];
 		e.preventDefault();
 		const l = pos[0];
 		const t = pos[1];
@@ -186,7 +181,7 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 		const style2 = `.holo:hover::before {${grad_pos}} !important`;
 		const style3 = `.holo:hover::after {${spark_pos} ${opc}} !important`;
 		card.setAttribute('style', tf);
-		style.innerHTML = `${style2} \n${style3}}`
+		style.innerHTML = `${style2} \n${style3}}`;
 	});
 
 	card.addEventListener('mouseleave', () => {
@@ -289,7 +284,7 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 
 	.center-card:hover {
 		border-radius: 0.5rem !important;
-		box-shadow: 0 0 30px -5px #ffffff70,0 0 10px -2px #ffffff9e,0 50px 20px 10px rgb(0,0,0);
+		box-shadow: 0 0 30px -5px #ffffff70, 0 0 10px -2px #ffffff9e, 0 50px 20px 10px rgb(0, 0, 0);
 	}
 
 	.center-card > .card-aura {
