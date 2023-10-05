@@ -54,12 +54,8 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 							/>)}
 					</div>
 					<div class="center-card">
-						<div
-							class:list={[
-								'card-aura',
-								cards[centeredCardId].types.toLowerCase().split(',')[0],
-							]}
-						></div>
+						<div class:list={cards[centeredCardId].rarity.toLowerCase()}></div>
+						<div class:list={['card-aura', cards[centeredCardId].types.toLowerCase().split(',')[0]]}></div>
 						<Image
 							src={cards[centeredCardId].imageUrl} alt="Charizard"
 							width="300"
@@ -106,13 +102,17 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 	</main>
 </Layout>
 <script>
-	const sets = document.querySelectorAll('.set');
+	const sets = document.querySelectorAll('.set') as NodeListOf<HTMLImageElement>;
 	sets.forEach(set => {
 		set.addEventListener('click', () => {
 			const index = set.classList[1];
 			const url = new URL(window.location.href);
 			url.searchParams.set('index', index);
 			window.location.href = url.toString();
+		});
+
+		set.addEventListener('load', () => {
+			set.classList.add('shadow');
 		});
 	});
 
@@ -182,6 +182,16 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 		gap: 3rem;
 	}
 
+	.shadow {
+		transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+		filter: drop-shadow(0px 0px 2px rgb(243, 208, 44)) drop-shadow(3px 3px 3px #000);
+	}
+
+	.set:hover {
+		cursor: pointer;
+		transform: scale(1.05);
+	}
+
 	.left-card, .right-card {
 		width: 60%;
 		display: flex;
@@ -201,6 +211,7 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 		height: 5.5rem;
 		object-fit: contain;
 	}
+
 
 	.center-card {
 		position: relative;
@@ -305,5 +316,250 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 		width: 5rem;
 		position: fixed;
 		bottom: 1rem;
+	}
+
+	.holo::after {
+		background-image: url("https://assets.codepen.io/13471/sparkles.gif"), url(https://assets.codepen.io/13471/holo.png), linear-gradient(125deg, #ff008450 15%, #fca40040 30%, #ffff0030 40%, #00ff8a20 60%, #00cfff40 70%, #cc4cfa50 85%);
+		background-position: 50% 50%;
+		background-size: 160%;
+		filter: brightness(1) contrast(1);
+		mix-blend-mode: color-dodge;
+		opacity: 70%;
+		transition: all 0.33s ease;
+		z-index: 2;
+	}
+
+	.holo::before,
+	.holo::after {
+		background-repeat: no-repeat;
+		content: "";
+		left: 50%;
+		mix-blend-mode: color-dodge;
+		position: absolute;
+		top: 52%;
+		transform: translate(-50%, -50%);
+		transition: all 0.33s ease;
+		width: 24rem;
+		height: 34rem;
+		border-radius: 0.5rem;
+	}
+
+	@-webkit-keyframes holoSparkle {
+		0%, 100% {
+			opacity: 0.75;
+			background-position: 50% 50%;
+			filter: brightness(1.2) contrast(1.25);
+		}
+		5%, 8% {
+			opacity: 1;
+			background-position: 40% 40%;
+			filter: brightness(0.8) contrast(1.2);
+		}
+		13%, 16% {
+			opacity: 0.5;
+			background-position: 50% 50%;
+			filter: brightness(1.2) contrast(0.8);
+		}
+		35%, 38% {
+			opacity: 1;
+			background-position: 60% 60%;
+			filter: brightness(1) contrast(1);
+		}
+		55% {
+			opacity: 0.33;
+			background-position: 45% 45%;
+			filter: brightness(1.2) contrast(1.25);
+		}
+	}
+
+	@keyframes holoSparkle {
+		0%, 100% {
+			opacity: 0.75;
+			background-position: 50% 50%;
+			filter: brightness(1.2) contrast(1.25);
+		}
+		5%, 8% {
+			opacity: 1;
+			background-position: 40% 40%;
+			filter: brightness(0.8) contrast(1.2);
+		}
+		13%, 16% {
+			opacity: 0.5;
+			background-position: 50% 50%;
+			filter: brightness(1.2) contrast(0.8);
+		}
+		35%, 38% {
+			opacity: 1;
+			background-position: 60% 60%;
+			filter: brightness(1) contrast(1);
+		}
+		55% {
+			opacity: 0.33;
+			background-position: 45% 45%;
+			filter: brightness(1.2) contrast(1.25);
+		}
+	}
+
+	@-webkit-keyframes holoGradient {
+		0%, 100% {
+			opacity: 0.5;
+			background-position: 50% 50%;
+			filter: brightness(0.5) contrast(1);
+		}
+		5%, 9% {
+			background-position: 100% 100%;
+			opacity: 1;
+			filter: brightness(0.75) contrast(1.25);
+		}
+		13%, 17% {
+			background-position: 0 0;
+			opacity: 0.88;
+		}
+		35%, 39% {
+			background-position: 100% 100%;
+			opacity: 1;
+			filter: brightness(0.5) contrast(1);
+		}
+		55% {
+			background-position: 0 0;
+			opacity: 1;
+			filter: brightness(0.75) contrast(1.25);
+		}
+	}
+
+	@keyframes holoGradient {
+		0%, 100% {
+			opacity: 0.5;
+			background-position: 50% 50%;
+			filter: brightness(0.5) contrast(1);
+		}
+		5%, 9% {
+			background-position: 100% 100%;
+			opacity: 1;
+			filter: brightness(0.75) contrast(1.25);
+		}
+		13%, 17% {
+			background-position: 0 0;
+			opacity: 0.88;
+		}
+		35%, 39% {
+			background-position: 100% 100%;
+			opacity: 1;
+			filter: brightness(0.5) contrast(1);
+		}
+		55% {
+			background-position: 0 0;
+			opacity: 1;
+			filter: brightness(0.75) contrast(1.25);
+		}
+	}
+
+	@-webkit-keyframes holoCard {
+		0%, 100% {
+			transform: rotateZ(0deg) rotateX(0deg) rotateY(0deg);
+		}
+		5%, 8% {
+			transform: rotateZ(0deg) rotateX(6deg) rotateY(-20deg);
+		}
+		13%, 16% {
+			transform: rotateZ(0deg) rotateX(-9deg) rotateY(32deg);
+		}
+		35%, 38% {
+			transform: rotateZ(3deg) rotateX(12deg) rotateY(20deg);
+		}
+		55% {
+			transform: rotateZ(-3deg) rotateX(-12deg) rotateY(-27deg);
+		}
+	}
+
+	@keyframes holoCard {
+		0%, 100% {
+			transform: rotateZ(0deg) rotateX(0deg) rotateY(0deg);
+		}
+		5%, 8% {
+			transform: rotateZ(0deg) rotateX(6deg) rotateY(-20deg);
+		}
+		13%, 16% {
+			transform: rotateZ(0deg) rotateX(-9deg) rotateY(32deg);
+		}
+		35%, 38% {
+			transform: rotateZ(3deg) rotateX(12deg) rotateY(20deg);
+		}
+		55% {
+			transform: rotateZ(-3deg) rotateX(-12deg) rotateY(-27deg);
+		}
+	}
+
+	@-webkit-keyframes rubberBand {
+		from {
+			transform: scale3d(1, 1, 1);
+		}
+		30% {
+			transform: scale3d(1.25, 0.75, 1);
+		}
+		40% {
+			transform: scale3d(0.75, 1.25, 1);
+		}
+		50% {
+			transform: scale3d(1.15, 0.85, 1);
+		}
+		65% {
+			transform: scale3d(0.95, 1.05, 1);
+		}
+		75% {
+			transform: scale3d(1.05, 0.95, 1);
+		}
+		to {
+			transform: scale3d(1, 1, 1);
+		}
+	}
+
+	@keyframes rubberBand {
+		from {
+			transform: scale3d(1, 1, 1);
+		}
+		30% {
+			transform: scale3d(1.25, 0.75, 1);
+		}
+		40% {
+			transform: scale3d(0.75, 1.25, 1);
+		}
+		50% {
+			transform: scale3d(1.15, 0.85, 1);
+		}
+		65% {
+			transform: scale3d(0.95, 1.05, 1);
+		}
+		75% {
+			transform: scale3d(1.05, 0.95, 1);
+		}
+		to {
+			transform: scale3d(1, 1, 1);
+		}
+	}
+
+	.loader {
+		animation-duration: 4s;
+		animation-fill-mode: forwards;
+		animation-iteration-count: infinite;
+		animation-name: placeHolderShimmer;
+		animation-timing-function: linear;
+		background: #f6f7f8;
+		background: linear-gradient(to right, #afafaf 8%, #9a9999 38%, #afafaf 54%);
+		background-size: auto;
+		position: absolute;
+		width: 300px;
+		height: 420px;
+		z-index: -1;
+		border-radius: 0.5rem;
+	}
+
+	@keyframes placeHolderShimmer {
+		0% {
+			background-position: -468px 0
+		}
+		100% {
+			background-position: 468px 0
+		}
 	}
 </style>
