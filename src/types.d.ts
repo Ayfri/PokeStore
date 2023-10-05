@@ -27,3 +27,9 @@ export interface User {
 	password: string;
 	email: string;
 }
+
+export interface PokemonStats {
+	name: string;
+	number: number;
+	price: number;
+}

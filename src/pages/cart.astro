@@ -1,0 +1,159 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageTitle from "../components/PageTitle.astro";
+import CartCard from "../components/CartCard.astro";
+---
+<Layout title="Cart">
+	<main>
+		<div class="cart-container">
+			<PageTitle title="Cart"/>
+			<div class="bottom-container">
+				<div class="card-container"></div>
+				<div class="purchase-resume-container">
+					<h2>Resume</h2>
+					<div class="purchase-resume-content"></div>
+					<a href="/confirm-address">
+						<button>Proceed to checkout</button>
+					</a>
+				</div>
+			</div>
+		</div>
+	</main>
+</Layout>
+<style>
+    main {
+        margin: auto;
+        padding: .6rem;
+        color: white;
+        font-size: 20px;
+        line-height: 1.6;
+        max-width: 100vw;
+        max-height: 100vh;
+    }
+
+
+    .cart-container {
+        margin: auto 7rem;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .bottom-container {
+        margin-top: 2rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .card-container {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .purchase-resume-container {
+        background-color: #232323;
+        border-radius: 1rem;
+        display: flex;
+        flex-direction: column;
+        padding: 2rem;
+        width: 20rem;
+        height: fit-content;
+    }
+
+    .purchase-resume-container > h2 {
+        margin: 0;
+    }
+
+
+
+    .purchase-resume-container > a > button {
+        background-color: #ff9e00;
+        font-size: 1.2rem;
+        padding: 1rem;
+        border-radius: 1rem;
+        border: none;
+        transition: all 0.2s ease-in-out;
+        width: 100%;
+    }
+
+    .purchase-resume-container > a > button:hover {
+        background-color: #ffb444;
+        cursor: pointer;
+    }
+
+
+</style>
+<style is:inline>
+    .card-container {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .card-container > img {
+        border-radius: 0.5rem;
+        width: 15rem;
+		height: 21rem;
+    }
+
+    .card-info {
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+	.card-info > .price {
+		font-weight: 600;
+	}
+
+	.purchase-resume-content-item {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.purchase-resume-content-item > .item-info {
+		display: flex;
+		flex-direction: row;
+		gap: 1rem;
+	}
+</style>
+<script>
+    import type {Card} from "../types";
+
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]') as Card[];
+
+
+    const response = await fetch('/local-storage',
+        {
+            method: 'POST',
+            body: JSON.stringify(cart),
+        })
+
+
+    const cardContainer = document.querySelector('.card-container') as HTMLDivElement;
+	const purchaseResumeContainer = document.querySelector('.purchase-resume-content') as HTMLDivElement;
+
+
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(await response.text(), 'text/html');
+	console.log(doc)
+
+    const cards = doc.querySelector('.cards') as HTMLDivElement;
+	console.log("cards = ", cards)
+	for (const card of cards.children) {
+		cardContainer.appendChild(card);
+	}
+
+	const purchaseResumeContent = doc.querySelector('.cart-stats') as HTMLDivElement;
+	console.log("cart-stats = ", purchaseResumeContent)
+	for (const item of purchaseResumeContent.children) {
+		purchaseResumeContainer.appendChild(item);
+	}
+
+
+
+
+
+
+</script>
