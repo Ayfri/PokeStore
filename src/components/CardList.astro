@@ -1,19 +1,15 @@
 ---
-import Card from "../pages/index.astro";
+import {Card} from "../types";
 import "../styles/colors.css";
 import {Image} from "astro:assets";
 
-export interface Props {
+interface Props {
 	card: Card;
 }
 
-const {
-	card: {
-		imageUrl, types, rarity, price, pokemon: {
-			name, description
-		}
-	}
-} = Astro.props;
+const {card} = Astro.props;
+const {imageUrl, pokemon, price, rarity, types} = card;
+const {description, name} = pokemon;
 ---
 
 <div class="card-pokestore">
@@ -21,8 +17,10 @@ const {
 	<div class:list={['aura', types.toLowerCase().split(',')]}></div>
 	<div class="loader"></div>
 	<Image
-		src={imageUrl} alt={name} width="300"
+		alt={name}
 		height="420"
+		src={imageUrl}
+		width="300"
 	/>
 	<h2>{name}</h2>
 	<h3>{price}$</h3>
