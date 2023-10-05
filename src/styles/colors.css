@@ -1,57 +1,79 @@
 :root {
     --grass: #78c850;
+    --grass2: #4e8234;
     --fire: #ed4c30;
+    --fire2: #9c531f;
     --lightning: #f8d030;
+    --lightning2: #a1871f;
     --metal: #a8a8c0;
+    --metal2: #6d6d8e;
     --water: #6890f0;
+    --water2: #445e9c;
     --fighting: #e06d11;
+    --fighting2: #7d1f1a;
     --colorless: #a8a878;
+    --colorless2: #6d6d4e;
     --darkness: #595d62;
+    --darkness2: #3a3a3a;
     --psychic: #8e4b9e;
+    --psychic2: #5d2e63;
     --fairy: #c6418a;
+    --fairy2: #9b6470;
     --dragon: #656531;
+    --dragon2: #3f3f1f;
 }
 
 .fire {
     --type-color: var(--fire);
+    --type-color2: var(--fire2);
 }
 
 .water {
     --type-color: var(--water);
+    --type-color2: var(--water2);
 }
 
 .grass {
     --type-color: var(--grass);
+    --type-color2: var(--grass2);
 }
 
 .lightning {
     --type-color: var(--lightning);
+    --type-color2: var(--lightning2);
 }
 
 .metal {
     --type-color: var(--metal);
+    --type-color2: var(--metal2);
 }
 
 .fighting {
     --type-color: var(--fighting);
+    --type-color2: var(--fighting2);
 }
 
 .colorless {
     --type-color: var(--colorless);
+    --type-color2: var(--colorless2);
 }
 
 .darkness {
     --type-color: var(--darkness);
+    --type-color2: var(--darkness2);
 }
 
 .psychic {
     --type-color: var(--psychic);
+    --type-color2: var(--psychic2);
 }
 
 .fairy {
     --type-color: var(--fairy);
+    --type-color2: var(--fairy2);
 }
 
 .dragon {
     --type-color: var(--dragon);
+    --type-color2: var(--dragon2);
 }

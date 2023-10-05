@@ -13,7 +13,7 @@ const filters = [
 const searchParams = Astro.url.searchParams;
 const numeroParam = searchParams.has('numero') ? searchParams.get('numero') : null;
 
-let centeredCardId = Astro.url.searchParams.get('index') ? parseInt(Astro.url.searchParams.get('index')) : 0;
+const centeredCardId = Astro.url.searchParams.get('index') ? parseInt(Astro.url.searchParams.get('index')) : 0;
 
 const setsList = await fetch(`${import.meta.env.API_URL}/sets`);
 const sets = await setsList.json() as Set[];
@@ -53,8 +53,8 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 								height="105"
 							/>)}
 					</div>
-					<div class="center-card">
-						<div class:list={cards[centeredCardId].rarity.toLowerCase()}></div>
+					<div class:list={[`center-card ${cards[centeredCardId].types.toLowerCase().split(',')[0]} ${cards[centeredCardId].rarity.toLowerCase()}`]}>
+						<!--<div class:list={cards[centeredCardId].rarity.toLowerCase()}></div>-->
 						<div
 							class:list={[
 								'card-aura',
@@ -62,6 +62,7 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 							]}
 						></div>
 						<Image
+							class="center-card-image"
 							src={cards[centeredCardId].imageUrl} alt="Charizard"
 							width="300"
 							height="420"
@@ -150,8 +151,54 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 	if (cart.find(c => c.id === parseInt(route.split('/').pop() as string))) {
 		buyButton.classList.add('success');
 	}
+
+	/*CARD EFFECT*/
+	//make the div center-card rotating when the mouse is over it
+	const card = document.querySelector('.center-card') as HTMLDivElement;
+	const style = document.getElementById('card') as HTMLStyleElement;
+	const sheet = style.sheet;
+	console.log(sheet)
+
+	card.addEventListener('mousemove', (e) => {
+		card.classList.remove('inactive');
+		const pos = [e.offsetX, e.offsetY];
+		e.preventDefault();
+		const l = pos[0];
+		const t = pos[1];
+		const h = card.getBoundingClientRect().height;
+		const w = card.getBoundingClientRect().width;
+		const px = Math.abs(Math.floor(100 / w * l) - 100);
+		const py = Math.abs(Math.floor(100 / h * t) - 100);
+		const pa = (50 - px) + (50 - py);
+		// math for gradient / background positions
+		const lp = (50 + (px - 50) / 1.5);
+		const tp = (50 + (py - 50) / 1.5);
+		const px_spark = (50 + (px - 50) / 7);
+		const py_spark = (50 + (py - 50) / 7);
+		const p_opc = 20 + (Math.abs(pa) * 1.5);
+		const ty = ((tp - 50) / 2) * -1;
+		const tx = ((lp - 50) / 1.5) * .5;
+
+		const grad_pos = `background-position: ${lp}% ${tp}%;`;
+		const spark_pos = `background-position: ${px_spark}% ${py_spark}%;`;
+		const opc = `opacity ${p_opc / 100};`;
+		const tf = `transform: rotateX(${ty}deg) rotateY(${tx}deg);`;
+		const style2 = `.holo:hover::before {${grad_pos}} !important`;
+		const style3 = `.holo:hover::after {${spark_pos} ${opc}} !important`;
+		card.setAttribute('style', tf);
+		style.innerHTML = `${style2} \n${style3}}`
+	});
+
+	card.addEventListener('mouseleave', () => {
+		card.classList.add('inactive');
+		card.removeAttribute('style');
+		card.style.transform = `rotateY(0deg) rotateX(0deg)`;
+		style.innerHTML = '';
+	});
+
 </script>
 
+<style is:inline id="card"></style>
 <style>
 	main {
 		margin: auto;
@@ -161,6 +208,10 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 		line-height: 1.6;
 		max-width: 100vw;
 		max-height: 100vh;
+	}
+
+	.inactive {
+		transition: all 3s cubic-bezier(0.22, 1, 0.36, 1) !important;
 	}
 
 	.filter {
@@ -199,6 +250,10 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 		filter: drop-shadow(0px 0px 8px rgb(243, 208, 44)) drop-shadow(3px 3px 4px #000);
 	}
 
+	.set {
+		transition: all .5s cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
 	.set:hover {
 		cursor: pointer;
 		transform: scale(1.05);
@@ -227,6 +282,12 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 
 	.center-card {
 		position: relative;
+		transform-style: preserve-3d;
+	}
+
+	.center-card:hover {
+		border-radius: 0.5rem !important;
+		box-shadow: 0 0 30px -5px #ffffff70,0 0 10px -2px #ffffff9e,0 50px 20px 10px rgb(0,0,0);
 	}
 
 	.center-card > .card-aura {
@@ -240,12 +301,13 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 		left: 50%;
 		top: 50%;
 		transform: translateX(-50%) translateY(-50%);
+		pointer-events: none;
 	}
 
 	.center-card > img {
 		width: 24rem;
 		height: 34rem;
-		border-radius: 0.5rem;
+		border-radius: 0.5rem !important;
 	}
 
 	.bottom-container {
@@ -330,7 +392,7 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 		bottom: 1rem;
 	}
 
-	.holo::after {
+	:global(.holo::after) {
 		background-image: url("https://assets.codepen.io/13471/sparkles.gif"), url(https://assets.codepen.io/13471/holo.png), linear-gradient(125deg, #ff008450 15%, #fca40040 30%, #ffff0030 40%, #00ff8a20 60%, #00cfff40 70%, #cc4cfa50 85%);
 		background-position: 50% 50%;
 		background-size: 160%;
@@ -339,6 +401,7 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 		opacity: 70%;
 		transition: all 0.33s ease;
 		z-index: 2;
+		border-radius: 2.5rem !important;
 	}
 
 	.holo::before,
@@ -353,200 +416,42 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 		transition: all 0.33s ease;
 		width: 24rem;
 		height: 34rem;
-		border-radius: 0.5rem;
+		border-radius: 0.5rem !important;
 	}
 
-	@-webkit-keyframes holoSparkle {
-		0%, 100% {
-			opacity: 0.75;
-			background-position: 50% 50%;
-			filter: brightness(1.2) contrast(1.25);
-		}
-		5%, 8% {
-			opacity: 1;
-			background-position: 40% 40%;
-			filter: brightness(0.8) contrast(1.2);
-		}
-		13%, 16% {
-			opacity: 0.5;
-			background-position: 50% 50%;
-			filter: brightness(1.2) contrast(0.8);
-		}
-		35%, 38% {
-			opacity: 1;
-			background-position: 60% 60%;
-			filter: brightness(1) contrast(1);
-		}
-		55% {
-			opacity: 0.33;
-			background-position: 45% 45%;
-			filter: brightness(1.2) contrast(1.25);
-		}
+	.holo.active:after,
+	.holo:hover:after {
+		filter: brightness(1) contrast(1);
+		opacity: 1;
+		border-radius: 0.5rem !important;
 	}
 
-	@keyframes holoSparkle {
-		0%, 100% {
-			opacity: 0.75;
-			background-position: 50% 50%;
-			filter: brightness(1.2) contrast(1.25);
-		}
-		5%, 8% {
-			opacity: 1;
-			background-position: 40% 40%;
-			filter: brightness(0.8) contrast(1.2);
-		}
-		13%, 16% {
-			opacity: 0.5;
-			background-position: 50% 50%;
-			filter: brightness(1.2) contrast(0.8);
-		}
-		35%, 38% {
-			opacity: 1;
-			background-position: 60% 60%;
-			filter: brightness(1) contrast(1);
-		}
-		55% {
-			opacity: 0.33;
-			background-position: 45% 45%;
-			filter: brightness(1.2) contrast(1.25);
-		}
+	.holo.active,
+	.holo:hover {
+		-webkit-animation: none;
+		animation: none;
+		transition: box-shadow 0.1s ease-out;
+		border-radius: 0.5rem !important;
 	}
 
-	@-webkit-keyframes holoGradient {
-		0%, 100% {
-			opacity: 0.5;
-			background-position: 50% 50%;
-			filter: brightness(0.5) contrast(1);
-		}
-		5%, 9% {
-			background-position: 100% 100%;
-			opacity: 1;
-			filter: brightness(0.75) contrast(1.25);
-		}
-		13%, 17% {
-			background-position: 0 0;
-			opacity: 0.88;
-		}
-		35%, 39% {
-			background-position: 100% 100%;
-			opacity: 1;
-			filter: brightness(0.5) contrast(1);
-		}
-		55% {
-			background-position: 0 0;
-			opacity: 1;
-			filter: brightness(0.75) contrast(1.25);
-		}
+	:global(.holo:hover::before) {
+		-webkit-animation: none;
+		animation: none;
+		background-image: linear-gradient(110deg, transparent 25%, var(--type-color) 48%, var(--type-color2) 52%, transparent 75%);
+		background-position: 50% 50%;
+		background-size: 250% 250%;
+		opacity: 0.88;
+		filter: brightness(0.66) contrast(1.33);
+		transition: none;
+		border-radius: 0.5rem !important;
 	}
 
-	@keyframes holoGradient {
-		0%, 100% {
-			opacity: 0.5;
-			background-position: 50% 50%;
-			filter: brightness(0.5) contrast(1);
+	@keyframes placeHolderShimmer {
+		0% {
+			background-position: -468px 0
 		}
-		5%, 9% {
-			background-position: 100% 100%;
-			opacity: 1;
-			filter: brightness(0.75) contrast(1.25);
-		}
-		13%, 17% {
-			background-position: 0 0;
-			opacity: 0.88;
-		}
-		35%, 39% {
-			background-position: 100% 100%;
-			opacity: 1;
-			filter: brightness(0.5) contrast(1);
-		}
-		55% {
-			background-position: 0 0;
-			opacity: 1;
-			filter: brightness(0.75) contrast(1.25);
-		}
-	}
-
-	@-webkit-keyframes holoCard {
-		0%, 100% {
-			transform: rotateZ(0deg) rotateX(0deg) rotateY(0deg);
-		}
-		5%, 8% {
-			transform: rotateZ(0deg) rotateX(6deg) rotateY(-20deg);
-		}
-		13%, 16% {
-			transform: rotateZ(0deg) rotateX(-9deg) rotateY(32deg);
-		}
-		35%, 38% {
-			transform: rotateZ(3deg) rotateX(12deg) rotateY(20deg);
-		}
-		55% {
-			transform: rotateZ(-3deg) rotateX(-12deg) rotateY(-27deg);
-		}
-	}
-
-	@keyframes holoCard {
-		0%, 100% {
-			transform: rotateZ(0deg) rotateX(0deg) rotateY(0deg);
-		}
-		5%, 8% {
-			transform: rotateZ(0deg) rotateX(6deg) rotateY(-20deg);
-		}
-		13%, 16% {
-			transform: rotateZ(0deg) rotateX(-9deg) rotateY(32deg);
-		}
-		35%, 38% {
-			transform: rotateZ(3deg) rotateX(12deg) rotateY(20deg);
-		}
-		55% {
-			transform: rotateZ(-3deg) rotateX(-12deg) rotateY(-27deg);
-		}
-	}
-
-	@-webkit-keyframes rubberBand {
-		from {
-			transform: scale3d(1, 1, 1);
-		}
-		30% {
-			transform: scale3d(1.25, 0.75, 1);
-		}
-		40% {
-			transform: scale3d(0.75, 1.25, 1);
-		}
-		50% {
-			transform: scale3d(1.15, 0.85, 1);
-		}
-		65% {
-			transform: scale3d(0.95, 1.05, 1);
-		}
-		75% {
-			transform: scale3d(1.05, 0.95, 1);
-		}
-		to {
-			transform: scale3d(1, 1, 1);
-		}
-	}
-
-	@keyframes rubberBand {
-		from {
-			transform: scale3d(1, 1, 1);
-		}
-		30% {
-			transform: scale3d(1.25, 0.75, 1);
-		}
-		40% {
-			transform: scale3d(0.75, 1.25, 1);
-		}
-		50% {
-			transform: scale3d(1.15, 0.85, 1);
-		}
-		65% {
-			transform: scale3d(0.95, 1.05, 1);
-		}
-		75% {
-			transform: scale3d(1.05, 0.95, 1);
-		}
-		to {
-			transform: scale3d(1, 1, 1);
+		100% {
+			background-position: 468px 0
 		}
 	}
 
@@ -564,14 +469,5 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 		height: 420px;
 		z-index: -1;
 		border-radius: 0.5rem;
-	}
-
-	@keyframes placeHolderShimmer {
-		0% {
-			background-position: -468px 0
-		}
-		100% {
-			background-position: 468px 0
-		}
 	}
 </style>
