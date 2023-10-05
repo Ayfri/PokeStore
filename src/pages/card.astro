@@ -4,9 +4,12 @@ import PageTitle from "../components/PageTitle.astro";
 import PokemonType from "../components/PokemonType.astro";
 import "../styles/colors.css";
 import {Image} from "astro:assets";
-import type {Card, Pokemon, Set} from "../types"
+import type {Card, Pokemon, Set} from "../types";
 
-const filters = ['numero', 'index'];
+const filters = [
+	'numero',
+	'index',
+];
 const searchParams = Astro.url.searchParams;
 const numeroParam = searchParams.has('numero') ? searchParams.get('numero') : null;
 
@@ -30,7 +33,6 @@ for (const [key, _] of searchParams.entries()) {
 const response = await fetch(`${import.meta.env.API_URL}/cards?${searchParams.toString()}`);
 let cards = await response.json() as Card[];
 cards = cards.sort((a, b) => a.pokemon.numero - b.pokemon.numero || b.price - a.price);
-console.log(cards);
 
 const setLogoFirstHalf = cards.slice(0, 5).map(card => card.set.imageUrl);
 const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
@@ -52,7 +54,12 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 							/>)}
 					</div>
 					<div class="center-card">
-						<div class:list={['card-aura', cards[centeredCardId].types.toLowerCase().split(',')[0]]}></div>
+						<div
+							class:list={[
+								'card-aura',
+								cards[centeredCardId].types.toLowerCase().split(',')[0],
+							]}
+						></div>
 						<Image
 							src={cards[centeredCardId].imageUrl} alt="Charizard"
 							width="300"
@@ -108,7 +115,7 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 			const url = new URL(window.location.href);
 			url.searchParams.set('index', index);
 			window.location.href = url.toString();
-		})
+		});
 	});
 </script>
 

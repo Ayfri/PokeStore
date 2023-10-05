@@ -20,11 +20,8 @@ export const onRequest: MiddlewareResponseHandler = async (context, next) => {
 		]) ?? [],
 	);
 
-	console.log('Cookies:', cookiesAsObject);
-
 	if ('session-token' in cookiesAsObject) {
 		const response = await fetch(`${import.meta.env.API_URL}/me`, {
-			// credentials: 'include',
 			headers: {
 				'cookie': Object.entries(cookiesAsObject).map(([name, value]) => `${name}=${value}`).join('; '),
 			},
