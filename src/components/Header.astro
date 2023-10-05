@@ -35,8 +35,11 @@ const username = locals.user?.username ?? '';
 	}
 </header>
 
-<script is:inline defer>
-	const logout = document.getElementById('logout');
+<script>
+	import {getCart} from '../utils/cart.js';
+
+	const cartCount = document.querySelector('#cart-count') as HTMLSpanElement;
+	const logout = document.querySelector('#logout') as HTMLAnchorElement;
 	logout?.addEventListener('click', async (e) => {
 		e.preventDefault();
 		const response = await fetch(logout.href, {
@@ -48,6 +51,11 @@ const username = locals.user?.username ?? '';
 			window.location.href = '/';
 		}
 	});
+
+	const cart = getCart();
+	if (cart.length > 0) {
+		cartCount.innerText = cart.length.toString();
+	}
 </script>
 
 <style>

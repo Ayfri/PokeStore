@@ -103,6 +103,9 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 	</main>
 </Layout>
 <script>
+	import {getCart} from '../utils/cart';
+	import type {Card} from '../types';
+
 	const sets = document.querySelectorAll('.set') as NodeListOf<HTMLImageElement>;
 	const url = new URL(window.location.href);
 	sets.forEach(set => {
@@ -121,7 +124,7 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 		});
 	});
 
-	const cart = JSON.parse(localStorage.getItem('cart') || '[]') as Card[];
+	const cart = getCart();
 	const buyButton = document.querySelector('#add-to-card') as HTMLButtonElement;
 	const cartCount = document.querySelector('#cart-count') as HTMLSpanElement;
 	const route = buyButton.dataset.route;
@@ -138,10 +141,6 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 
 	if (cart.find(c => c.id === parseInt(route.split('/').pop() as string))) {
 		buyButton.classList.add('success');
-	}
-
-	if (cart.length > 0) {
-		cartCount.innerText = cart.length.toString();
 	}
 </script>
 
