@@ -1,42 +1,43 @@
 ---
-interface Props {
-    title: string;
+import {HTMLAttributes} from 'astro/types';
+interface Props extends HTMLAttributes<'div'> {
+	title: string;
 }
 
 const {title} = Astro.props;
 ---
-
 <div class="title">
 	<h1>{title}</h1>
 	<h2>{title}</h2>
 </div>
+
 <style>
-    .title {
-        position: relative;
-        width: fit-content;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+	.title {
+		position: relative;
+		width: fit-content;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 	}
 
-    .title > h1 {
-        position: absolute;
-	    color: rgba(24, 24, 24, 0.8);
-        font-size: 7rem;
-        top: -2.5rem;
-        width: max-content;
+	.title > h1 {
+		position: absolute;
+		color: rgba(24, 24, 24, 0.8);
+		font-size: 7rem;
+		top: -2.5rem;
+		width: max-content;
 		z-index: -1;
-    }
+	}
 
-    .title > h2 {
-        color: #ffffff;
-        font-size: 4rem;
-    }
+	.title > h2 {
+		color: #ffffff;
+		font-size: 4rem;
+	}
 
-    .title > h1, .title > h2 {
-        margin: 0;
-        padding: 0;
-        user-select: none;
+	.title > h1, .title > h2 {
+		margin: 0;
+		padding: 0;
+		user-select: none;
 
-    }
+	}
 </style>
