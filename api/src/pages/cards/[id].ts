@@ -16,7 +16,7 @@ export async function GET({params}: GetParameters) {
 		include: {
 			pokemon: true,
 			set: true,
-		}
+		},
 	});
 
 	return jsonResponse(cards);

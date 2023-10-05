@@ -94,10 +94,8 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 						</p>
 					</div>
 					<div class="purchase-button">
-						<p>
-							{cards[centeredCardId].price} $
-						</p>
-						<button>
+						<p>{cards[centeredCardId].price} $</p>
+						<button id="add-to-card" data-route={`${import.meta.env.API_URL}/cards/${cards[centeredCardId].id}`}>
 							Add to cart
 						</button>
 					</div>
@@ -117,6 +115,29 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 			window.location.href = url.toString();
 		});
 	});
+
+	const cart = JSON.parse(localStorage.getItem('cart') || '[]') as Card[];
+	const buyButton = document.querySelector('#add-to-card') as HTMLButtonElement;
+	const cartCount = document.querySelector('#cart-count') as HTMLSpanElement;
+	const route = buyButton.dataset.route;
+	buyButton.addEventListener('click', async () => {
+		const response = await fetch(route);
+		const card = await response.json() as Card;
+		if (cart.find(c => c.id === card.id)) return;
+		cart.push(card);
+
+		localStorage.setItem('cart', JSON.stringify(cart));
+		buyButton.classList.add('success');
+		cartCount.innerText = cart.length.toString();
+	}, {once: true});
+
+	if (cart.find(c => c.id === parseInt(route.split('/').pop() as string))) {
+		buyButton.classList.add('success');
+	}
+
+	if (cart.length > 0) {
+		cartCount.innerText = cart.length.toString();
+	}
 </script>
 
 <style>
@@ -181,7 +202,6 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 		object-fit: contain;
 	}
 
-
 	.center-card {
 		position: relative;
 	}
@@ -217,7 +237,7 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 		height: 100%;
 		width: 100%;
 		display: flex;
-		gap: 10rem;
+		gap: 5rem;
 		flex-direction: row;
 		justify-content: space-between;
 	}
@@ -247,7 +267,7 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 	.purchase-button {
 		background-color: #232323;
 		border-radius: 2rem;
-		width: 15%;
+		width: 15rem;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -258,18 +278,24 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 		margin: 0;
 	}
 
-	.purchase-button > button {
+	#add-to-card {
+		border: none;
+		border-radius: 1rem;
 		background-color: #ff9e00;
+		cursor: pointer;
 		font-size: 1.2rem;
 		padding: 1rem;
-		border-radius: 1rem;
-		border: none;
 		transition: all 0.2s ease-in-out;
 	}
 
-	.purchase-button > button:hover {
+	#add-to-card:hover {
 		background-color: #ffb444;
-		cursor: pointer;
+	}
+
+	#add-to-card.success {
+		background-color: #45d045;
+		cursor: not-allowed;
+		opacity: 0.5;
 	}
 
 	.back-button {

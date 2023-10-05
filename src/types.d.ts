@@ -1,10 +1,11 @@
 export interface Card {
+	id: number;
 	imageUrl: string;
-	types: string;
-	rarity: string;
-	price: number;
 	pokemon: Pokemon;
+	price: number;
+	rarity: string;
 	set: Set;
+	types: string;
 }
 
 export interface Pokemon {
