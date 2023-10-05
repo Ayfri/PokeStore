@@ -55,7 +55,12 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 					</div>
 					<div class="center-card">
 						<div class:list={cards[centeredCardId].rarity.toLowerCase()}></div>
-						<div class:list={['card-aura', cards[centeredCardId].types.toLowerCase().split(',')[0]]}></div>
+						<div
+							class:list={[
+								'card-aura',
+								cards[centeredCardId].types.toLowerCase().split(',')[0],
+							]}
+						></div>
 						<Image
 							src={cards[centeredCardId].imageUrl} alt="Charizard"
 							width="300"
@@ -91,8 +96,10 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 					</div>
 					<div class="purchase-button">
 						<p>{cards[centeredCardId].price} $</p>
-						<button id="add-to-card"
-						        data-route={`${import.meta.env.API_URL}/cards/${cards[centeredCardId].id}`}>
+						<button
+							id="add-to-card"
+							data-route={`${import.meta.env.API_URL}/cards/${cards[centeredCardId].id}`}
+						>
 							Add to cart
 						</button>
 					</div>
@@ -131,6 +138,7 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 	buyButton.addEventListener('click', async () => {
 		const response = await fetch(route);
 		const card = await response.json() as Card;
+
 		if (cart.find(c => c.id === card.id)) return;
 		cart.push(card);
 
@@ -188,7 +196,7 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 
 	.shadow {
 		transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-		filter: drop-shadow(0px 0px 8px rgb(243,208,44)) drop-shadow(3px 3px 4px #000);
+		filter: drop-shadow(0px 0px 8px rgb(243, 208, 44)) drop-shadow(3px 3px 4px #000);
 	}
 
 	.set:hover {

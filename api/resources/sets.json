@@ -28,10 +28,6 @@
     "logo": "https://images.pokemontcg.io/ex5/logo.png"
   },
   {
-    "name": "POP Series 1",
-    "logo": "https://images.pokemontcg.io/pop1/logo.png"
-  },
-  {
     "name": "Team Rocket Returns",
     "logo": "https://images.pokemontcg.io/ex7/logo.png"
   },
@@ -70,10 +66,6 @@
   {
     "name": "Great Encounters",
     "logo": "https://images.pokemontcg.io/dp4/logo.png"
-  },
-  {
-    "name": "POP Series 7",
-    "logo": "https://images.pokemontcg.io/pop7/logo.png"
   },
   {
     "name": "Majestic Dawn",
@@ -140,22 +132,6 @@
     "logo": "https://images.pokemontcg.io/swsh45sv/logo.png"
   },
   {
-    "name": "Battle Styles",
-    "logo": "https://images.pokemontcg.io/swsh5/logo.png"
-  },
-  {
-    "name": "EX Trainer Kit Latias",
-    "logo": "https://images.pokemontcg.io/tk1a/logo.png"
-  },
-  {
-    "name": "Pokémon GO",
-    "logo": "https://images.pokemontcg.io/pgo/logo.png"
-  },
-  {
-    "name": "Silver Tempest",
-    "logo": "https://images.pokemontcg.io/swsh12/logo.png"
-  },
-  {
     "name": "Holon Phantoms",
     "logo": "https://images.pokemontcg.io/ex13/logo.png"
   },
@@ -182,14 +158,6 @@
   {
     "name": "HS—Undaunted",
     "logo": "https://images.pokemontcg.io/hgss3/logo.png"
-  },
-  {
-    "name": "McDonald's Collection 2011",
-    "logo": "https://images.pokemontcg.io/mcd11/logo.png"
-  },
-  {
-    "name": "Emerging Powers",
-    "logo": "https://images.pokemontcg.io/bw2/logo.png"
   },
   {
     "name": "Plasma Blast",
@@ -224,52 +192,8 @@
     "logo": "https://images.pokemontcg.io/sm7/logo.png"
   },
   {
-    "name": "Shining Fates",
-    "logo": "https://images.pokemontcg.io/swsh45/logo.png"
-  },
-  {
-    "name": "Celebrations: Classic Collection",
-    "logo": "https://images.pokemontcg.io/cel25c/logo.png"
-  },
-  {
-    "name": "McDonald's Collection 2014",
-    "logo": "https://images.pokemontcg.io/mcd14/logo.png"
-  },
-  {
-    "name": "McDonald's Collection 2017",
-    "logo": "https://images.pokemontcg.io/mcd17/logo.png"
-  },
-  {
-    "name": "McDonald's Collection 2021",
-    "logo": "https://images.pokemontcg.io/mcd21/logo.png"
-  },
-  {
-    "name": "EX Trainer Kit 2 Plusle",
-    "logo": "https://images.pokemontcg.io/tk2a/logo.png"
-  },
-  {
-    "name": "EX Trainer Kit 2 Minun",
-    "logo": "https://images.pokemontcg.io/tk2b/logo.png"
-  },
-  {
     "name": "Brilliant Stars",
     "logo": "https://images.pokemontcg.io/swsh9/logo.png"
-  },
-  {
-    "name": "Lost Origin Trainer Gallery",
-    "logo": "https://images.pokemontcg.io/swsh11tg/logo.png"
-  },
-  {
-    "name": "Crown Zenith Galarian Gallery",
-    "logo": "https://images.pokemontcg.io/swsh12pt5gg/logo.png"
-  },
-  {
-    "name": "Scarlet & Violet",
-    "logo": "https://images.pokemontcg.io/sv1/logo.png"
-  },
-  {
-    "name": "Scarlet & Violet Black Star Promos",
-    "logo": "https://images.pokemontcg.io/svp/logo.png"
   },
   {
     "name": "Wizards Black Star Promos",
@@ -324,10 +248,6 @@
     "logo": "https://images.pokemontcg.io/ex16/logo.png"
   },
   {
-    "name": "POP Series 8",
-    "logo": "https://images.pokemontcg.io/pop8/logo.png"
-  },
-  {
     "name": "Stormfront",
     "logo": "https://images.pokemontcg.io/dp7/logo.png"
   },
@@ -346,10 +266,6 @@
   {
     "name": "Call of Legends",
     "logo": "https://images.pokemontcg.io/col1/logo.png"
-  },
-  {
-    "name": "Noble Victories",
-    "logo": "https://images.pokemontcg.io/bw3/logo.png"
   },
   {
     "name": "Plasma Storm",
@@ -402,34 +318,6 @@
   {
     "name": "Vivid Voltage",
     "logo": "https://images.pokemontcg.io/swsh4/logo.png"
-  },
-  {
-    "name": "Evolving Skies",
-    "logo": "https://images.pokemontcg.io/swsh7/logo.png"
-  },
-  {
-    "name": "Celebrations",
-    "logo": "https://images.pokemontcg.io/cel25/logo.png"
-  },
-  {
-    "name": "McDonald's Collection 2018",
-    "logo": "https://images.pokemontcg.io/mcd18/logo.png"
-  },
-  {
-    "name": "Fusion Strike",
-    "logo": "https://images.pokemontcg.io/swsh8/logo.png"
-  },
-  {
-    "name": "Pokémon Futsal Collection",
-    "logo": "https://images.pokemontcg.io/fut20/logo.png"
-  },
-  {
-    "name": "Astral Radiance",
-    "logo": "https://images.pokemontcg.io/swsh10/logo.png"
-  },
-  {
-    "name": "McDonald's Collection 2022",
-    "logo": "https://images.pokemontcg.io/mcd22/logo.png"
   },
   {
     "name": "Base",
@@ -488,20 +376,12 @@
     "logo": "https://images.pokemontcg.io/bwp/logo.png"
   },
   {
-    "name": "Black & White",
-    "logo": "https://images.pokemontcg.io/bw1/logo.png"
-  },
-  {
     "name": "Next Destinies",
     "logo": "https://images.pokemontcg.io/bw4/logo.png"
   },
   {
     "name": "Dark Explorers",
     "logo": "https://images.pokemontcg.io/bw5/logo.png"
-  },
-  {
-    "name": "McDonald's Collection 2012",
-    "logo": "https://images.pokemontcg.io/mcd12/logo.png"
   },
   {
     "name": "Dragons Exalted",
@@ -566,54 +446,6 @@
   {
     "name": "Rebel Clash",
     "logo": "https://images.pokemontcg.io/swsh2/logo.png"
-  },
-  {
-    "name": "Chilling Reign",
-    "logo": "https://images.pokemontcg.io/swsh6/logo.png"
-  },
-  {
-    "name": "McDonald's Collection 2015",
-    "logo": "https://images.pokemontcg.io/mcd15/logo.png"
-  },
-  {
-    "name": "Best of Game",
-    "logo": "https://images.pokemontcg.io/bp/logo.png"
-  },
-  {
-    "name": "EX Trainer Kit Latios",
-    "logo": "https://images.pokemontcg.io/tk1b/logo.png"
-  },
-  {
-    "name": "Brilliant Stars Trainer Gallery",
-    "logo": "https://images.pokemontcg.io/swsh9tg/logo.png"
-  },
-  {
-    "name": "Astral Radiance Trainer Gallery",
-    "logo": "https://images.pokemontcg.io/swsh10tg/logo.png"
-  },
-  {
-    "name": "Lost Origin",
-    "logo": "https://images.pokemontcg.io/swsh11/logo.png"
-  },
-  {
-    "name": "Silver Tempest Trainer Gallery",
-    "logo": "https://images.pokemontcg.io/swsh12tg/logo.png"
-  },
-  {
-    "name": "Crown Zenith",
-    "logo": "https://images.pokemontcg.io/swsh12pt5/logo.png"
-  },
-  {
-    "name": "Paldea Evolved",
-    "logo": "https://images.pokemontcg.io/sv2/logo.png"
-  },
-  {
-    "name": "Scarlet & Violet Energies",
-    "logo": "https://images.pokemontcg.io/sve/logo.png"
-  },
-  {
-    "name": "Obsidian Flames",
-    "logo": "https://images.pokemontcg.io/sv3/logo.png"
   },
   {
     "name": "151",
