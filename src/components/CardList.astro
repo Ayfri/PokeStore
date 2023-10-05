@@ -9,31 +9,33 @@ interface Props {
 
 const {card} = Astro.props;
 const {
-	imageUrl,
-	pokemon,
-	price,
-	rarity,
-	types,
+    imageUrl,
+    pokemon,
+    price,
+    rarity,
+    types,
 } = card;
 const {
-	description,
-	name,
+    description,
+    name,
 } = pokemon;
 ---
 
-<div class="card-pokestore">
-	<div class:list={rarity.toLowerCase()}></div>
-	<div class:list={['aura', types.toLowerCase().split(',')]}></div>
-	<div class="loader"></div>
-	<Image
-		alt={name}
-		height="420"
-		src={imageUrl}
-		width="300"
-	/>
-	<h2>{name}</h2>
-	<h3>{price}$</h3>
-</div>
+<a class="card-link" href={`/card?numero=${pokemon.numero}`}>
+	<div class="card-pokestore">
+		<div class:list={rarity.toLowerCase()}></div>
+		<div class:list={['aura', types.toLowerCase().split(',')]}></div>
+		<div class="loader"></div>
+		<Image
+				alt={name}
+				height="420"
+				src={imageUrl}
+				width="300"
+		/>
+		<h2>{name}</h2>
+		<h3>{price}$</h3>
+	</div>
+</a>
 <style>
     .card-link {
         text-decoration: none;
@@ -56,20 +58,20 @@ const {
         font-weight: 400;
     }
 
-	.card-pokestore {
-		align-items: center;
-		cursor: pointer;
-		display: flex;
-		flex-flow: column;
-		padding: 2rem;
-		position: relative;
-		transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1);
-		width: fit-content;
-	}
+    .card-pokestore {
+        align-items: center;
+        cursor: pointer;
+        display: flex;
+        flex-flow: column;
+        padding: 2rem;
+        position: relative;
+        transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+        width: fit-content;
+    }
 
-	.card-pokestore:hover {
-		transform: scale(1.025);
-	}
+    .card-pokestore:hover {
+        transform: scale(1.025);
+    }
 
     .aura {
         background: var(--type-color);
