@@ -154,7 +154,6 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 	}
 
 	.left-card, .right-card {
-		height: 100%;
 		width: 60%;
 		display: flex;
 		align-items: center;
@@ -163,6 +162,9 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set.imageUrl);
 		background-color: rgba(35, 35, 35, 0.75);
 		border-radius: 1rem;
 		border: #f3d02c solid 6px;
+		padding: 1rem;
+		height: 34rem;
+		box-sizing: border-box;
 	}
 
 	.left-card > img, .right-card > img {
