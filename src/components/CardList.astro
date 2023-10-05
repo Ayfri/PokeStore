@@ -12,8 +12,8 @@ const {imageUrl, pokemon, price, rarity, types} = card;
 const {description, name} = pokemon;
 ---
 
-<div class="card-pokestore">
-	<a href={`/card?numero=${card.pokemon.numero}`}>
+<a class="card-link" href={`/card?numero=${card.pokemon.numero}`}>
+	<div class="card-pokestore">
 		<div class:list={rarity.toLowerCase()}></div>
 		<div class:list={['aura', types.toLowerCase().split(',')]}></div>
 		<div class="loader"></div>
@@ -25,18 +25,18 @@ const {description, name} = pokemon;
 		/>
 		<h2>{name}</h2>
 		<h3>{price}$</h3>
-	</a>
-</div>
+	</div>
+</a>
 <style>
 
-	.card-pokestore > a {
-		text-decoration: none;
-		color: white;
-	}
+    .card-link {
+        text-decoration: none;
+        color: white;
+    }
 
     h2, h3 {
         margin: 0;
-		text-align: center;
+        text-align: center;
 
     }
 
