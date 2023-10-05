@@ -7,7 +7,8 @@ import type {Card, Set} from "../types";
 
 
 
-const filters = ['numero', 'types', 'rarity', 'set', 'name', 'sort'];
+const filters = ['numero', 'types', 'rarity', 'set', 'name', 'sort', 'order'];
+const orders = ['asc', 'desc'];
 
 const typesList = await fetch(`${import.meta.env.API_URL}/types`);
 const types = await typesList.json() as string[];
@@ -25,6 +26,7 @@ const setParam = searchParams.has('set') ? searchParams.get('set') : null;
 const numeroParam = searchParams.has('numero') ? searchParams.get('numero') : null;
 const nameParam = searchParams.has('name') ? searchParams.get('name') : null;
 const sortParam = searchParams.has('sort') ? searchParams.get('sort') : null;
+const orderParam = searchParams.has('order') ? searchParams.get('order') : null;
 
 if (typesParam && (typesParam === 'all' || !types.map(type => type.toLowerCase()).includes(typesParam))) {
 	Astro.url.searchParams.delete('types');
@@ -46,6 +48,16 @@ if (numeroParam && !(numeroParam >= 1 && numeroParam <= 151)) {
 	return Astro.redirect(Astro.url.href);
 }
 
+if (orderParam && !orders.includes(orderParam)) {
+	Astro.url.searchParams.delete('order');
+	return Astro.redirect(Astro.url.href);
+}
+
+if (!orderParam) {
+	Astro.url.searchParams.set('order', 'asc');
+	return Astro.redirect(Astro.url.href);
+}
+
 for (const [key, _] of searchParams.entries()) {
 	if (!filters.includes(key)) {
 		Astro.url.searchParams.delete(key);
@@ -56,24 +68,42 @@ for (const [key, _] of searchParams.entries()) {
 const response = await fetch(`${import.meta.env.API_URL}/cards?${searchParams.toString()}`);
 let cards = await response.json() as Card[];
 
-switch (sortParam) {
-	case 'numero':
-		Astro.url.searchParams.delete('sort');
-		return Astro.redirect(Astro.url.href);
-	case 'price':
-		cards = cards.sort((a, b) => b.price - a.price);
-		break;
-	case 'name':
-		cards = cards.sort((a, b) => a.pokemon.name.localeCompare(b.pokemon.name));
-		break;
-	default:
-		cards = cards.sort((a, b) => a.pokemon.numero - b.pokemon.numero || b.price - a.price);
-		break;
+cards = cards.sort((a, b) => a.pokemon.numero - b.pokemon.numero || b.price - a.price);
+const searchParamSize = new Map(searchParams.entries()).size;
+
+// keep first card of each Pokémon
+if (searchParamSize === 0 || (sortParam && searchParamSize === 1) || (sortParam && orderParam && searchParamSize === 2) || (orderParam && searchParamSize === 1)) {
+	cards = cards.filter((card, index, self) => self.findIndex(c => c.pokemon.numero === card.pokemon.numero) === index);
 }
 
-const searchParamSize = new Map(searchParams.entries()).size;
-if (searchParamSize === 0 || (sortParam && searchParamSize === 1)) {
-	cards = cards.filter((card, index, self) => self.findIndex(c => c.pokemon.numero === card.pokemon.numero) === index);
+if (orderParam === 'desc' && searchParamSize === 1) {
+	cards = cards.reverse();
+}
+
+if (searchParamSize === 1 && orderParam === 'asc') {
+	Astro.url.searchParams.set('sort', 'numero');
+	return Astro.redirect(Astro.url.href);
+}
+
+switch (sortParam) {
+	case 'numero':
+		cards = cards.sort((a, b) => a.pokemon.numero - b.pokemon.numero || a.price - b.price);
+		if (orderParam === 'desc') {
+			cards = cards.sort((a, b) => b.pokemon.numero - a.pokemon.numero || b.price - a.price);
+		}
+		break;
+	case 'price':
+		cards = cards.sort((a, b) => a.price - b.price || a.pokemon.numero - b.pokemon.numero);
+		if (orderParam === 'desc') {
+			cards = cards.sort((a, b) => b.price - a.price || a.pokemon.numero - b.pokemon.numero);
+		}
+		break;
+	case 'name':
+		cards = cards.sort((a, b) => a.pokemon.name.localeCompare(b.pokemon.name) || b.price - a.price);
+		if (orderParam === 'desc') {
+			cards = cards.sort((a, b) => b.pokemon.name.localeCompare(a.pokemon.name) || b.price - a.price);
+		}
+		break;
 }
 ---
 
@@ -91,13 +121,7 @@ if (searchParamSize === 0 || (sortParam && searchParamSize === 1)) {
 				<PageTitle title="Card List"></PageTitle>
 				<div class="filters-container">
 					<div class="filters-top">
-						<button class="sort-order-btn filter">
-							<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512">
-								<path
-									d="M151.6 42.4C145.5 35.8 137 32 128 32s-17.5 3.8-23.6 10.4l-88 96c-11.9 13-11.1 33.3 2 45.2s33.3 11.1 45.2-2L96 146.3V448c0 17.7 14.3 32 32 32s32-14.3 32-32V146.3l32.4 35.4c11.9 13 32.2 13.9 45.2 2s13.9-32.2 2-45.2l-88-96zM320 480h32c17.7 0 32-14.3 32-32s-14.3-32-32-32H320c-17.7 0-32 14.3-32 32s14.3 32 32 32zm0-128h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H320c-17.7 0-32 14.3-32 32s14.3 32 32 32zm0-128H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H320c-17.7 0-32 14.3-32 32s14.3 32 32 32zm0-128H544c17.7 0 32-14.3 32-32s-14.3-32-32-32H320c-17.7 0-32 14.3-32 32s14.3 32 32 32z"/>
-							</svg>
-							<!--<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512">&lt;!&ndash;! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. &ndash;&gt;<path d="M151.6 469.6C145.5 476.2 137 480 128 480s-17.5-3.8-23.6-10.4l-88-96c-11.9-13-11.1-33.3 2-45.2s33.3-11.1 45.2 2L96 365.7V64c0-17.7 14.3-32 32-32s32 14.3 32 32V365.7l32.4-35.4c11.9-13 32.2-13.9 45.2-2s13.9 32.2 2 45.2l-88 96zM320 480c-17.7 0-32-14.3-32-32s14.3-32 32-32h32c17.7 0 32 14.3 32 32s-14.3 32-32 32H320zm0-128c-17.7 0-32-14.3-32-32s14.3-32 32-32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H320zm0-128c-17.7 0-32-14.3-32-32s14.3-32 32-32H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H320zm0-128c-17.7 0-32-14.3-32-32s14.3-32 32-32H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H320z"/></svg>-->
-						</button>
+						<button class="sort-order-btn filter"></button>
 						<button class="reset-btn filter">Reset filters</button>
 						<input type="text" placeholder="ID" name="numero" class="filter">
 						<input type="text" placeholder="Name" name="name" class="filter">
@@ -206,6 +230,26 @@ if (searchParamSize === 0 || (sortParam && searchParamSize === 1)) {
 
 		resetBtn.addEventListener('click', () => {
 			window.location.href = new URL(window.location.href).origin;
+		});
+
+		/*ORDER BUTTON*/
+		const orderBtn = document.querySelector('.sort-order-btn') as HTMLButtonElement;
+		const url = new URL(window.location.href);
+		const order = url.searchParams.get('order');
+
+		if (order === 'asc') {
+			orderBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><path d="M151.6 42.4C145.5 35.8 137 32 128 32s-17.5 3.8-23.6 10.4l-88 96c-11.9 13-11.1 33.3 2 45.2s33.3 11.1 45.2-2L96 146.3V448c0 17.7 14.3 32 32 32s32-14.3 32-32V146.3l32.4 35.4c11.9 13 32.2 13.9 45.2 2s13.9-32.2 2-45.2l-88-96zM320 480h32c17.7 0 32-14.3 32-32s-14.3-32-32-32H320c-17.7 0-32 14.3-32 32s14.3 32 32 32zm0-128h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H320c-17.7 0-32 14.3-32 32s14.3 32 32 32zm0-128H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H320c-17.7 0-32 14.3-32 32s14.3 32 32 32zm0-128H544c17.7 0 32-14.3 32-32s-14.3-32-32-32H320c-17.7 0-32 14.3-32 32s14.3 32 32 32z"/></svg>`
+		} else if (order === 'desc') {
+			orderBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><path d="M151.6 469.6C145.5 476.2 137 480 128 480s-17.5-3.8-23.6-10.4l-88-96c-11.9-13-11.1-33.3 2-45.2s33.3-11.1 45.2 2L96 365.7V64c0-17.7 14.3-32 32-32s32 14.3 32 32V365.7l32.4-35.4c11.9-13 32.2-13.9 45.2-2s13.9 32.2 2 45.2l-88 96zM320 480c-17.7 0-32-14.3-32-32s14.3-32 32-32h32c17.7 0 32 14.3 32 32s-14.3 32-32 32H320zm0-128c-17.7 0-32-14.3-32-32s14.3-32 32-32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H320zm0-128c-17.7 0-32-14.3-32-32s14.3-32 32-32H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H320zm0-128c-17.7 0-32-14.3-32-32s14.3-32 32-32H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H320z"/></svg>`
+		}
+
+		orderBtn.addEventListener('click', () => {
+			if (order === 'asc') {
+				url.searchParams.set('order', 'desc');
+			} else {
+				url.searchParams.set('order', 'asc');
+			}
+			window.location.href = url.toString();
 		});
 
 		/*SCROLL BUTTON*/
@@ -323,7 +367,7 @@ if (searchParamSize === 0 || (sortParam && searchParamSize === 1)) {
 		align-items: center;
 	}
 
-	.reset-btn {
+	.reset-btn, .sort-order-btn {
 		border-radius: 4px;
 		border: 3px solid #FFF;
 		color: white;
@@ -340,12 +384,24 @@ if (searchParamSize === 0 || (sortParam && searchParamSize === 1)) {
 		background-color: transparent;
 	}
 
-	.reset-btn:hover {
+	.filter {
+		height: 1rem;
+	}
+
+	.sort-order-btn {
+		fill: white;
+		width: 2rem !important;
+	}
+
+	.reset-btn:hover, .sort-order-btn:hover {
 		cursor: pointer;
 		color: #000;
 		background-size: 100% 100%;
 		font-weight: 500;
+	}
 
+	.sort-order-btn:hover {
+		fill: #000;
 	}
 
 	#scroll-btn {
