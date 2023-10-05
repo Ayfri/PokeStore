@@ -35,9 +35,16 @@ model Cards {
     types     String   @db.VarChar(50)
 }
 
+model Sessions {
+    id     String @id @db.VarChar(64)
+    userId BigInt @map("user_id") @db.UnsignedBigInt
+    user   Users  @relation(fields: [userId], references: [id])
+}
+
 model Users {
-    id       BigInt @id @db.UnsignedBigInt
-    email    String @db.VarChar(500)
-    password String @db.VarChar(40)
-    username String @db.VarChar(32)
+    id       BigInt     @id @db.UnsignedBigInt
+    email    String     @db.VarChar(500)
+    password String     @db.VarChar(40)
+    username String     @db.VarChar(32)
+    Sessions Sessions[]
 }

@@ -9,9 +9,19 @@ interface User {
 }
 
 const fields = {
-	username: {label: "Username", required: true, autocomplete: true, type: "text", placeholder: "Jérome"}, password: {
-		label: "Password", required: true,
-		autocomplete: true, placeholder: "My-Passw0rd", type: "password"
+	username: {
+		label: "Username",
+		required: true,
+		autocomplete: true,
+		type: "text",
+		placeholder: "Jérome",
+	},
+	password: {
+		label: "Password",
+		required: true,
+		autocomplete: true,
+		placeholder: "My-Passw0rd",
+		type: "password",
 	},
 };
 
@@ -30,10 +40,19 @@ export const prerender = true;
 <script>
 	import {displayError, handleForm} from '../utils/form';
 
-	handleForm<User>(async (user, response, form) => {
-		if (response.status === 200) window.location.href = '/';
-		else if (response.status === 401) displayError(await response.text(), form);
-		else displayError('An error occurred, please try again later', form);
+	handleForm<User>(async (result, response, form) => {
+		switch (response.status) {
+			case 200:
+				document.cookie = `session-token=${result}; path=/`;
+				window.location.href = '/';
+				break;
+			case 401:
+				displayError(result, form);
+				break;
+			default:
+				displayError('An error occurred, please try again later', form);
+				break;
+		}
 	}, false);
 </script>
 

@@ -13,6 +13,16 @@ export function displayError(error: string, form: HTMLFormElement = document.que
 	errorElement.innerText = error;
 }
 
+export function handleForm<T = any>(
+	onResult: (result: string, response: Response, form: HTMLFormElement) => void,
+	getAsJson?: false,
+	form?: HTMLFormElement,
+): void;
+export function handleForm<T = any>(
+	onResult: (result: T, response: Response, form: HTMLFormElement) => void,
+	getAsJson?: true,
+	form?: HTMLFormElement,
+): void;
 export function handleForm<T = any>(onResult: (result: T, response: Response, form: HTMLFormElement) => void = () => {
 	console.log('Form submitted');
 }, getAsJson: boolean = true, form: HTMLFormElement = document.querySelector('form') as HTMLFormElement) {
@@ -20,7 +30,8 @@ export function handleForm<T = any>(onResult: (result: T, response: Response, fo
 		event.preventDefault();
 		const formData = new FormData(form);
 		const response = await fetch(form.action, {
-			method: form.method, body: formData,
+			method: form.method,
+			body: formData,
 		});
 		const result = getAsJson ? await response.json() : await response.text();
 		onResult(result, response, form);

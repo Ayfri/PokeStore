@@ -136,20 +136,20 @@ switch (sortParam) {
 						<select name="set" id="set" class="filter">
 							<option value="all">All sets</option>
 							{sets.sort((a, b) => a.name.localeCompare(b.name))
-								.map(set =>
-									<option value={set.name.toLowerCase()}>{set.name}</option>)}
+							     .map(set =>
+								     <option value={set.name.toLowerCase()}>{set.name}</option>)}
 						</select>
 						<select name="type" id="type" class="filter">
 							<option value="all">All types</option>
 							{types.sort((a, b) => a.localeCompare(b))
-								.map(type =>
-									<option value={type.toLowerCase()}>{type}</option>)}
+							      .map(type =>
+								      <option value={type.toLowerCase()}>{type}</option>)}
 						</select>
 						<select name="rarity" id="rarity" class="filter">
 							<option value="all">All rarities</option>
 							{rarity.sort((a, b) => a.localeCompare(b))
-								.map(rarity =>
-									<option value={rarity.toLowerCase()}>{rarity}</option>)}
+							       .map(rarity =>
+								       <option value={rarity.toLowerCase()}>{rarity}</option>)}
 						</select>
 					</div>
 				</div>
@@ -256,7 +256,10 @@ switch (sortParam) {
 		const scrollBtn = document.querySelector('#scroll-btn') as HTMLButtonElement;
 		scrollBtn.addEventListener('click', () => {
 			const cardsGrid = document.querySelector('.cards-grid') as HTMLDivElement;
-			cardsGrid.scrollTo({top: cardsGrid.scrollHeight, behavior: 'smooth'});
+			cardsGrid.scrollTo({
+				top: cardsGrid.scrollHeight,
+				behavior: 'smooth',
+			});
 		});
 
 		function addFilterToUrl(element, paramName, removeName, split) {

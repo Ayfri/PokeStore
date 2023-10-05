@@ -1,4 +1,6 @@
 ---
+import {App} from '../env';
+type Locals = App.Locals;
 interface Props {
 	cards_href: string;
 	username: string;
@@ -6,9 +8,9 @@ interface Props {
 	logo_href: string;
 }
 
-const {username} = Astro.props;
-
-const loggedIn = false; // TODO: check if user is logged in
+const locals = Astro.locals as Locals;
+const loggedIn = locals.user !== undefined;
+const username = locals.user?.username ?? '';
 ---
 <header>
 	<a href="/" class="cards-link">Cards</a>
@@ -23,12 +25,30 @@ const loggedIn = false; // TODO: check if user is logged in
 		</svg>
 	</a>
 	{
-		loggedIn ?
-			<a href="/account">{username}</a> :
-			<a href="/login">Login</a>
-
+		loggedIn
+		?
+		<a href="/account">{username}</a>
+		<a href="./auth/logout" id="logout">Logout</a>
+		:
+		<a href="/login">Login</a>
 	}
 </header>
+
+<script is:inline defer>
+	const logout = document.getElementById('logout');
+	logout?.addEventListener('click', async (e) => {
+		e.preventDefault();
+		const response = await fetch(logout.href, {
+			method: 'GET',
+		});
+
+		if (response.ok) {
+			document.cookie = `session-token=; expires=${new Date(0)}; path=/;`;
+			window.location.href = '/';
+		}
+	});
+</script>
+
 <style>
 	:root {
 		--header-color: #232323;

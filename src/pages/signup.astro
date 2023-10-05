@@ -9,11 +9,26 @@ interface User {
 }
 
 const fields = {
-	username: {label: "Username", required: true, autocomplete: true, type: "text", placeholder: "Jérome"},
-	email: {label: "Email", required: true, autocomplete: true, type: "email", placeholder: "jerome.jouan@ynov.com"},
+	username: {
+		label: "Username",
+		required: true,
+		autocomplete: true,
+		type: "text",
+		placeholder: "Jérome",
+	},
+	email: {
+		label: "Email",
+		required: true,
+		autocomplete: true,
+		type: "email",
+		placeholder: "jerome.jouan@ynov.com",
+	},
 	password: {
-		label: "Password", required: true,
-		autocomplete: true, placeholder: "My-Passw0rd", type: "password"
+		label: "Password",
+		required: true,
+		autocomplete: true,
+		placeholder: "My-Passw0rd",
+		type: "password",
 	},
 };
 
@@ -33,8 +48,12 @@ export const prerender = true;
 	import {displayError, handleForm} from '../utils/form';
 
 	handleForm<User>(async (user, response, form) => {
-		if (response.status === 200) window.location.href = '/';
-		else if (response.status in [400, 409, 500]) displayError(await response.text(), form);
+		if (response.status === 200) {
+			window.location.href = '/login';
+			return;
+		}
+
+		displayError(user, form);
 	}, false);
 </script>
 
