@@ -137,4 +137,8 @@ import PageTitle from "../components/PageTitle.astro";
 		localStorage.removeItem('cart');
 		localStorage.removeItem('address');
 	});
+
+	if (cart.length === 0) {
+		window.location.href = '/cart';
+	}
 </script>

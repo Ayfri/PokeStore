@@ -14,7 +14,7 @@ import PageTitle from "../components/PageTitle.astro";
 				<h3>Please enter a delivery address to continue</h3>
 				<input id="autocomplete" placeholder="Enter a place" type="text"/>
 				<a href="/confirm-cart">
-					<button>Confirm address</button>
+					<button disabled>Confirm address</button>
 				</a>
 			</div>
 			<div class="purchase-resume-container">
@@ -87,12 +87,19 @@ import PageTitle from "../components/PageTitle.astro";
 		border: none;
 		transition: all 0.2s ease-in-out;
 		width: fit-content;
+		cursor: pointer;
 	}
 
 	.delivery-address > a > button:hover {
 		background-color: #ffb444;
-		cursor: pointer;
 	}
+
+	.delivery-address > a > button[disabled]:hover {
+		background-color: #ff9e00;
+		cursor: not-allowed;
+	}
+
+
 
 
     .purchase-resume-container {
@@ -191,16 +198,24 @@ import PageTitle from "../components/PageTitle.astro";
 
 
 	const button = document.querySelector('button') as HTMLButtonElement;
+	const addressInput = document.querySelector('#autocomplete') as HTMLInputElement;
+
+	addressInput.addEventListener('input', () => {
+		button.disabled = addressInput.value === '';
+	});
+
 
 	button.addEventListener('click', () => {
-		const addressInput = document.querySelector('#autocomplete') as HTMLInputElement;
-
 		localStorage.setItem('address', addressInput.value);
 	});
+
+	if (cart.length === 0) {
+		window.location.href = '/cart';
+	}
 </script>
 
 <script
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBCSe5KYUcwwq9eZ5NKVqgyFrBG3oSUKE&libraries=places&callback=initAutocomplete"
+		src={`https://maps.googleapis.com/maps/api/js?key=${import.meta.env.API_KEY}&libraries=places&callback=initAutocomplete`}
 		async defer
 >
 </script>
