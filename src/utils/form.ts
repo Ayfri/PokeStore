@@ -25,17 +25,23 @@ export function handleForm<T = any>(
 ): void;
 export function handleForm<T = any>(
 	onResult: (result: T, response: Response, form: HTMLFormElement, event: SubmitEvent) => void = () => console.log('Form submitted'),
-	getAsJson: boolean = true,
-	form: HTMLFormElement = document.querySelector('form') as HTMLFormElement,
+	getAsJson?: boolean,
+	form?: HTMLFormElement,
+	useSubmitterFormAction?: boolean,
 ) {
-	form.addEventListener('submit', async event => {
+	const foundForm = form ?? document.querySelector('form') as HTMLFormElement;
+	getAsJson ??= true;
+	useSubmitterFormAction ??= false;
+
+	foundForm.addEventListener('submit', async event => {
 		event.preventDefault();
-		const formData = new FormData(form);
-		const response = await fetch(form.action, {
-			method: form.method,
+		const formData = new FormData(foundForm);
+		const route = useSubmitterFormAction ? (event.submitter as HTMLInputElement).formAction : foundForm.action;
+		const response = await fetch(route, {
+			method: foundForm.method,
 			body: formData,
 		});
 		const result = getAsJson ? await response.json() : await response.text();
-		onResult(result, response, form, event);
+		onResult(result, response, foundForm, event);
 	});
 }
