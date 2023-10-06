@@ -39,7 +39,7 @@ const {
 			width="300"
 		/>
 		<h2>{name}</h2>
-		<h3>{price}$</h3>
+		<h3>{price && price !== 100_000 ? `${price} $` : 'Priceless'}</h3>
 	</div>
 </a>
 <style>

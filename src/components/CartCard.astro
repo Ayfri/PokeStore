@@ -4,26 +4,28 @@ import {Image} from "astro:assets";
 
 
 interface Props {
-    card: Card;
+	card: Card;
 }
 
-const {name, imageUrl, set, rarity, price} = Astro.props;
+const {
+	name,
+	imageUrl,
+	set,
+	rarity,
+	price,
+} = Astro.props;
 ---
 <div class="card-container">
 	<Image
-			alt={name}
-			height="420"
-			src={imageUrl}
-			width="300"
+		alt={name}
+		height="420"
+		src={imageUrl}
+		width="300"
 	/>
 	<div class="card-info">
 		<h2>{name}</h2>
 		<p>{set}</p>
 		<p>{rarity}</p>
-		<p class="price">{price}</p>
+		<p class="price">{price} $</p>
 	</div>
-
 </div>
-<style>
-
-</style>

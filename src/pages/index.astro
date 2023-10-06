@@ -5,8 +5,6 @@ import PageTitle from "../components/PageTitle.astro";
 import type {Card, Set} from "../types";
 
 
-
-
 const filters = [
 	'numero',
 	'types',
@@ -35,7 +33,6 @@ const typesParam = searchParams.has('types') ? searchParams.get('types') : null;
 const rarityParam = searchParams.has('rarity') ? searchParams.get('rarity') : null;
 const setParam = searchParams.has('set') ? searchParams.get('set') : null;
 const numeroParam = searchParams.has('numero') ? searchParams.get('numero') : null;
-const nameParam = searchParams.has('name') ? searchParams.get('name') : null;
 const sortParam = searchParams.has('sort') ? searchParams.get('sort') : null;
 const orderParam = searchParams.has('order') ? searchParams.get('order') : null;
 
@@ -69,7 +66,7 @@ if (!orderParam) {
 	return Astro.redirect(Astro.url.href);
 }
 
-for (const [key, _] of searchParams.entries()) {
+for (const [key,] of searchParams.entries()) {
 	if (!filters.includes(key)) {
 		Astro.url.searchParams.delete(key);
 		return Astro.redirect(Astro.url.href);
@@ -83,8 +80,12 @@ cards = cards.sort((a, b) => a.pokemon.numero - b.pokemon.numero || b.price - a.
 const searchParamSize = new Map(searchParams.entries()).size;
 
 // keep first card of each Pokémon
-if (searchParamSize === 0 || (sortParam && searchParamSize === 1) || (sortParam && orderParam && searchParamSize === 2) ||
-	(orderParam && searchParamSize === 1)) {
+if (
+	searchParamSize === 0 ||
+	(sortParam && searchParamSize === 1) ||
+	(sortParam && orderParam && searchParamSize === 2) ||
+	(orderParam && searchParamSize === 1)
+) {
 	cards = cards.filter((card, index, self) => self.findIndex(c => c.pokemon.numero === card.pokemon.numero) === index);
 }
 
@@ -97,6 +98,7 @@ if (searchParamSize === 1 && orderParam === 'asc') {
 	return Astro.redirect(Astro.url.href);
 }
 
+cards.map(card => card.price ||= 100_000);
 switch (sortParam) {
 	case 'numero':
 		cards = cards.sort((a, b) => a.pokemon.numero - b.pokemon.numero || a.price - b.price);
@@ -210,16 +212,15 @@ switch (sortParam) {
 		/*NUMERO FILTER*/
 		const inputNumero = document.querySelector('input[name="numero"]') as HTMLInputElement;
 		let currentNumero = new URL(window.location.href).searchParams.get('numero');
-		if (currentNumero && !(currentNumero >= 1 && currentNumero <= 151)) {
-			currentNumero = null;
-		}
+		if (currentNumero && !(currentNumero >= 1 && currentNumero <= 151)) currentNumero = null;
+
 		inputNumero.value = currentNumero || '';
 
 		addFilterToUrl(inputNumero, 'numero', '', false);
 
 		/*NAME FILTER*/
 		const inputName = document.querySelector('input[name="name"]') as HTMLInputElement;
-		let currentName = new URL(window.location.href).searchParams.get('name');
+		const currentName = new URL(window.location.href).searchParams.get('name');
 		inputName.value = currentName || '';
 
 		addFilterToUrl(inputName, 'name', '', false);

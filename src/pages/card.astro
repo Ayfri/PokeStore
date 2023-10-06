@@ -19,7 +19,7 @@ if (numeroParam && !(numeroParam >= 1 && numeroParam <= 151)) {
 	return Astro.redirect("/");
 }
 
-for (const [key, _] of searchParams.entries()) {
+for (const [key,] of searchParams.entries()) {
 	if (!filters.includes(key)) {
 		Astro.url.searchParams.delete(key);
 		return Astro.redirect(Astro.url.href);
@@ -122,12 +122,13 @@ const centeredCard = cards[centeredCardId];
 					</div>
 					<div class="purchase-button">
 						<p data-values={cards.map(card => card.price)} id="card-price">
-							{centeredCard.price} $
+							{centeredCard.price ? `${centeredCard.price} $` : 'Priceless'}
 						</p>
 						<button
 							data-route={`${import.meta.env.API_URL}/cards/${centeredCard.id}`}
 							data-values={cards.map(card => card.id)}
 							id="add-to-card"
+							disabled={centeredCard.price ? '' : 'disabled'}
 						>
 							Add to cart
 						</button>
@@ -201,8 +202,9 @@ const centeredCard = cards[centeredCardId];
 				centerCard.classList.add('center-card', firstType, ...rarity.split(' '), 'inactive');
 			});
 
-			handleDynamicValue(cardPrice, (element, value) => {
-				element.textContent = `${value} $`;
+			handleDynamicValue(cardPrice, (element, price) => {
+				element.textContent = price ? `${price} $` : 'Priceless';
+				addToCart.disabled = !price;
 			});
 
 			handleDynamicValue(addToCart, (element, value) => {
@@ -220,7 +222,7 @@ const centeredCard = cards[centeredCardId];
 	const cart = getCart();
 	const buyButton = document.querySelector('#add-to-card') as HTMLButtonElement;
 	const cartCount = document.querySelector('#cart-count') as HTMLSpanElement;
-	buyButton.addEventListener('click', async (event) => {
+	buyButton.addEventListener('click', async event => {
 		const target = event.target as HTMLButtonElement;
 		const route = target.dataset.route;
 		const response = await fetch(route);
@@ -242,7 +244,7 @@ const centeredCard = cards[centeredCardId];
 	const card = document.querySelector('.center-card') as HTMLDivElement;
 	const style = document.getElementById('card') as HTMLStyleElement;
 
-	card.addEventListener('mousemove', (e) => {
+	card.addEventListener('mousemove', e => {
 		card.classList.remove('inactive');
 		const pos = [
 			e.offsetX,
@@ -257,20 +259,20 @@ const centeredCard = cards[centeredCardId];
 		const py = Math.abs(Math.floor(100 / h * t) - 100);
 		const pa = (50 - px) + (50 - py);
 		// math for gradient / background positions
-		const lp = (50 + (px - 50) / 1.5);
-		const tp = (50 + (py - 50) / 1.5);
-		const px_spark = (50 + (px - 50) / 7);
-		const py_spark = (50 + (py - 50) / 7);
-		const p_opc = 20 + (Math.abs(pa) * 1.5);
+		const lp = 50 + (px - 50) / 1.5;
+		const tp = 50 + (py - 50) / 1.5;
+		const pxSpark = 50 + (px - 50) / 7;
+		const pySpark = 50 + (py - 50) / 7;
+		const pOpc = 20 + Math.abs(pa) * 1.5;
 		const ty = ((tp - 50) / 2) * -1;
 		const tx = ((lp - 50) / 1.5) * 0.5;
 
-		const grad_pos = `background-position: ${lp}% ${tp}%;`;
-		const spark_pos = `background-position: ${px_spark}% ${py_spark}%;`;
-		const opc = `opacity ${p_opc / 100};`;
+		const gradPos = `background-position: ${lp}% ${tp}%;`;
+		const sparkPos = `background-position: ${pxSpark}% ${pySpark}%;`;
+		const opc = `opacity ${pOpc / 100};`;
 		const tf = `transform: rotateX(${ty}deg) rotateY(${tx}deg);`;
-		const style2 = `.holo:hover::before {${grad_pos}} !important`;
-		const style3 = `.holo:hover::after {${spark_pos} ${opc}} !important`;
+		const style2 = `.holo:hover::before {${gradPos}} !important`;
+		const style3 = `.holo:hover::after {${sparkPos} ${opc}} !important`;
 		card.setAttribute('style', tf);
 		style.innerHTML = `${style2} \n${style3}}`;
 	});
@@ -281,7 +283,6 @@ const centeredCard = cards[centeredCardId];
 		card.style.transform = `rotateY(0deg) rotateX(0deg)`;
 		style.innerHTML = '';
 	});
-
 </script>
 
 <style is:inline id="card"></style>
@@ -518,6 +519,12 @@ const centeredCard = cards[centeredCardId];
 
 	#add-to-card.success {
 		background-color: #45d045;
+		cursor: not-allowed;
+		opacity: 0.5;
+	}
+
+	#add-to-card:disabled {
+		background-color: #ff9e00;
 		cursor: not-allowed;
 		opacity: 0.5;
 	}
