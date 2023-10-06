@@ -138,7 +138,6 @@ const centeredCard = cards[centeredCardId];
 							data-route={`${import.meta.env.API_URL}/cards/${centeredCard.id}`}
 							data-values={cards.map(card => card.id)}
 							id="add-to-card"
-							disabled={centeredCard.price ? '' : 'disabled'}
 						>
 							Add to cart
 						</button>
@@ -164,6 +163,8 @@ const centeredCard = cards[centeredCardId];
 	const filter = document.querySelector('#filter') as HTMLDivElement;
 
 	let urlIndex = url.searchParams.get('index');
+
+	if (cardPrice.textContent === 'Priceless') addToCart.disabled = true;
 
 	function handleDynamicValue<T>(element: T, callback: (element: T, value: string) => void) {
 		urlIndex = url.searchParams.get('index');
@@ -538,7 +539,7 @@ const centeredCard = cards[centeredCardId];
 		cursor: not-allowed;
 		opacity: 0.5;
 	}
-	
+
 	:global(.holo::after) {
 		background-image: url("https://assets.codepen.io/13471/sparkles.gif"), url(https://assets.codepen.io/13471/holo.png), linear-gradient(125deg, #ff008450 15%, #fca40040 30%, #ffff0030 40%, #00ff8a20 60%, #00cfff40 70%, #cc4cfa50 85%);
 		background-position: 50% 50%;
