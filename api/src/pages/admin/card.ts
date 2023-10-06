@@ -110,7 +110,7 @@ export async function POST({
 				});
 
 				if (!card) return errorResponse('Unknown error.');
-				return new Response('Pokemon successfully created!', {
+				return new Response(`Card successfully created with id ${card.id} !`, {
 					status: 201,
 				});
 			}
