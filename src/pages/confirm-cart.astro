@@ -20,11 +20,10 @@ import PageTitle from "../components/PageTitle.astro";
 				<h3>Delivery address</h3>
 				<p class="address">Ynov Aix Campus</p>
 			</div>
-			<a href="/jsp">
+			<a href="/purchase-confirmed">
 				<button>Confirm purchase</button>
 			</a>
 		</div>
-
 	</main>
 </Layout>
 <style>
@@ -132,4 +131,10 @@ import PageTitle from "../components/PageTitle.astro";
 	if (addressFromLocalStorage) {
 		address.textContent = addressFromLocalStorage;
 	}
+
+	const button = document.querySelector('button') as HTMLButtonElement;
+	button.addEventListener('click', () => {
+		localStorage.removeItem('cart');
+		localStorage.removeItem('address');
+	});
 </script>
