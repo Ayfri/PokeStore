@@ -14,6 +14,7 @@ const username = locals.user?.username ?? '';
 ---
 <header>
 	<a href="/" class="cards-link">Cards</a>
+	<span class="empty"></span>
 	<a href="/" class="logo-link">
 		<img alt="logo" class="logo" src="/pokestore.png"/>
 	</a>
@@ -104,7 +105,7 @@ const username = locals.user?.username ?? '';
 		background-image: linear-gradient(transparent 50%, var(--header-color) 50%);
 	}
 
-	.cards-link {
+	.empty {
 		flex: 1;
 	}
 
