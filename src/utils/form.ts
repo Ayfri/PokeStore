@@ -17,11 +17,13 @@ export function handleForm<T = any>(
 	onResult: (result: string, response: Response, form: HTMLFormElement, event: SubmitEvent) => void,
 	getAsJson?: false,
 	form?: HTMLFormElement,
+	useSubmitterFormAction?: boolean,
 ): void;
 export function handleForm<T = any>(
 	onResult: (result: T, response: Response, form: HTMLFormElement, event: SubmitEvent) => void,
 	getAsJson?: true,
 	form?: HTMLFormElement,
+	useSubmitterFormAction?: boolean,
 ): void;
 export function handleForm<T = any>(
 	onResult: (result: T, response: Response, form: HTMLFormElement, event: SubmitEvent) => void = () => console.log('Form submitted'),
