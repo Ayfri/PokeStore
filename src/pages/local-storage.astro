@@ -10,6 +10,7 @@ if (Astro.request.method !== 'POST') return "Bad route";
 const body = await Astro.request.json() as Card[];
 const outputJson = [] as PokemonStats[];
 const pokemonStats = {};
+let totalPrice = 0;
 
 body.forEach((item) => {
 	const pokemonName = item.pokemon.name;
@@ -18,11 +19,13 @@ body.forEach((item) => {
 	if (pokemonStats[pokemonName]) {
 		pokemonStats[pokemonName].number++;
 		pokemonStats[pokemonName].price += pokemonPrice;
+        totalPrice += pokemonPrice;
 	} else {
 		pokemonStats[pokemonName] = {
 			number: 1,
 			price: pokemonPrice,
 		};
+        totalPrice += pokemonPrice;
 	}
 });
 
@@ -37,6 +40,7 @@ for (const pokemonName in pokemonStats) {
 		});
 	}
 }
+console.log(totalPrice)
 ---
 <div class="cards">
 	{body.map((card) => (
@@ -58,4 +62,8 @@ for (const pokemonName in pokemonStats) {
 			price={item.price}
 		/>
 	))}
+</div>
+<div class="total-price">
+	<h3>Total</h3>
+	<p>{totalPrice} $</p>
 </div>

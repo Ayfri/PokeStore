@@ -1,0 +1,197 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageTitle from "../components/PageTitle.astro";
+---
+
+<Layout title="Confirm Address">
+	<main>
+		<PageTitle
+				title="Confirm Address"
+		></PageTitle>
+		<div class="confirm-container">
+			<div class="delivery-address">
+				<h2>Delivery Address</h2>
+				<h3>Please enter a delivery address to continue</h3>
+				<input id="autocomplete" placeholder="Enter a place" type="text"/>
+				<a href="/confirm-cart">
+					<button>Confirm address</button>
+				</a>
+			</div>
+			<div class="purchase-resume-container">
+				<h2>Resume</h2>
+				<h3>Articles</h3>
+
+				<div class="purchase-resume-content"></div>
+				<div class="purchase-resume-cost"></div>
+			</div>
+		</div>
+	</main>
+</Layout>
+<style>
+    main {
+        margin: auto 15rem;
+        display: flex;
+        flex-direction: column;
+        padding: .6rem;
+        color: white;
+        font-size: 20px;
+        line-height: 1.6;
+        max-width: 100vw;
+        max-height: 100vh;
+    }
+
+    .confirm-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .delivery-address {
+        background-color: #232323;
+        border-radius: 1rem;
+        display: flex;
+        flex-direction: column;
+        padding: 2rem;
+        width: 40rem;
+        height: fit-content;
+    }
+
+    .delivery-address > h2 {
+        margin: 0;
+    }
+
+    .delivery-address > h3 {
+        font-weight: normal;
+    }
+
+	.delivery-address > input {
+		padding: 1rem;
+		border-radius: 1rem;
+		border: none;
+		background-color: #2b2b2b;
+		color: white;
+		font-size: 1.2rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.delivery-address > a {
+		width: fit-content;
+		height: fit-content;
+	}
+
+	.delivery-address > a > button {
+		background-color: #ff9e00;
+		font-size: 1.2rem;
+		padding: 1rem;
+		border-radius: 1rem;
+		border: none;
+		transition: all 0.2s ease-in-out;
+		width: fit-content;
+	}
+
+	.delivery-address > a > button:hover {
+		background-color: #ffb444;
+		cursor: pointer;
+	}
+
+
+    .purchase-resume-container {
+        background-color: #232323;
+        border-radius: 1rem;
+        display: flex;
+        flex-direction: column;
+        padding: 2rem;
+        width: 20rem;
+        height: fit-content;
+    }
+
+    .purchase-resume-container > h2 {
+        margin: 0;
+    }
+
+	.purchase-resume-content {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+</style>
+<style is:inline>
+	.purchase-resume-content-item {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.purchase-resume-content-item p {
+		margin: 0;
+	}
+	.purchase-resume-content-item > .item-info {
+		display: flex;
+		flex-direction: row;
+		gap: 1rem;
+	}
+</style>
+<script is:inline>
+    const autocompleteInput = document.querySelector("#autocomplete");
+    let autocomplete;
+
+    function initAutocomplete() {
+        autocomplete = new google.maps.places.Autocomplete(
+            autocompleteInput,
+            {
+                types: ["address"],
+                componentRestrictions: {country: "fr"},
+                fields: ["address_components", "geometry", "icon", "name"],
+            }
+        );
+        console.log(autocomplete);
+        autocomplete.addEventListener("place_changed", onPlaceChanged);
+    }
+
+    function onPlaceChanged() {
+        const place = autocomplete.getPlace();
+
+        if (place.geometry) {
+            document.getElementById("details").innerHTML = place.name;
+            console.log(place);
+        }
+    }
+</script>
+<script>
+	import type {Card} from "../types";
+
+	const cart = JSON.parse(localStorage.getItem('cart') || '[]') as Card[];
+
+	console.log('cart = ', cart);
+
+
+	const response = await fetch(
+		'/local-storage',
+		{
+			method: 'POST',
+			body: JSON.stringify(cart),
+		},
+	);
+
+
+	const cardContainer = document.querySelector('.card-container') as HTMLDivElement;
+	const purchaseResumeContainer = document.querySelector('.purchase-resume-content') as HTMLDivElement;
+	const purchaseResumeCost = document.querySelector('.purchase-resume-cost') as HTMLDivElement;
+
+	const parser = new DOMParser();
+	let string = await response.text();
+	string = string.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+	string = string.replace(/<!DOCTYPE html>/gi, '');
+	string = string.replace('&amp;', 'and');
+
+	const doc = parser.parseFromString(string, 'text/html');
+
+	const cards = doc.querySelector('.cards') as HTMLDivElement;
+	purchaseResumeContainer.append(...doc.querySelectorAll('.purchase-resume-content-item'));
+	purchaseResumeCost.append(...doc.querySelectorAll('.total-price'));
+</script>
+
+<script
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBCSe5KYUcwwq9eZ5NKVqgyFrBG3oSUKE&libraries=places&callback=initAutocomplete"
+		async defer
+>
+</script>

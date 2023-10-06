@@ -13,6 +13,7 @@
 		"pokemontcgsdk": "^2.0.0"
 	},
 	"devDependencies": {
+		"@types/google.maps": "^3.54.3",
 		"prisma": "^5.3.1"
 	},
 	"prisma": {

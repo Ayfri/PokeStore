@@ -11,7 +11,9 @@ import CartCard from "../components/CartCard.astro";
 				<div class="card-container"></div>
 				<div class="purchase-resume-container">
 					<h2>Resume</h2>
+					<h3>Articles</h3>
 					<div class="purchase-resume-content"></div>
+					<div class="purchase-resume-cost"></div>
 					<a href="/confirm-address">
 						<button>Proceed to checkout</button>
 					</a>
@@ -81,7 +83,11 @@ import CartCard from "../components/CartCard.astro";
 		cursor: pointer;
 	}
 
-
+	.purchase-resume-content {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
 </style>
 <style is:inline>
 	.card-container {
@@ -111,6 +117,10 @@ import CartCard from "../components/CartCard.astro";
 		justify-content: space-between;
 	}
 
+	.purchase-resume-content-item p {
+		margin: 0;
+	}
+
 	.purchase-resume-content-item > .item-info {
 		display: flex;
 		flex-direction: row;
@@ -136,6 +146,7 @@ import CartCard from "../components/CartCard.astro";
 
 	const cardContainer = document.querySelector('.card-container') as HTMLDivElement;
 	const purchaseResumeContainer = document.querySelector('.purchase-resume-content') as HTMLDivElement;
+	const purchaseResumeCost = document.querySelector('.purchase-resume-cost') as HTMLDivElement;
 
 	const parser = new DOMParser();
 	let string = await response.text();
@@ -148,4 +159,5 @@ import CartCard from "../components/CartCard.astro";
 	const cards = doc.querySelector('.cards') as HTMLDivElement;
 	cardContainer.append(...cards.querySelectorAll('.card-container'));
 	purchaseResumeContainer.append(...doc.querySelectorAll('.purchase-resume-content-item'));
+	purchaseResumeCost.append(...doc.querySelectorAll('.total-price'));
 </script>
