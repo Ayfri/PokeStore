@@ -84,6 +84,7 @@ const rarity = await rarityList.json() as string[];
 				displaySuccess('', form);
 				await sleep(50);
 				displaySuccess(result, form);
+				form.reset();
 				return;
 			}
 			displaySuccess('', form);

@@ -23,13 +23,23 @@ export async function POST({request, url}: APIContext) {
 		return errorResponse('Missing fields.');
 	}
 
-	/*todo: remove params*/
 	const existingPokemon = await prismaClient.pokemons.findFirst({
 		where: {
 			OR: [
 				{numero: number},
 				{name},
 				{description},
+			],
+		}
+	});
+
+	const samePokemon = await prismaClient.pokemons.findFirst({
+		where: {
+			AND: [
+				{numero: number},
+				{name},
+				{description},
+				{type}
 			],
 		}
 	});
@@ -71,5 +81,20 @@ export async function POST({request, url}: APIContext) {
 			return new Response('Pokemon successfully edited!', {
 				status: 201,
 			});
+
+		case 'remove':
+			if (!samePokemon) return errorResponse('Pokemon does not exist.');
+			const deletedPokemon = await prismaClient.pokemons.delete({
+				where: {
+					id: samePokemon.id,
+				},
+			});
+
+			if (!deletedPokemon) return errorResponse('Unknown error.');
+			return new Response('Pokemon successfully deleted!', {
+				status: 201,
+			});
 	}
+
+	return errorResponse('Unknown error.');
 }
