@@ -3,11 +3,10 @@ import {Card} from "../types";
 import {Image} from "astro:assets";
 
 
-interface Props {
-	card: Card;
-}
+interface Props extends Card {}
 
 const {
+	id,
 	name,
 	imageUrl,
 	set,
@@ -28,4 +27,5 @@ const {
 		<p>{rarity}</p>
 		<p class="price">{price} $</p>
 	</div>
+	<button class="remove" data-id={id}>X</button>
 </div>

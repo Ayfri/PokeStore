@@ -9,7 +9,7 @@ if (Astro.request.method !== 'POST') return "Bad route";
 
 const body = await Astro.request.json() as Card[];
 const outputJson = [] as PokemonStats[];
-const pokemonStats = {};
+const pokemonStats: Record<string, PokemonStats> = {};
 let totalPrice = 0;
 
 body.forEach(item => {
@@ -17,27 +17,20 @@ body.forEach(item => {
 	const pokemonPrice = item.price;
 
 	if (pokemonStats[pokemonName]) {
-		pokemonStats[pokemonName].number++;
-		pokemonStats[pokemonName].price += pokemonPrice;
+		pokemonStats[pokemonName].cards.push(item);
 		totalPrice += pokemonPrice;
 	} else {
 		pokemonStats[pokemonName] = {
-			number: 1,
-			price: pokemonPrice,
+			cards: [item],
+			name: pokemonName,
 		};
-		totalPrice += pokemonPrice;
 	}
 });
-
 
 for (const pokemonName in pokemonStats) {
 	if (pokemonStats.hasOwnProperty(pokemonName)) {
 		const stats = pokemonStats[pokemonName];
-		outputJson.push({
-			name: pokemonName,
-			number: stats.number,
-			price: stats.price,
-		});
+		outputJson.push(stats);
 	}
 }
 ---
@@ -55,12 +48,20 @@ for (const pokemonName in pokemonStats) {
 <div class="cart-stats">
 	{outputJson.map(item =>
 		<PurchaseItem
+			cards={item.cards}
 			name={item.name}
-			number={item.number}
-			price={item.price}
 		/>)}
 </div>
+
 <div class="total-price">
 	<h3>Total</h3>
-	<p>{totalPrice} $</p>
+	<p>
+		{
+			outputJson.reduce(
+				(acc, item) => acc + item.cards.reduce(
+					(acc, card) => acc + card.price, 0,
+				), 0,
+			)
+		} $
+	</p>
 </div>

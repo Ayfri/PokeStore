@@ -29,7 +29,6 @@ export interface User {
 }
 
 export interface PokemonStats {
+	cards: Card[];
 	name: string;
-	number: number;
-	price: number;
 }

@@ -5,9 +5,7 @@ import PageTitle from "../components/PageTitle.astro";
 
 <Layout title="Confirm Cart">
 	<main>
-		<PageTitle
-			title="Confirm Cart"
-		></PageTitle>
+		<PageTitle title="Confirm Cart"/>
 		<div class="purchase-resume-container">
 			<h2>Resume</h2>
 			<h3>Articles</h3>
@@ -18,7 +16,7 @@ import PageTitle from "../components/PageTitle.astro";
 			</div>
 			<div class="purchase-resume-address">
 				<h3>Delivery address</h3>
-				<p class="address">Ynov Aix Campus</p>
+				<p class="address"></p>
 			</div>
 			<a href="/purchase-confirmed">
 				<button>Confirm purchase</button>
@@ -66,11 +64,6 @@ import PageTitle from "../components/PageTitle.astro";
 
 	.purchase-resume-container > h2 {
 		margin: 0;
-	}
-
-	.purchase-resume-content-item {
-		display: flex;
-		justify-content: space-between;
 	}
 
 	.purchase-resume-content-item > .item-info {

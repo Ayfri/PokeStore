@@ -1,14 +1,21 @@
 ---
+import {Card} from '../types';
+interface Props {
+	cards: Card[];
+	name: string;
+}
+
 const {
+	cards,
 	name,
-	number,
-	price,
 } = Astro.props;
 ---
 <div class="purchase-resume-content-item">
 	<div class="item-info">
 		<p>{name}</p>
-		<p>x{number}</p>
+		<p>x{cards.length}</p>
 	</div>
-	<p>{price} $</p>
+	<p>
+		{cards.reduce((acc, c) => acc + c.price, 0)} $
+	</p>
 </div>
