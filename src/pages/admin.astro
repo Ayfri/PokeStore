@@ -70,16 +70,25 @@ const rarity = await rarityList.json() as string[];
 	import {displayError, displaySuccess, handleForm} from '../utils/form';
 	import type {Pokemon} from "../types";
 
+	async function sleep(ms: number) {
+		return new Promise((resolve) => setTimeout(resolve, ms));
+	}
+
+
 	const forms = document.querySelectorAll('form');
 
 	forms.forEach(formElement => {
-		handleForm<Pokemon>(async (result, response, form, event) => {
+		handleForm<Pokemon>(async (result, response, form) => {
 			if (response.status === 201) {
 				displayError('', form);
+				displaySuccess('', form);
+				await sleep(50);
 				displaySuccess(result, form);
 				return;
 			}
 			displaySuccess('', form);
+			displayError('', form);
+			await sleep(50);
 			displayError(result, form);
 		}, false, formElement, true);
 	});
