@@ -18,8 +18,8 @@ const rarityList = await fetch(`${import.meta.env.API_URL}/rarity`);
 const rarity = await rarityList.json() as string[];
 ---
 
-<main>
-	<Layout title="Pokéstore - Admin">
+<Layout title="Pokéstore - Admin">
+	<main>
 		<div class="top-container">
 			<PageTitle title="Admin"/>
 		</div>
@@ -91,8 +91,8 @@ const rarity = await rarityList.json() as string[];
 				]}
 			/>
 		</div>
-	</Layout>
-</main>
+	</main>
+</Layout>
 <script>
 	import {displayError, displaySuccess, handleForm} from '../utils/form';
 	import type {Pokemon} from "../types";
