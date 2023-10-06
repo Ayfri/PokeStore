@@ -52,6 +52,7 @@ import PageTitle from "../components/PageTitle.astro";
 		gap: 2rem;
 	}
 
+
 	.purchase-resume-container {
 		background-color: #232323;
 		border-radius: 1rem;
@@ -162,5 +163,13 @@ import PageTitle from "../components/PageTitle.astro";
 
 
 	const button = document.querySelector('button') as HTMLButtonElement;
-	if (cart.length !== 0) button.disabled = false;
+	const text = document.createElement('p');
+	text.textContent = "Your cart is empty";
+	text.style.fontSize = '3rem';
+
+	if (cart.length !== 0) {
+		button.disabled = false
+	} else {
+		cardContainer.appendChild(text);
+	}
 </script>
