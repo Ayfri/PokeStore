@@ -8,6 +8,7 @@ import type {Card} from "../types";
 const filters = [
 	'numero',
 	'index',
+	'id',
 ];
 const searchParams = Astro.url.searchParams;
 const numeroParam = searchParams.has('numero') ? searchParams.get('numero') : null;
@@ -29,6 +30,14 @@ for (const [key,] of searchParams.entries()) {
 const response = await fetch(`${import.meta.env.API_URL}/cards?${searchParams.toString()}`);
 let cards = await response.json() as Card[];
 cards = cards.sort((a, b) => a.pokemon.numero - b.pokemon.numero || b.price - a.price);
+
+if (Astro.url.searchParams.has('id')) {
+	const id = Astro.url.searchParams.get('id');
+	const index = cards.findIndex(card => card.id === parseInt(id));
+	if (index !== -1) Astro.url.searchParams.set('index', index.toString());
+	Astro.url.searchParams.delete('id');
+	return Astro.redirect(Astro.url.href);
+}
 
 const setLogoFirstHalf = cards.slice(0, 5).map(card => card.set);
 const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set);
@@ -74,6 +83,7 @@ const centeredCard = cards[centeredCardId];
 											hidden: index !== centeredCardId,
 										}}
 										decoding="async"
+										hidden={index !== centeredCardId}
 										draggable="false"
 										loading="eager"
 										height="420"
@@ -182,6 +192,7 @@ const centeredCard = cards[centeredCardId];
 
 			mainImages.forEach(image => image.classList.add('hidden'));
 			mainImages[index].classList.remove('hidden');
+			mainImages[index].hidden = false;
 
 			sets.forEach(set => set.classList.remove('shadow'));
 			sets[index].classList.add('shadow');
@@ -412,12 +423,8 @@ const centeredCard = cards[centeredCardId];
 		0% {
 			opacity: 1;
 		}
-		98% {
-			opacity: 0;
-		}
 		100% {
 			opacity: 0;
-			display: none;
 		}
 	}
 
@@ -439,6 +446,10 @@ const centeredCard = cards[centeredCardId];
 	.image.hidden {
 		animation: image-fade-out 0.4s ease-in-out;
 		opacity: 0;
+	}
+
+	.image:not(.hidden) {
+		z-index: 10;
 	}
 
 	.bottom-container {

@@ -1,7 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageTitle from "../components/PageTitle.astro";
-import CartCard from "../components/CartCard.astro";
 ---
 <Layout title="Cart">
 	<main>
@@ -136,10 +135,6 @@ import CartCard from "../components/CartCard.astro";
 	import type {Card} from "../types";
 
 	const cart = JSON.parse(localStorage.getItem('cart') || '[]') as Card[];
-
-	console.log('cart = ', cart);
-
-
 	const response = await fetch(
 		'/local-storage',
 		{
@@ -147,7 +142,6 @@ import CartCard from "../components/CartCard.astro";
 			body: JSON.stringify(cart),
 		},
 	);
-
 
 	const cardContainer = document.querySelector('.card-container') as HTMLDivElement;
 	const purchaseResumeContainer = document.querySelector('.purchase-resume-content') as HTMLDivElement;
@@ -168,7 +162,5 @@ import CartCard from "../components/CartCard.astro";
 
 
 	const button = document.querySelector('button') as HTMLButtonElement;
-	if (cart.length !== 0) {
-		button.disabled = false;
-	}
+	if (cart.length !== 0) button.disabled = false;
 </script>

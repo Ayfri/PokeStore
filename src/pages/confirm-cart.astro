@@ -6,7 +6,7 @@ import PageTitle from "../components/PageTitle.astro";
 <Layout title="Confirm Cart">
 	<main>
 		<PageTitle
-				title="Confirm Cart"
+			title="Confirm Cart"
 		></PageTitle>
 		<div class="purchase-resume-container">
 			<h2>Resume</h2>
@@ -27,17 +27,17 @@ import PageTitle from "../components/PageTitle.astro";
 	</main>
 </Layout>
 <style>
-    main {
-        margin: auto 15rem;
-        display: flex;
-        flex-direction: column;
-        padding: .6rem;
-        color: white;
-        font-size: 20px;
-        line-height: 1.6;
-        max-width: 100vw;
-        max-height: 100vh;
-    }
+	main {
+		margin: auto 15rem;
+		display: flex;
+		flex-direction: column;
+		padding: .6rem;
+		color: white;
+		font-size: 20px;
+		line-height: 1.6;
+		max-width: 100vw;
+		max-height: 100vh;
+	}
 
 	.purchase-resume-container {
 		background-color: #232323;
@@ -49,35 +49,35 @@ import PageTitle from "../components/PageTitle.astro";
 		height: fit-content;
 	}
 
-    .purchase-resume-container > a > button {
-        background-color: #ff9e00;
-        font-size: 1.2rem;
-        padding: 1rem;
-        border-radius: 1rem;
-        border: none;
-        transition: all 0.2s ease-in-out;
-        width: fit-content;
-    }
+	.purchase-resume-container > a > button {
+		background-color: #ff9e00;
+		font-size: 1.2rem;
+		padding: 1rem;
+		border-radius: 1rem;
+		border: none;
+		transition: all 0.2s ease-in-out;
+		width: fit-content;
+	}
 
-    .purchase-resume-container > a > button:hover {
-        background-color: #ffb444;
-        cursor: pointer;
-    }
+	.purchase-resume-container > a > button:hover {
+		background-color: #ffb444;
+		cursor: pointer;
+	}
 
-    .purchase-resume-container > h2 {
-        margin: 0;
-    }
+	.purchase-resume-container > h2 {
+		margin: 0;
+	}
 
-    .purchase-resume-content-item {
-        display: flex;
-        justify-content: space-between;
-    }
+	.purchase-resume-content-item {
+		display: flex;
+		justify-content: space-between;
+	}
 
-    .purchase-resume-content-item > .item-info {
-        display: flex;
-        flex-direction: row;
-        gap: 1rem;
-    }
+	.purchase-resume-content-item > .item-info {
+		display: flex;
+		flex-direction: row;
+		gap: 1rem;
+	}
 </style>
 <style is:inline>
 	.purchase-resume-content-item {
@@ -88,6 +88,7 @@ import PageTitle from "../components/PageTitle.astro";
 	.purchase-resume-content-item p {
 		margin: 0;
 	}
+
 	.purchase-resume-content-item > .item-info {
 		display: flex;
 		flex-direction: row;
@@ -98,10 +99,6 @@ import PageTitle from "../components/PageTitle.astro";
 	import type {Card} from "../types";
 
 	const cart = JSON.parse(localStorage.getItem('cart') || '[]') as Card[];
-
-	console.log('cart = ', cart);
-
-
 	const response = await fetch(
 		'/local-storage',
 		{
@@ -109,7 +106,6 @@ import PageTitle from "../components/PageTitle.astro";
 			body: JSON.stringify(cart),
 		},
 	);
-
 
 	const purchaseResumeContainer = document.querySelector('.purchase-resume-content') as HTMLDivElement;
 	const purchaseResumeCost = document.querySelector('.purchase-resume-cost') as HTMLDivElement;
@@ -138,7 +134,5 @@ import PageTitle from "../components/PageTitle.astro";
 		localStorage.removeItem('address');
 	});
 
-	if (cart.length === 0) {
-		window.location.href = '/cart';
-	}
+	if (cart.length === 0) window.location.href = '/cart';
 </script>

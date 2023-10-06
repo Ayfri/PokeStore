@@ -6,7 +6,7 @@ import PageTitle from "../components/PageTitle.astro";
 <Layout title="Confirm Address">
 	<main>
 		<PageTitle
-				title="Confirm Address"
+			title="Confirm Address"
 		></PageTitle>
 		<div class="confirm-container">
 			<div class="delivery-address">
@@ -28,41 +28,41 @@ import PageTitle from "../components/PageTitle.astro";
 	</main>
 </Layout>
 <style>
-    main {
-        margin: auto 15rem;
-        display: flex;
-        flex-direction: column;
-        padding: .6rem;
-        color: white;
-        font-size: 20px;
-        line-height: 1.6;
-        max-width: 100vw;
-        max-height: 100vh;
-    }
+	main {
+		margin: auto 15rem;
+		display: flex;
+		flex-direction: column;
+		padding: .6rem;
+		color: white;
+		font-size: 20px;
+		line-height: 1.6;
+		max-width: 100vw;
+		max-height: 100vh;
+	}
 
-    .confirm-container {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-    }
+	.confirm-container {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+	}
 
-    .delivery-address {
-        background-color: #232323;
-        border-radius: 1rem;
-        display: flex;
-        flex-direction: column;
-        padding: 2rem;
-        width: 40rem;
-        height: fit-content;
-    }
+	.delivery-address {
+		background-color: #232323;
+		border-radius: 1rem;
+		display: flex;
+		flex-direction: column;
+		padding: 2rem;
+		width: 40rem;
+		height: fit-content;
+	}
 
-    .delivery-address > h2 {
-        margin: 0;
-    }
+	.delivery-address > h2 {
+		margin: 0;
+	}
 
-    .delivery-address > h3 {
-        font-weight: normal;
-    }
+	.delivery-address > h3 {
+		font-weight: normal;
+	}
 
 	.delivery-address > input {
 		padding: 1rem;
@@ -99,22 +99,19 @@ import PageTitle from "../components/PageTitle.astro";
 		cursor: not-allowed;
 	}
 
+	.purchase-resume-container {
+		background-color: #232323;
+		border-radius: 1rem;
+		display: flex;
+		flex-direction: column;
+		padding: 2rem;
+		width: 20rem;
+		height: fit-content;
+	}
 
-
-
-    .purchase-resume-container {
-        background-color: #232323;
-        border-radius: 1rem;
-        display: flex;
-        flex-direction: column;
-        padding: 2rem;
-        width: 20rem;
-        height: fit-content;
-    }
-
-    .purchase-resume-container > h2 {
-        margin: 0;
-    }
+	.purchase-resume-container > h2 {
+		margin: 0;
+	}
 
 	.purchase-resume-content {
 		display: flex;
@@ -131,6 +128,7 @@ import PageTitle from "../components/PageTitle.astro";
 	.purchase-resume-content-item p {
 		margin: 0;
 	}
+
 	.purchase-resume-content-item > .item-info {
 		display: flex;
 		flex-direction: row;
@@ -138,38 +136,38 @@ import PageTitle from "../components/PageTitle.astro";
 	}
 </style>
 <script is:inline>
-    const autocompleteInput = document.querySelector("#autocomplete");
-    let autocomplete;
+	const autocompleteInput = document.querySelector("#autocomplete");
+	let autocomplete;
 
-    function initAutocomplete() {
-        autocomplete = new google.maps.places.Autocomplete(
-            autocompleteInput,
-            {
-                types: ["address"],
-                componentRestrictions: {country: "fr"},
-                fields: ["address_components", "geometry", "icon", "name"],
-            }
-        );
-        console.log(autocomplete);
-        autocomplete.addEventListener("place_changed", onPlaceChanged);
-    }
+	function initAutocomplete() {
+		autocomplete = new google.maps.places.Autocomplete(
+			autocompleteInput,
+			{
+				types: ["address"],
+				componentRestrictions: {country: "fr"},
+				fields: [
+					"address_components",
+					"geometry",
+					"icon",
+					"name",
+				],
+			},
+		);
+		autocomplete.addEventListener("place_changed", onPlaceChanged);
+	}
 
-    function onPlaceChanged() {
-        const place = autocomplete.getPlace();
+	function onPlaceChanged() {
+		const place = autocomplete.getPlace();
 
-        if (place.geometry) {
-            document.getElementById("details").innerHTML = place.name;
-            console.log(place);
-        }
-    }
+		if (place.geometry) {
+			document.getElementById("details").innerHTML = place.name;
+		}
+	}
 </script>
 <script>
 	import type {Card} from "../types";
 
 	const cart = JSON.parse(localStorage.getItem('cart') || '[]') as Card[];
-
-	console.log('cart = ', cart);
-
 
 	const response = await fetch(
 		'/local-storage',
@@ -179,8 +177,6 @@ import PageTitle from "../components/PageTitle.astro";
 		},
 	);
 
-
-	const cardContainer = document.querySelector('.card-container') as HTMLDivElement;
 	const purchaseResumeContainer = document.querySelector('.purchase-resume-content') as HTMLDivElement;
 	const purchaseResumeCost = document.querySelector('.purchase-resume-cost') as HTMLDivElement;
 
@@ -215,7 +211,7 @@ import PageTitle from "../components/PageTitle.astro";
 </script>
 
 <script
-		src={`https://maps.googleapis.com/maps/api/js?key=${import.meta.env.API_KEY}&libraries=places&callback=initAutocomplete`}
-		async defer
+	src={`https://maps.googleapis.com/maps/api/js?key=${import.meta.env.API_KEY}&libraries=places&callback=initAutocomplete`}
+	async defer
 >
 </script>
