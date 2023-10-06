@@ -21,58 +21,75 @@ const rarity = await rarityList.json() as string[];
 <main>
 	<Layout title="Pokéstore - Admin">
 		<div class="top-container">
-			<PageTitle
-				title='Admin'
-			></PageTitle>
+			<PageTitle title="Admin"/>
 		</div>
 		<div class="panels-container">
-			<Panel id="pokemon-form" route="/admin/pokemon" title="Pokémon"
-			       inputs={["numero", "name", "description"]}
-			       selects={[{
-				       name: "type",
-				       options: [...types.sort((a, b) => a.localeCompare(b)).map(type => type)],
-				       multiple: true
-			       }]}
-			></Panel>
-			<Panel id="card-form" route="/admin/card" title="Card"
-			       inputs={["price", "image"]}
-			       selects={[{name: "types", options: [...types.sort((a, b) => a.localeCompare(b)).map(type => type)], multiple: true},
-				       {
-					       name: "rarity",
-					       options: [
-						       ...rarity.sort((a, b) => a.localeCompare(b)).map(rarity => rarity)
-					       ],
-					       multiple: false
-				       },
-				       {
-					        name: "set",
-					        options: [
-						        ...sets.map(set => set.name).sort((a, b) => a.localeCompare(b)).map(set => set)
-					        ],
-					        multiple: false
-				       },
-				       {
-					       name: "pokemon",
-					       options: [
-						       ...cards.map(card => card.pokemon.name).sort((a, b) => a.localeCompare(b)).map(pokemon => pokemon)
-					       ],
-					       multiple: false
-				       }
-			       ]}
-			></Panel>
-			<Panel id="set-form"
-			       route="/admin/set"
-			       title="Set"
-			       inputs={[
-				       "name", "image"
-			       ]}
-			       selects={[{
-				       name: "",
-				       options: [""],
-				       multiple: false
-			       }
-			       ]}
-			></Panel>
+			<Panel
+				id="pokemon-form" route="/admin/pokemon" title="Pokémon"
+				inputs={[
+					"numero",
+					"name",
+					"description",
+				]}
+				selects={[
+					{
+						name: "type",
+						options: [...types.sort((a, b) => a.localeCompare(b)).map(type => type)],
+						multiple: true,
+					},
+				]}
+			/>
+			<Panel
+				id="card-form" route="/admin/card" title="Card"
+				inputs={[
+					"price",
+					"image",
+				]}
+				selects={[
+					{
+						name: "types",
+						options: [...types.sort((a, b) => a.localeCompare(b)).map(type => type)],
+						multiple: true,
+					},
+					{
+						name: "rarity",
+						options: [
+							...rarity.sort((a, b) => a.localeCompare(b)).map(rarity => rarity),
+						],
+						multiple: false,
+					},
+					{
+						name: "set",
+						options: [
+							...sets.map(set => set.name).sort((a, b) => a.localeCompare(b)).map(set => set),
+						],
+						multiple: false,
+					},
+					{
+						name: "pokemon",
+						options: [
+							...cards.map(card => card.pokemon.name).sort((a, b) => a.localeCompare(b)).map(pokemon => pokemon),
+						],
+						multiple: false,
+					},
+				]}
+			/>
+			<Panel
+				id="set-form"
+				route="/admin/set"
+				title="Set"
+				inputs={[
+					"name",
+					"image",
+				]}
+				selects={[
+					{
+						name: "",
+						options: [""],
+						multiple: false,
+					},
+				]}
+			/>
 		</div>
 	</Layout>
 </main>
@@ -81,28 +98,42 @@ const rarity = await rarityList.json() as string[];
 	import type {Pokemon} from "../types";
 
 	async function sleep(ms: number) {
-		return new Promise((resolve) => setTimeout(resolve, ms));
+		return new Promise(resolve => setTimeout(resolve, ms));
 	}
-
 
 	const forms = document.querySelectorAll('form');
 
-	forms.forEach(formElement => {
+	forms.forEach(formElement =>
 		handleForm<Pokemon>(async (result, response, form) => {
-			if (response.status === 201) {
-				displayError('', form);
+				if (response.status === 201) {
+					displayError('', form);
+					displaySuccess('', form);
+					await sleep(50);
+					displaySuccess(result, form);
+					form.reset();
+					return;
+				}
+
 				displaySuccess('', form);
+				displayError('', form);
 				await sleep(50);
-				displaySuccess(result, form);
-				form.reset();
-				return;
-			}
-			displaySuccess('', form);
-			displayError('', form);
-			await sleep(50);
-			displayError(result, form);
-		}, false, formElement, true);
-	});
+				displayError(result, form);
+			}, false, formElement, (form, formData, event) => {
+				const url = new URL(event.submitter.getAttribute('formaction'));
+				console.log(url, url.pathname);
+
+				if (url.searchParams.get('button') === 'edit' && url.pathname === '/admin/card') {
+					const prompt = window.prompt('Please enter card id.');
+					const id = Number.parseInt(prompt ?? '');
+					if (isNaN(id)) return false;
+
+					formData.append('id', id.toString());
+				}
+
+				return true;
+			},
+			true,
+		));
 </script>
 <style>
 	:root {
@@ -125,7 +156,7 @@ const rarity = await rarityList.json() as string[];
 	.panels-container {
 		display: flex;
 		justify-content: space-evenly;
-		align-items: center;
+		align-items: flex-start;
 		padding-bottom: 5rem;
 		padding-top: 5rem;
 	}
@@ -137,5 +168,9 @@ const rarity = await rarityList.json() as string[];
 		margin-right: 7rem;
 		align-items: center;
 		border-bottom: white solid 6px;
+	}
+
+	:global(option):not(:checked) {
+		background-color: #2C2829;
 	}
 </style>

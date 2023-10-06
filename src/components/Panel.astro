@@ -1,13 +1,23 @@
 ---
 interface Pokemon {
 	id: string;
-	route: string
+	route: string;
 	title: string;
 	inputs: string[];
-	selects: string[{ name: string, options: string[], multiple: boolean }];
+	selects: string[{
+		name: string,
+		options: string[],
+		multiple: boolean
+	}];
 }
 
-const {id, route, title, inputs, selects} = Astro.props;
+const {
+	id,
+	route,
+	title,
+	inputs,
+	selects,
+} = Astro.props;
 const path = route.startsWith("/") ? `${import.meta.env.API_URL}${route}` : route;
 ---
 
@@ -15,28 +25,37 @@ const path = route.startsWith("/") ? `${import.meta.env.API_URL}${route}` : rout
 	<h1>{title}</h1>
 	<form method="post" id={id}>
 		<div class="fields">
-			{inputs.map((input) => <input required name={input}
-			                              placeholder={input[0].toUpperCase() + input.slice(1)}/>)}
+			{inputs.map((input) => <input
+				required name={input}
+				placeholder={input[0].toUpperCase() + input.slice(1)}
+			/>)}
 			{selects.filter(a => a.name != "").map((select) => <select
-				required name={select.name} multiple={select.multiple}>{select.options.map((option) =>
+				required name={select.name} multiple={select.multiple}
+			>{select.options.map((option) =>
 				<option>{option}</option>)}</select>)}
 		</div>
 		<p class="error"></p>
 		<p class="success"></p>
 		<div class="buttons">
 			<div class="buttons-top">
-				<button style="background-color: #5ca854" name="add" formmethod="post"
-				        formaction=`${path}?button=add`>
+				<button
+					style="background-color: #5ca854" name="add" formmethod="post"
+					formaction=`${path}?button=add`
+				>
 					Add
 				</button>
-				<button style="background-color: #c44949" name="remove" formmethod="post"
-				        formaction=`${path}?button=remove`>
+				<button
+					style="background-color: #c44949" name="remove" formmethod="post"
+					formaction=`${path}?button=remove`
+				>
 					Remove
 				</button>
 			</div>
 			<div class="buttons-bottom">
-				<button style="background-color: #d16d55" name="edit" formmethod="post"
-				        formaction=`${path}?button=edit`>
+				<button
+					style="background-color: #d16d55" name="edit" formmethod="post"
+					formaction=`${path}?button=edit`
+				>
 					Edit
 				</button>
 			</div>
@@ -53,7 +72,7 @@ const path = route.startsWith("/") ? `${import.meta.env.API_URL}${route}` : rout
 	.panel {
 		background-color: #2C2829;
 		width: 22rem;
-		height: 36rem;
+		min-height: 36rem;
 		border-radius: 2em;
 		display: flex;
 		justify-content: center;
