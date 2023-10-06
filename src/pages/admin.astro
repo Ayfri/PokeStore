@@ -23,36 +23,17 @@ const rarity = await rarityList.json() as string[];
 			></PageTitle>
 		</div>
 		<div class="panels-container">
-			<Panel id="pokemon-form"
-				route="/admin/pokemon"
-			       title="Pokémon"
-			       inputs={[
-				       "numero", "name", "description"
-			       ]}
-			       selects={[
-				       {
-					       name: "type",
-					       options: [
-						       ...types.sort((a, b) => a.localeCompare(b)).map(type => type)
-					       ],
-					       multiple: true
-				       }
-			       ]}
+			<Panel id="pokemon-form" route="/admin/pokemon" title="Pokémon"
+			       inputs={["numero", "name", "description"]}
+			       selects={[{
+				       name: "type",
+				       options: [...types.sort((a, b) => a.localeCompare(b)).map(type => type)],
+				       multiple: true
+			       }]}
 			></Panel>
-			<Panel id="card-form"
-				route="/admin/card"
-			       title="Card"
-			       inputs={[
-				       "price", "image"
-			       ]}
-			       selects={[
-				       {
-					       name: "types",
-					       options: [
-						       ...types.sort((a, b) => a.localeCompare(b)).map(type => type)
-					       ],
-					       multiple: true
-				       },
+			<Panel id="card-form" route="/admin/card" title="Card"
+			       inputs={["price", "image"]}
+			       selects={[{name: "types", options: [...types.sort((a, b) => a.localeCompare(b)).map(type => type)], multiple: true},
 				       {
 					       name: "rarity",
 					       options: [
@@ -70,7 +51,7 @@ const rarity = await rarityList.json() as string[];
 			       ]}
 			></Panel>
 			<Panel id="set-form"
-				route="/admin/set"
+			       route="/admin/set"
 			       title="Set"
 			       inputs={[
 				       "name", "image"
@@ -85,6 +66,24 @@ const rarity = await rarityList.json() as string[];
 		</div>
 	</Layout>
 </main>
+<script>
+	import {displayError, displaySuccess, handleForm} from '../utils/form';
+	import type {Pokemon} from "../types";
+
+	const forms = document.querySelectorAll('form');
+
+	forms.forEach(formElement => {
+		handleForm<Pokemon>(async (result, response, form, event) => {
+			if (response.status === 201) {
+				displayError('', form);
+				displaySuccess(result, form);
+				return;
+			}
+			displaySuccess('', form);
+			displayError(result, form);
+		}, false, formElement, true);
+	});
+</script>
 <style>
 	:root {
 		--card-margin: 1rem;

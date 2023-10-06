@@ -15,11 +15,14 @@ const path = route.startsWith("/") ? `${import.meta.env.API_URL}${route}` : rout
 	<h1>{title}</h1>
 	<form method="post" id={id}>
 		<div class="fields">
-			{inputs.map((input) => <input name={input} placeholder={input[0].toUpperCase() + input.slice(1)}/>)}
+			{inputs.map((input) => <input required name={input}
+			                              placeholder={input[0].toUpperCase() + input.slice(1)}/>)}
 			{selects.filter(a => a.name != "").map((select) => <select
-				name={select.name} multiple={select.multiple}>{select.options.map((option) =>
+				required name={select.name} multiple={select.multiple}>{select.options.map((option) =>
 				<option>{option}</option>)}</select>)}
 		</div>
+		<p class="error"></p>
+		<p class="success"></p>
 		<div class="buttons">
 			<div class="buttons-top">
 				<button style="background-color: #5ca854" name="add" formmethod="post"
@@ -40,16 +43,6 @@ const path = route.startsWith("/") ? `${import.meta.env.API_URL}${route}` : rout
 		</div>
 	</form>
 </div>
-<script>
-	import {displayError, handleForm} from '../utils/form';
-	handleForm<Pokemon>(async (user, response, form) => {
-		if (response.status === 200) {
-			window.location.href = '/admin';
-			return;
-		}
-		displayError(user, form);
-	}, false, document.querySelector(`#${id}`));
-</script>
 <style>
 	h1 {
 		text-shadow: 0 0 .3em #000;
@@ -157,8 +150,29 @@ const path = route.startsWith("/") ? `${import.meta.env.API_URL}${route}` : rout
 		font-size: 17px;
 	}
 
-
 	input:focus {
 		outline: none;
 	}
+
+	:global(.error) {
+		color: #ff4c4c;
+		transition: opacity 0.2s ease-in-out;
+	}
+
+	:global(.success) {
+		color: #5ca854;
+		transition: opacity 0.2s ease-in-out;
+	}
+
+	:global(.error:empty), :global(.success:empty) {
+		opacity: 0;
+		margin: 0;
+		height: 0;
+	}
+
+	:global(.error:not(:empty)), :global(.success:not(:empty)) {
+		opacity: 1;
+	}
+
+
 </style>

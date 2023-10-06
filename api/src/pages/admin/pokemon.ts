@@ -1,7 +1,7 @@
 import type {APIContext} from 'astro';
 import prisma from '../../prisma.ts';
 import {newId} from '../../random.ts';
-import {errorResponse, formData, jsonResponse} from '../../utils.ts';
+import {errorResponse, formData} from '../../utils.ts';
 
 interface Pokemon {
 	description: string;
@@ -18,9 +18,10 @@ export async function POST({request, url}: APIContext) {
 	console.log(`description: ${description}, name: ${name}, numero: ${numero}, type: ${type}`);
 	numero = parseInt(numero.toString());
 
-	/*todo: make every fields required*/
-	/*todo: get every types (only first one got)*/
-	/*todo: display error/success in front*/
+	if(!description || !name || !numero || !type) {
+		return errorResponse('Missing fields.');
+	}
+
 	/*todo: edit & remove params*/
 	const existingPokemon = await prismaClient.pokemons.findFirst({
 		where: {
@@ -32,8 +33,10 @@ export async function POST({request, url}: APIContext) {
 		}
 	});
 
-	if(searchParam === 'add') {
-		if (existingPokemon) return errorResponse('Pokemon already exists.', 409);
+	if(searchParam === 'add' && existingPokemon) {
+		if (existingPokemon.description === description) return errorResponse('Description already exists.');
+		if (existingPokemon.name === name) return errorResponse('Name already exists.');
+		if (existingPokemon.numero === numero) return errorResponse('Numero already exists.');
 	}
 
 	const pokemon = await prismaClient.pokemons.create({
@@ -44,5 +47,7 @@ export async function POST({request, url}: APIContext) {
 
 
 	if (!pokemon) return errorResponse('Unknown error.');
-	return jsonResponse(pokemon);
+	return new Response('Pokemon successfully created!', {
+		status: 201,
+	})
 }

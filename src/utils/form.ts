@@ -9,8 +9,13 @@ export interface Input {
 }
 
 export function displayError(error: string, form: HTMLFormElement = document.querySelector('form') as HTMLFormElement) {
-	const errorElement = form.querySelector('.error') as HTMLDivElement;
+	const errorElement = form.querySelector('.error') as HTMLParagraphElement;
 	errorElement.innerText = error;
+}
+
+export function displaySuccess(success: string, form: HTMLFormElement = document.querySelector('form') as HTMLFormElement) {
+	const successElement = form.querySelector('.success') as HTMLParagraphElement;
+	successElement.innerText = success;
 }
 
 export function handleForm<T = any>(
@@ -38,6 +43,12 @@ export function handleForm<T = any>(
 	foundForm.addEventListener('submit', async event => {
 		event.preventDefault();
 		const formData = new FormData(foundForm);
+		const formSelects = foundForm.querySelectorAll('select');
+		formSelects.forEach(select => {
+			const name = select.getAttribute('name') as string;
+			const selectOptionsValues = [...select.options].filter(option => option.selected).map(option => option.value);
+			formData.set(name, selectOptionsValues.join(','));
+		});
 		const route = useSubmitterFormAction ? (event.submitter as HTMLInputElement).formAction : foundForm.action;
 		const response = await fetch(route, {
 			method: foundForm.method,
