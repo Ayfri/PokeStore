@@ -231,9 +231,8 @@ const centeredCard = cards[centeredCardId];
 	});
 
 	const cart = getCart();
-	const buyButton = document.querySelector('#add-to-card') as HTMLButtonElement;
 	const cartCount = document.querySelector('#cart-count') as HTMLSpanElement;
-	buyButton.addEventListener('click', async event => {
+	addToCart.addEventListener('click', async event => {
 		const target = event.target as HTMLButtonElement;
 		const route = target.dataset.route;
 		const response = await fetch(route);
@@ -243,12 +242,12 @@ const centeredCard = cards[centeredCardId];
 		cart.push(card);
 
 		localStorage.setItem('cart', JSON.stringify(cart));
-		buyButton.classList.add('success');
+		addToCart.classList.add('success');
 		cartCount.innerText = cart.length.toString();
-	}, {once: true});
+	});
 
-	if (cart.find(c => c.id === parseInt(buyButton.dataset.route.split('/').pop() as string))) {
-		buyButton.classList.add('success');
+	if (cart.find(c => c.id === parseInt(addToCart.dataset.route.split('/').pop() as string))) {
+		addToCart.classList.add('success');
 	}
 
 	/*CARD EFFECT*/
