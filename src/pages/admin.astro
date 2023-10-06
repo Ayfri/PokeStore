@@ -7,6 +7,9 @@ import type {Card, Set} from "../types";
 const typesList = await fetch(`${import.meta.env.API_URL}/types`);
 const types = await typesList.json() as string[];
 
+const setsList = await fetch(`${import.meta.env.API_URL}/sets`);
+const sets = await setsList.json() as Set[];
+
 const response = await fetch(`${import.meta.env.API_URL}/cards`);
 let cards = await response.json() as Card[];
 cards = cards.filter((card, index, self) => self.findIndex(c => c.pokemon.numero === card.pokemon.numero) === index);
@@ -40,6 +43,13 @@ const rarity = await rarityList.json() as string[];
 						       ...rarity.sort((a, b) => a.localeCompare(b)).map(rarity => rarity)
 					       ],
 					       multiple: false
+				       },
+				       {
+					        name: "set",
+					        options: [
+						        ...sets.map(set => set.name).sort((a, b) => a.localeCompare(b)).map(set => set)
+					        ],
+					        multiple: false
 				       },
 				       {
 					       name: "pokemon",
