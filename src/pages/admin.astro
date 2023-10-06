@@ -2,10 +2,17 @@
 import Layout from "../layouts/Layout.astro";
 import PageTitle from "../components/PageTitle.astro";
 import Panel from "../components/Panel.astro";
-import type {Set} from "../types";
+import type {Card, Set} from "../types";
 
-const setsList = await fetch(`${import.meta.env.API_URL}/sets`);
-const sets = await setsList.json() as Set[];
+const typesList = await fetch(`${import.meta.env.API_URL}/types`);
+const types = await typesList.json() as string[];
+
+const response = await fetch(`${import.meta.env.API_URL}/cards`);
+let cards = await response.json() as Card[];
+cards = cards.filter((card, index, self) => self.findIndex(c => c.pokemon.numero === card.pokemon.numero) === index);
+
+const rarityList = await fetch(`${import.meta.env.API_URL}/rarity`);
+const rarity = await rarityList.json() as string[];
 ---
 
 <main>
@@ -16,25 +23,62 @@ const sets = await setsList.json() as Set[];
 			></PageTitle>
 		</div>
 		<div class="panels-container">
-			<Panel title="Pokémon"
+			<Panel id="pokemon-form"
+				route="/admin/pokemon"
+			       title="Pokémon"
 			       inputs={[
-				       "id", "rarity", "image", "price"
+				       "numero", "name", "description"
 			       ]}
-			       selects={[{
-				       name: "set",
-				       options: [
-					       ...sets.sort((a,b) => a.name.localeCompare(b.name)).map(set => set.name)
-				       ],
-			       }
+			       selects={[
+				       {
+					       name: "type",
+					       options: [
+						       ...types.sort((a, b) => a.localeCompare(b)).map(type => type)
+					       ],
+					       multiple: true
+				       }
 			       ]}
 			></Panel>
-			<Panel title="Set"
+			<Panel id="card-form"
+				route="/admin/card"
+			       title="Card"
+			       inputs={[
+				       "price", "image"
+			       ]}
+			       selects={[
+				       {
+					       name: "types",
+					       options: [
+						       ...types.sort((a, b) => a.localeCompare(b)).map(type => type)
+					       ],
+					       multiple: true
+				       },
+				       {
+					       name: "rarity",
+					       options: [
+						       ...rarity.sort((a, b) => a.localeCompare(b)).map(rarity => rarity)
+					       ],
+					       multiple: false
+				       },
+				       {
+					       name: "pokemon",
+					       options: [
+						       ...cards.map(card => card.pokemon.name).sort((a, b) => a.localeCompare(b)).map(pokemon => pokemon)
+					       ],
+					       multiple: false
+				       }
+			       ]}
+			></Panel>
+			<Panel id="set-form"
+				route="/admin/set"
+			       title="Set"
 			       inputs={[
 				       "name", "image"
 			       ]}
 			       selects={[{
 				       name: "",
 				       options: [""],
+				       multiple: false
 			       }
 			       ]}
 			></Panel>
@@ -63,6 +107,8 @@ const sets = await setsList.json() as Set[];
 		display: flex;
 		justify-content: space-evenly;
 		align-items: center;
+		padding-bottom: 5rem;
+		padding-top: 5rem;
 	}
 
 	.top-container {

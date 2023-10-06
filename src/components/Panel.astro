@@ -1,31 +1,55 @@
 ---
-interface Props {
+interface Pokemon {
+	id: string;
+	route: string
 	title: string;
 	inputs: string[];
-	selects: string[{ name: string, options: string[] }];
+	selects: string[{ name: string, options: string[], multiple: boolean }];
 }
 
-const {title, selects, inputs} = Astro.props;
+const {id, route, title, inputs, selects} = Astro.props;
+const path = route.startsWith("/") ? `${import.meta.env.API_URL}${route}` : route;
 ---
 
 <div class="panel">
 	<h1>{title}</h1>
-	<div class="fields">
-		{inputs.map((input) => <input name={input} placeholder={input[0].toUpperCase() + input.slice(1)}/>)}
-		{selects.filter(a => a.name != "").map((select) => <select
-			name={select.name}>{select.options.map((option) =>
-			<option>{option}</option>)}</select>)}
-	</div>
-	<div class="buttons">
-		<div class="buttons-top">
-			<button style="background-color: #5ca854">Add</button>
-			<button style="background-color: #c44949">Remove</button>
+	<form method="post" id={id}>
+		<div class="fields">
+			{inputs.map((input) => <input name={input} placeholder={input[0].toUpperCase() + input.slice(1)}/>)}
+			{selects.filter(a => a.name != "").map((select) => <select
+				name={select.name} multiple={select.multiple}>{select.options.map((option) =>
+				<option>{option}</option>)}</select>)}
 		</div>
-		<div class="buttons-bottom">
-			<button style="background-color: #d16d55">Edit</button>
+		<div class="buttons">
+			<div class="buttons-top">
+				<button style="background-color: #5ca854" name="add" formmethod="post"
+				        formaction=`${path}?button=add`>
+					Add
+				</button>
+				<button style="background-color: #c44949" name="remove" formmethod="post"
+				        formaction=`${path}?button=remove`>
+					Remove
+				</button>
+			</div>
+			<div class="buttons-bottom">
+				<button style="background-color: #d16d55" name="edit" formmethod="post"
+				        formaction=`${path}?button=edit`>
+					Edit
+				</button>
+			</div>
 		</div>
-	</div>
+	</form>
 </div>
+<script>
+	import {displayError, handleForm} from '../utils/form';
+	handleForm<Pokemon>(async (user, response, form) => {
+		if (response.status === 200) {
+			window.location.href = '/admin';
+			return;
+		}
+		displayError(user, form);
+	}, false, document.querySelector(`#${id}`));
+</script>
 <style>
 	h1 {
 		text-shadow: 0 0 .3em #000;
@@ -46,10 +70,17 @@ const {title, selects, inputs} = Astro.props;
 		padding: 2rem;
 	}
 
+	form {
+		flex: 1;
+		display: flex;
+		flex-flow: column;
+		align-items: center;
+	}
+
 	.fields {
 		display: flex;
 		flex-flow: column;
-		gap: 2rem;
+		gap: 1rem;
 		width: 100%;
 		align-items: center;
 		flex: 1;
@@ -59,7 +90,6 @@ const {title, selects, inputs} = Astro.props;
 		display: flex;
 		flex-flow: column;
 		align-items: center;
-		width: 80%;
 		gap: 1rem;
 	}
 
@@ -83,7 +113,7 @@ const {title, selects, inputs} = Astro.props;
 
 	button {
 		border: none;
-		font-family: "Clash Display",serif;
+		font-family: "Clash Display", serif;
 		font-weight: 600;
 		color: white;
 		height: 2rem;
@@ -98,6 +128,10 @@ const {title, selects, inputs} = Astro.props;
 
 	button:hover {
 		transform: scale(1.05);
+	}
+
+	select[multiple] {
+		height: 5rem;
 	}
 
 	select:hover, button:hover {
