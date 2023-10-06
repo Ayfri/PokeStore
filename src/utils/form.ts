@@ -43,6 +43,8 @@ export function handleForm<T = any>(
 	getAsJson ??= true;
 	useSubmitterFormAction ??= false;
 
+	console.log('foundForm', foundForm);
+
 	foundForm.addEventListener('submit', async event => {
 		event.preventDefault();
 		const formData = new FormData(foundForm);
@@ -52,7 +54,7 @@ export function handleForm<T = any>(
 			const selectOptionsValues = [...select.options].filter(option => option.selected).map(option => option.value);
 			formData.set(name, selectOptionsValues.join(','));
 		});
-		if (!beforeSubmit?.(foundForm, formData, event)) return;
+		if (beforeSubmit?.(foundForm, formData, event) === false) return;
 
 		const route = useSubmitterFormAction ? (event.submitter as HTMLInputElement).formAction : foundForm.action;
 		const response = await fetch(route, {
