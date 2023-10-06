@@ -121,6 +121,7 @@ const centeredCard = cards[centeredCardId];
 						</p>
 						<button
 							data-route={`${import.meta.env.API_URL}/cards/${centeredCard.id}`}
+							data-values={cards.map(card => card.id)}
 							id="add-to-card"
 						>
 							Add to cart
@@ -140,32 +141,36 @@ const centeredCard = cards[centeredCardId];
 	const url = new URL(window.location.href);
 	const mainImages = document.querySelectorAll('.image') as NodeListOf<HTMLImageElement>;
 
+	const addToCart = document.querySelector('#add-to-card') as HTMLButtonElement;
 	const cardAura = document.querySelector('#card-aura') as HTMLDivElement;
 	const cardPrice = document.querySelector('#card-price') as HTMLParagraphElement;
 	const cardTypes = document.querySelector('#card-types') as HTMLDivElement;
 	const centerCard = document.querySelector('#center-card') as HTMLDivElement;
 	const filter = document.querySelector('#filter') as HTMLDivElement;
 
+	let urlIndex = url.searchParams.get('index');
+
 	function handleDynamicValue<T>(element: T, callback: (element: T, value: string) => void) {
+		urlIndex = url.searchParams.get('index');
 		const values = element.dataset.values?.split(',') as string[];
-		const index = url.searchParams.get('index') ? parseInt(url.searchParams.get('index') as string) : 0;
+		const index = urlIndex ? parseInt(urlIndex as string) : 0;
 		const value = values[index];
 		callback(element, value);
 	}
 
 	sets.forEach(set => {
-		if (url.searchParams.get('index') === set.classList[1]) {
+		if (urlIndex === set.classList[1]) {
 			set.classList.add('shadow');
 		}
 
-		if (!url.searchParams.get('index') && set.classList[1] === '0') {
+		if (!urlIndex && set.classList[1] === '0') {
 			set.classList.add('shadow');
 		}
 
 		set.addEventListener('click', () => {
-			const index = set.classList[1];
-			if (url.searchParams.get('index') === index) return;
+			urlIndex = url.searchParams.get('index');
 
+			const index = set.classList[1];
 			url.searchParams.set('index', index);
 			window.history.pushState({}, '', url.toString());
 
@@ -190,15 +195,29 @@ const centeredCard = cards[centeredCardId];
 				centerCard.classList.remove(...centerCard.classList);
 				centerCard.classList.add('center-card', firstType, ...rarity.split(' '), 'inactive');
 			});
-			handleDynamicValue(cardPrice, (element, value) => element.textContent = `${value} $`);
+
+			handleDynamicValue(cardPrice, (element, value) => {
+				element.textContent = `${value} $`;
+			});
+
+			handleDynamicValue(addToCart, (element, value) => {
+				const cart = getCart();
+				element.dataset.route = element.dataset.route?.replace(/\d+$/, value);
+				if (cart.find(c => c.id === parseInt(value))) {
+					element.classList.add('success');
+				} else {
+					element.classList.remove('success');
+				}
+			});
 		});
 	});
 
 	const cart = getCart();
 	const buyButton = document.querySelector('#add-to-card') as HTMLButtonElement;
 	const cartCount = document.querySelector('#cart-count') as HTMLSpanElement;
-	const route = buyButton.dataset.route;
-	buyButton.addEventListener('click', async () => {
+	buyButton.addEventListener('click', async (event) => {
+		const target = event.target as HTMLButtonElement;
+		const route = target.dataset.route;
 		const response = await fetch(route);
 		const card = await response.json() as Card;
 
@@ -210,7 +229,7 @@ const centeredCard = cards[centeredCardId];
 		cartCount.innerText = cart.length.toString();
 	}, {once: true});
 
-	if (cart.find(c => c.id === parseInt(route.split('/').pop() as string))) {
+	if (cart.find(c => c.id === parseInt(buyButton.dataset.route.split('/').pop() as string))) {
 		buyButton.classList.add('success');
 	}
 
@@ -397,7 +416,7 @@ const centeredCard = cards[centeredCardId];
 	}
 
 	.image:not(.hidden) {
-		animation: image-fade-in 0.5s ease-in-out;
+		animation: image-fade-in 0.2s ease-in-out;
 	}
 
 	.bottom-container {
