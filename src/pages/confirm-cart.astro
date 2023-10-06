@@ -18,7 +18,7 @@ import PageTitle from "../components/PageTitle.astro";
 			</div>
 			<div class="purchase-resume-address">
 				<h3>Delivery address</h3>
-				<p>Ynov Aix Campus</p>
+				<p class="address">Ynov Aix Campus</p>
 			</div>
 			<a href="/jsp">
 				<button>Confirm purchase</button>
@@ -112,7 +112,6 @@ import PageTitle from "../components/PageTitle.astro";
 	);
 
 
-	const cardContainer = document.querySelector('.card-container') as HTMLDivElement;
 	const purchaseResumeContainer = document.querySelector('.purchase-resume-content') as HTMLDivElement;
 	const purchaseResumeCost = document.querySelector('.purchase-resume-cost') as HTMLDivElement;
 
@@ -127,4 +126,10 @@ import PageTitle from "../components/PageTitle.astro";
 	const cards = doc.querySelector('.cards') as HTMLDivElement;
 	purchaseResumeContainer.append(...doc.querySelectorAll('.purchase-resume-content-item'));
 	purchaseResumeCost.append(...doc.querySelectorAll('.total-price'));
+
+	const address = document.querySelector('.address') as HTMLParagraphElement;
+	const addressFromLocalStorage = localStorage.getItem('address');
+	if (addressFromLocalStorage) {
+		address.textContent = addressFromLocalStorage;
+	}
 </script>

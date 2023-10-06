@@ -188,6 +188,15 @@ import PageTitle from "../components/PageTitle.astro";
 	const cards = doc.querySelector('.cards') as HTMLDivElement;
 	purchaseResumeContainer.append(...doc.querySelectorAll('.purchase-resume-content-item'));
 	purchaseResumeCost.append(...doc.querySelectorAll('.total-price'));
+
+
+	const button = document.querySelector('button') as HTMLButtonElement;
+
+	button.addEventListener('click', () => {
+		const addressInput = document.querySelector('#autocomplete') as HTMLInputElement;
+
+		localStorage.setItem('address', addressInput.value);
+	});
 </script>
 
 <script
