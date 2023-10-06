@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import PageTitle from "../components/PageTitle.astro";
 import "../styles/colors.css";
 import {Image} from "astro:assets";
-import type {Card, Pokemon, Set} from "../types";
+import type {Card} from "../types";
 
 const filters = [
 	'numero',
@@ -45,6 +45,7 @@ const centeredCard = cards[centeredCardId];
 							<Image
 								alt={set.name}
 								class:list={[`set ${index}`]}
+								draggable="false"
 								height="105"
 								src={set.imageUrl}
 								width="75"
@@ -63,28 +64,32 @@ const centeredCard = cards[centeredCardId];
 							id="card-aura"
 						>
 						</div>
-						{
-							cards.map((card, index) =>
-								<img
-									alt={card.pokemon.name}
-									class:list={{
-										image: true,
-										hidden: index !== centeredCardId,
-									}}
-									decoding="async"
-									loading="eager"
-									height="420"
-									src={card.imageUrl}
-									width="300"
-								/>,
-							)
-						}
+						<div class="images">
+							{
+								cards.map((card, index) =>
+									<img
+										alt={card.pokemon.name}
+										class:list={{
+											image: true,
+											hidden: index !== centeredCardId,
+										}}
+										decoding="async"
+										draggable="false"
+										loading="eager"
+										height="420"
+										src={card.imageUrl}
+										width="300"
+									/>,
+								)
+							}
+						</div>
 					</div>
 					<div class="right-card">
 						{setLogoSecondHalf.map((set, index) =>
 							<Image
 								alt={set.name}
 								class:list={[`set ${index + 5}`]}
+								draggable="false"
 								height="105"
 								src={set.imageUrl}
 								width="75"
@@ -258,7 +263,7 @@ const centeredCard = cards[centeredCardId];
 		const py_spark = (50 + (py - 50) / 7);
 		const p_opc = 20 + (Math.abs(pa) * 1.5);
 		const ty = ((tp - 50) / 2) * -1;
-		const tx = ((lp - 50) / 1.5) * .5;
+		const tx = ((lp - 50) / 1.5) * 0.5;
 
 		const grad_pos = `background-position: ${lp}% ${tp}%;`;
 		const spark_pos = `background-position: ${px_spark}% ${py_spark}%;`;
@@ -291,12 +296,16 @@ const centeredCard = cards[centeredCardId];
 		max-height: 100vh;
 	}
 
+	img {
+		user-select: none;
+	}
+
 	.inactive {
 		transition: all 3s cubic-bezier(0.22, 1, 0.36, 1) !important;
 	}
 
 	.filter::before {
-		background-image: url("/public/particles.png");
+		background-image: url("/particles.png");
 		background-repeat: no-repeat;
 		width: 100%;
 		height: 100%;
@@ -360,6 +369,7 @@ const centeredCard = cards[centeredCardId];
 		width: 8.5rem;
 		height: 5.5rem;
 		object-fit: contain;
+		-webkit-user-drag: none;
 	}
 
 	.center-card {
@@ -400,23 +410,32 @@ const centeredCard = cards[centeredCardId];
 		0% {
 			opacity: 1;
 		}
+		98% {
+			opacity: 0;
+		}
 		100% {
 			opacity: 0;
+			display: none;
 		}
 	}
 
-	.image {
-		border-radius: 0.5rem !important;
+	.images {
 		height: 34rem;
+		width: 24rem;
+		position: relative;
+	}
+
+	.image {
+		border-radius: 0.5rem;
+		height: 34rem;
+		position: absolute;
+		animation: image-fade-in 0.4s ease-in-out;
 		width: 24rem;
 	}
 
 	.image.hidden {
-		display: none;
-	}
-
-	.image:not(.hidden) {
-		animation: image-fade-in 0.2s ease-in-out;
+		animation: image-fade-out 0.4s ease-in-out;
+		opacity: 0;
 	}
 
 	.bottom-container {
