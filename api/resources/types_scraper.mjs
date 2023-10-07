@@ -1,5 +1,5 @@
 import fs from 'fs';
-import cards from './cards.json' assert {type: "json"};
+import cards from './cards-old.json' assert {type: "json"};
 
 const cards_types = [];
 

@@ -6,12 +6,12 @@ export function randomBetween(min: number, max: number) {
 
 /**
  * Generate a new ID
- * Schema is "dddddddrrrrrrrr" where r is a random number and d is the current timestamp
+ * Schema is "dddddddrrrrrrrrrr" where r is a random number and d is the current timestamp
  */
 export function newId() {
 	const now = Date.now();
 	const nowString = now.toString().substring(0, 7);
-	const random = randomBetween(1000000, 9999999);
+	const random = randomBetween(100000000, 999999999);
 	return parseInt(`${nowString}${random}`);
 }
 

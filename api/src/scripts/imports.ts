@@ -1,5 +1,5 @@
 import type {Prisma} from '@prisma/client';
-import cards from '../../resources/cards.json';
+import cards from '../../resources/cards.json'; /*todo: add old before push*/
 import pokemons from '../../resources/pokemons.json';
 import sets from '../../resources/sets.json';
 import prisma from '../prisma.ts';
@@ -25,8 +25,8 @@ async function pushPokemons() {
 			id: newId(),
 			description: pokemon.description,
 			name: pokemon.name.replace(/ [♀♂] /, ''),
-			numero: parseInt(pokemon.num),
-			type: pokemon.type.join(','),
+			numero: pokemon.id,
+			type: pokemon.types.join(','),
 		})),
 	});
 }

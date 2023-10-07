@@ -32,13 +32,13 @@ const {
 		></div>
 		<div class="loader"></div>
 		<Image
-			alt={name}
+			alt={name.charAt(0).toUpperCase() + name.slice(1)}
 			height="420"
 			src={imageUrl}
 			draggable="false"
 			width="300"
 		/>
-		<h2>{name}</h2>
+		<h2>{name.charAt(0).toUpperCase() + name.slice(1)}</h2>
 		<h3>{price && price !== 100_000 ? `${price} $` : 'Priceless'}</h3>
 	</div>
 </a>
