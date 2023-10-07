@@ -15,7 +15,7 @@ const numeroParam = searchParams.has('numero') ? searchParams.get('numero') : nu
 
 const centeredCardId = Astro.url.searchParams.get('index') ? parseInt(Astro.url.searchParams.get('index')) : 0;
 
-if (numeroParam && !(numeroParam >= 1 && numeroParam <= 151)) {
+if (numeroParam && !(numeroParam >= 1 && numeroParam <= 1008)) {
 	Astro.url.searchParams.delete('numero');
 	return Astro.redirect("/");
 }
@@ -31,6 +31,11 @@ const response = await fetch(`${import.meta.env.API_URL}/cards?${searchParams.to
 let cards = await response.json() as Card[];
 cards = cards.sort((a, b) => a.pokemon.numero - b.pokemon.numero || b.price - a.price);
 
+if (cards.length === 0) {
+	Astro.url.searchParams.delete('numero');
+	return Astro.redirect("/");
+}
+
 if (Astro.url.searchParams.has('id')) {
 	const id = Astro.url.searchParams.get('id');
 	const index = cards.findIndex(card => card.id === parseInt(id));
@@ -42,10 +47,11 @@ if (Astro.url.searchParams.has('id')) {
 const setLogoFirstHalf = cards.slice(0, 5).map(card => card.set);
 const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set);
 const centeredCard = cards[centeredCardId];
+const pokemonName = centeredCard.pokemon.name;
 ---
 <Layout title="Pokéstore">
 	<main>
-		<div class:list={[`filter ${cards[centeredCardId].types.toLowerCase().split(',')[0]}`]} id="filter"></div>
+		<div class:list={[`filter ${centeredCard.types.toLowerCase().split(',')[0]}`]} id="filter"></div>
 		<div class="main-container">
 			<div class="top-container">
 				<div class="card-container">
@@ -61,7 +67,7 @@ const centeredCard = cards[centeredCardId];
 							/>)}
 					</div>
 					<div
-						class:list={[`center-card ${cards[centeredCardId].types.toLowerCase().split(',')[0]} ${cards[centeredCardId].rarity.toLowerCase()}`]}
+						class:list={[`center-card ${centeredCard.types.toLowerCase().split(',')[0]} ${centeredCard.rarity.toLowerCase()}`]}
 						data-values={cards.map(card => card.rarity.toLowerCase())}
 						id="center-card"
 					>
@@ -108,7 +114,7 @@ const centeredCard = cards[centeredCardId];
 				</div>
 			</div>
 			<div class="bottom-container">
-				<PageTitle title={centeredCard.pokemon.name}/>
+				<PageTitle title={pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1)}/>
 				<div class="bottom-half-bottom">
 					<div class="left-space"></div>
 					<div class="pokemon-info">
@@ -363,7 +369,7 @@ const centeredCard = cards[centeredCardId];
 	}
 
 	.left-card, .right-card {
-		width: 60%;
+		width: 11rem;
 		display: flex;
 		align-items: center;
 		justify-content: space-evenly;
