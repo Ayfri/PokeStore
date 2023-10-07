@@ -1,3 +1,4 @@
+import {numberOfPokemons} from './pokemon_scraper.mjs';
 import pokemon from 'pokemontcgsdk';
 import {configDotenv} from "dotenv";
 // noinspection ES6UnusedImports
@@ -7,8 +8,6 @@ import fs from "fs";
 const dotenv = configDotenv({
 	path: '../.env',
 });
-
-const maxPokemon = 1015;
 
 pokemon.configure({apiKey: dotenv.parsed['POKEMON_TCG_API_KEY']});
 
@@ -23,13 +22,13 @@ async function getPokemon(index) {
 	});
 
 	if (cards.length === 0) {
-		console.log(`Pokedex: ${index}/${maxPokemon}, no cards found !`);
+		console.log(`Pokedex: ${index}/${numberOfPokemons}, no cards found !`);
 		return [];
 	}
 
-	console.log(`Pokedex: ${index}/${maxPokemon}, caught ${cards[0].name} ! (${cards.length} cards)`);
+	console.log(`Pokedex: ${index}/${numberOfPokemons}, caught ${cards[0].name} ! (${cards.length} cards)`);
 
-	const filteredCards = cards.map(card => ({
+	return cards.map(card => ({
 		name: card.name,
 		rarity: card.rarity,
 		image: card.images.large,
@@ -40,8 +39,6 @@ async function getPokemon(index) {
 			card?.tcgplayer?.prices?.["1stEditionNormal"]?.market,
 		types: card.types.join(', '),
 	})).sort((a, b) => b.price - a.price);
-
-	return filteredCards;
 }
 
 async function getSet() {
@@ -60,7 +57,7 @@ async function getSet() {
 	}));
 
 	// filter by cards
-	const cardsJson = await import('./cards-old.json', {
+	const cardsJson = await import('./cards.json', {
 		assert: {type: 'json'},
 	});
 
@@ -77,11 +74,12 @@ async function getSet() {
 
 
 // UNCOMMENT TO GET POKÉMONS
-// const promises = Array.from({length: maxPokemon}, (_, i) => getPokemon(i + 1));
+// const promises = Array.from({length: numberOfPokemons}, (_, i) => getPokemon(i + 1));
 // const pokemonGroups = promises.map((promise, index) => (
+/*
 
 const pokemonGroups = [];
-for (let i = 0; i < maxPokemon; i += 2) {
+for (let i = 0; i < numberOfPokemons; i += 2) {
 	const pokemonGroup = await Promise.all([
 		getPokemon(i + 1),
 		getPokemon(i + 2)
@@ -89,9 +87,9 @@ for (let i = 0; i < maxPokemon; i += 2) {
 	pokemonGroups.push(...pokemonGroup);
 }
 fs.writeFileSync('cards-full.json', JSON.stringify(pokemonGroups, null, 2));
-
+*/
 
 // UNCOMMENT TO GET SETS
-const sets = await getSet();
-console.log(`Filtered sets, writing ${sets.length} sets !`);
-fs.writeFileSync('sets-full.json', JSON.stringify(sets, null, 2));
+// const sets = await getSet();
+// console.log(`Filtered sets, writing ${sets.length} sets !`);
+// fs.writeFileSync('sets-full.json', JSON.stringify(sets, null, 2));
