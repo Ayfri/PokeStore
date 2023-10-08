@@ -1,4 +1,4 @@
-import {migrate} from '../scripts/imports';
+import {migrate} from '../../scripts/imports';
 
 export async function GET() {
 	await migrate();
