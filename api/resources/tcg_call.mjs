@@ -83,9 +83,7 @@ async function getSet() {
 
 
 // UNCOMMENT TO GET POKÉMONS
-// const promises = Array.from({length: numberOfPokemons}, (_, i) => getPokemon(i + 1));
-// const pokemonGroups = promises.map((promise, index) => (
-
+/*
 const pokemonGroups = [];
 const interval = 10;
 for (let i = 0; i <= numberOfPokemons; i += 10) {
@@ -96,8 +94,9 @@ for (let i = 0; i <= numberOfPokemons; i += 10) {
 	pokemonGroups.push(...result);
 }
 await fs.writeFile('cards-full.json', JSON.stringify(pokemonGroups, null, 2));
+*/
 
 // UNCOMMENT TO GET SETS
 // const sets = await getSet();
 // console.log(`Filtered sets, writing ${sets.length} sets !`);
-// fs.writeFileSync('sets-full.json', JSON.stringify(sets, null, 2));
+// await fs.writeFile('sets-full.json', JSON.stringify(sets, null, 2));
