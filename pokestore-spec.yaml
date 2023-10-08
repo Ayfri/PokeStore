@@ -1,0 +1,97 @@
+openapi: 3.0.0
+info:
+  title: Pokestore
+  version: 1.0.0
+servers:
+  - url: http://{{url}}
+tags:
+  - name: /
+  - name: /cards/
+  - name: /pokemons/
+paths:
+  /types:
+    get:
+      tags:
+        - /
+      summary: /types
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /rarity:
+    get:
+      tags:
+        - /
+      summary: /rarity
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /sets:
+    get:
+      tags:
+        - /
+      summary: /sets
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /cards:
+    get:
+      tags:
+        - /cards/
+      summary: '?set'
+      parameters:
+        - name: set
+          in: query
+          schema:
+            type: string
+          example: base
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /cards/1696760100175103:
+    get:
+      tags:
+        - default
+      summary: /[id] Copy
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /pokemons/1696760192781708:
+    get:
+      tags:
+        - /pokemons/
+      summary: /[id]
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /pokemons:
+    get:
+      tags:
+        - /pokemons/
+      summary: /
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /admin/load:
+    get:
+      tags:
+        - default
+      summary: /admin/load
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
