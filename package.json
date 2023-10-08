@@ -14,6 +14,7 @@
 	},
 	"devDependencies": {
 		"@types/google.maps": "^3.54.3",
+		"dotenv": "^16.3.1",
 		"prisma": "^5.3.1"
 	},
 	"prisma": {
