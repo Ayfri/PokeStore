@@ -4,6 +4,7 @@ import PageTitle from "../components/PageTitle.astro";
 import "../styles/colors.css";
 import {Image} from "astro:assets";
 import type {Card} from "../types";
+import {numberOfPokemons} from '../constants';
 
 const filters = [
 	'numero',
@@ -15,7 +16,7 @@ const numeroParam = searchParams.has('numero') ? searchParams.get('numero') : nu
 
 const centeredCardId = Astro.url.searchParams.get('index') ? parseInt(Astro.url.searchParams.get('index')) : 0;
 
-if (numeroParam && !(numeroParam >= 1 && numeroParam <= 1008)) {
+if (numeroParam && !(numeroParam >= 1 && numeroParam <= numberOfPokemons)) {
 	Astro.url.searchParams.delete('numero');
 	return Astro.redirect("/");
 }

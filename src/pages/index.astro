@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import CardList from "../components/CardList.astro";
 import PageTitle from "../components/PageTitle.astro";
 import type {Card, Set} from "../types";
+import {numberOfPokemons} from '../constants';
 
 
 const filters = [
@@ -51,7 +52,7 @@ if (setParam && (setParam === 'all' || !sets.map(set => set.name.toLowerCase()).
 	return Astro.redirect(Astro.url.href);
 }
 
-if (numeroParam && !(numeroParam >= 1 && numeroParam <= 151)) {
+if (numeroParam && !(numeroParam >= 1 && numeroParam <= numberOfPokemons)) {
 	Astro.url.searchParams.delete('numero');
 	return Astro.redirect(Astro.url.href);
 }

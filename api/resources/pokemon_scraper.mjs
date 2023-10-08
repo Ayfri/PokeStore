@@ -1,6 +1,5 @@
 import fs from "fs";
-
-export const numberOfPokemons = 1008;
+import {numberOfPokemons} from './constants.mjs';
 
 async function fetchPokemons() {
 	const response = await fetch(`https://pokeapi.co/api/v2/pokemon-species?limit=${numberOfPokemons}`);

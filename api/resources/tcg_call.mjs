@@ -1,8 +1,8 @@
-import {numberOfPokemons} from './pokemon_scraper.mjs';
 import pokemon from 'pokemontcgsdk';
 import {configDotenv} from "dotenv";
 // noinspection ES6UnusedImports
-import fs from "fs";
+import fs from "fs/promises";
+import {numberOfPokemons} from './constants.mjs';
 
 
 const dotenv = configDotenv({
@@ -11,15 +11,24 @@ const dotenv = configDotenv({
 
 pokemon.configure({apiKey: dotenv.parsed['POKEMON_TCG_API_KEY']});
 
+async function fetchPokemon(index) {
+	try {
+		return pokemon.card.all({
+			q: `nationalPokedexNumbers:${index}`,
+			orderBy: 'nationalPokedexNumbers',
+			select: 'name,rarity,images,set,cardmarket,types,nationalPokedexNumbers',
+		});
+	} catch (e) {
+		console.log(`Pokedex: ${index}/${numberOfPokemons}, error: ${e.message}, retrying...`);
+		return fetchPokemon(index);
+	}
+}
+
 async function getPokemon(index) {
 	/**
 	 * @type {import('pokemontcgsdk').Card[]}
 	 */
-	const cards = await pokemon.card.all({
-		q: `nationalPokedexNumbers:${index}`,
-		orderBy: 'nationalPokedexNumbers',
-		select: 'name,rarity,images,set,cardmarket,types,nationalPokedexNumbers',
-	});
+	const cards = await fetchPokemon(index);
 
 	if (cards.length === 0) {
 		console.log(`Pokedex: ${index}/${numberOfPokemons}, no cards found !`);
@@ -76,18 +85,17 @@ async function getSet() {
 // UNCOMMENT TO GET POKÉMONS
 // const promises = Array.from({length: numberOfPokemons}, (_, i) => getPokemon(i + 1));
 // const pokemonGroups = promises.map((promise, index) => (
-/*
 
 const pokemonGroups = [];
-for (let i = 0; i < numberOfPokemons; i += 2) {
-	const pokemonGroup = await Promise.all([
-		getPokemon(i + 1),
-		getPokemon(i + 2)
+const interval = 10;
+for (let i = 0; i <= numberOfPokemons; i += 10) {
+	const promises = await Promise.all([
+		Array.from({length: interval}, (_, j) => getPokemon(i + j + 1)),
 	]);
-	pokemonGroups.push(...pokemonGroup);
+	const result = await Promise.all(promises.flat());
+	pokemonGroups.push(...result);
 }
-fs.writeFileSync('cards-full.json', JSON.stringify(pokemonGroups, null, 2));
-*/
+await fs.writeFile('cards-full.json', JSON.stringify(pokemonGroups, null, 2));
 
 // UNCOMMENT TO GET SETS
 // const sets = await getSet();
