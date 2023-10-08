@@ -15,7 +15,7 @@ To install the project you need to follow multiple steps :
     - POKEMON_TCG_API_KEY: The API key of the [Pokemon TCG API](https://pokemontcg.io/).
 5. Create a `.env` file in the root folder of the project and fill it with the following variables :
     - API_URL: The URL of the API.
-    - API_KEY: The API key of the Google Maps API.
+    - API_KEY: The API key of the Google Maps API (you must activate the "Places API" one the key).
 6. Run `prisma generate` to generate the Prisma client.
 7. Run the api with `npm run api`.
 8. Run the client with `npm run dev`.
