@@ -68,7 +68,7 @@ The project is structured as follows :
 
 The database is structured as follows :
 
-![Database schema](https://imgur.com/a/OFFCiIm)
+![Database schema](https://imgur.com/15X86Fv.png)
 
 ## API
 
