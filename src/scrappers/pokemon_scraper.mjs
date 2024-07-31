@@ -1,7 +1,7 @@
 import fs from "fs";
 import {numberOfPokemons} from './constants.mjs';
 
-async function fetchPokemons() {
+export async function fetchPokemons() {
 	const response = await fetch(`https://pokeapi.co/api/v2/pokemon-species?limit=${numberOfPokemons}`);
 	const json = await response.json();
 	console.log(`Fetched ${json.results.length} pokemons`);
@@ -19,8 +19,6 @@ async function fetchPokemons() {
 		};
 	});
 
-	return await Promise.all(fetchPromises);
+	const pokemonsWithDescriptions = await Promise.all(fetchPromises);
+	fs.writeFileSync('pokemons-full.json', JSON.stringify(pokemonsWithDescriptions, null, 2));
 }
-
-const pokemonsWithDescriptions = await fetchPokemons();
-fs.writeFileSync('pokemons-full.json', JSON.stringify(pokemonsWithDescriptions, null, 2));

@@ -1,16 +1,9 @@
 ---
-import {App} from '../env';
-type Locals = App.Locals;
 interface Props {
 	cards_href: string;
-	username: string;
 	cart_icon: string;
 	logo_href: string;
 }
-
-const locals = Astro.locals as Locals;
-const loggedIn = locals.user !== undefined;
-const username = locals.user?.username ?? '';
 ---
 <header>
 	<a href="/" class="cards-link">Cards</a>
@@ -26,38 +19,7 @@ const username = locals.user?.username ?? '';
 			/>
 		</svg>
 	</a>
-	{
-		loggedIn
-		?
-		<a href="/account">{username}</a>
-		<a href="./auth/logout" id="logout">Logout</a>
-		:
-		<a href="/login">Login</a>
-	}
 </header>
-
-<script>
-	import {getCart} from '../utils/cart.js';
-
-	const cartCount = document.querySelector('#cart-count') as HTMLSpanElement;
-	const logout = document.querySelector('#logout') as HTMLAnchorElement;
-	logout?.addEventListener('click', async (e) => {
-		e.preventDefault();
-		const response = await fetch(logout.href, {
-			method: 'GET',
-		});
-
-		if (response.ok) {
-			document.cookie = `session-token=; expires=${new Date(0)}; path=/;`;
-			window.location.href = '/';
-		}
-	});
-
-	const cart = getCart();
-	if (cart.length > 0) {
-		cartCount.innerText = cart.length.toString();
-	}
-</script>
 
 <style>
 	:root {

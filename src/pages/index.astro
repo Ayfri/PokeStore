@@ -1,9 +1,13 @@
 ---
+import {getCards, getPokemons, getRarities, getSets, getTypes} from '../helpers/data';
 import Layout from '../layouts/Layout.astro';
 import CardList from "../components/CardList.astro";
 import PageTitle from "../components/PageTitle.astro";
+import {scrapEverything} from '../scrappers/scrap_everything';
 import type {Card, Set} from "../types";
 import {numberOfPokemons} from '../constants';
+
+await scrapEverything();
 
 
 const filters = [
@@ -20,14 +24,9 @@ const orders = [
 	'desc',
 ];
 
-const typesList = await fetch(`${import.meta.env.API_URL}/types`);
-const types = await typesList.json() as string[];
-
-const rarityList = await fetch(`${import.meta.env.API_URL}/rarity`);
-const rarity = await rarityList.json() as string[];
-
-const setsList = await fetch(`${import.meta.env.API_URL}/sets`);
-const sets = await setsList.json() as Set[];
+const types = await getTypes();
+const rarity = await getRarities();
+const sets = await getSets();
 
 const searchParams = Astro.url.searchParams;
 const typesParam = searchParams.has('types') ? searchParams.get('types') : null;
@@ -52,7 +51,7 @@ if (setParam && (setParam === 'all' || !sets.map(set => set.name.toLowerCase()).
 	return Astro.redirect(Astro.url.href);
 }
 
-if (numeroParam && !(numeroParam >= 1 && numeroParam <= numberOfPokemons)) {
+if (numeroParam && !(parseInt(numeroParam) >= 1 && parseInt(numeroParam) <= numberOfPokemons)) {
 	Astro.url.searchParams.delete('numero');
 	return Astro.redirect(Astro.url.href);
 }
@@ -74,20 +73,24 @@ for (const [key,] of searchParams.entries()) {
 	}
 }
 
-const response = await fetch(`${import.meta.env.API_URL}/cards?${searchParams.toString()}`);
-let cards = await response.json() as Card[];
+let cards = await getCards();
+const pokemons = await getPokemons();
+// console.log(pokemons);
+cards.map(card => card.pokemon = pokemons.find(pokemon => pokemon.id === parseInt(card.numero)));
 
-cards = cards.sort((a, b) => a.pokemon.numero - b.pokemon.numero || b.price - a.price);
+cards = cards.filter(card => card.pokemon);
+
+cards = cards.sort((a, b) => a.pokemon.id - b.pokemon.id || b.price - a.price);
 const searchParamSize = new Map(searchParams.entries()).size;
 
 // keep first card of each Pokémon
 if (
 	searchParamSize === 0 ||
-	(sortParam && searchParamSize === 1) ||
-	(sortParam && orderParam && searchParamSize === 2) ||
-	(orderParam && searchParamSize === 1)
+	sortParam && searchParamSize === 1 ||
+	sortParam && orderParam && searchParamSize === 2 ||
+	orderParam && searchParamSize === 1
 ) {
-	cards = cards.filter((card, index, self) => self.findIndex(c => c.pokemon.numero === card.pokemon.numero) === index);
+	cards = cards.filter((card, index, self) => self.findIndex(c => c.pokemon.id === card.pokemon.id) === index);
 }
 
 if (orderParam === 'desc' && searchParamSize === 1) {
@@ -102,15 +105,15 @@ if (searchParamSize === 1 && orderParam === 'asc') {
 cards.map(card => card.price ||= 100_000);
 switch (sortParam) {
 	case 'numero':
-		cards = cards.sort((a, b) => a.pokemon.numero - b.pokemon.numero || a.price - b.price);
+		cards = cards.sort((a, b) => a.pokemon.id - b.pokemon.id || a.price - b.price);
 		if (orderParam === 'desc') {
-			cards = cards.sort((a, b) => b.pokemon.numero - a.pokemon.numero || b.price - a.price);
+			cards = cards.sort((a, b) => b.pokemon.id - a.pokemon.id || b.price - a.price);
 		}
 		break;
 	case 'price':
-		cards = cards.sort((a, b) => a.price - b.price || a.pokemon.numero - b.pokemon.numero);
+		cards = cards.sort((a, b) => a.price - b.price || a.pokemon.id - b.pokemon.id);
 		if (orderParam === 'desc') {
-			cards = cards.sort((a, b) => b.price - a.price || a.pokemon.numero - b.pokemon.numero);
+			cards = cards.sort((a, b) => b.price - a.price || a.pokemon.id - b.pokemon.id);
 		}
 		break;
 	case 'name':
@@ -181,7 +184,7 @@ switch (sortParam) {
 		const selectType = document.querySelector('#type') as HTMLSelectElement;
 		let currentType = new URL(window.location.href).searchParams.get('types');
 		const options = Array.from(selectType.options).map(option => option.value.toLowerCase());
-		if (!options.includes(currentType)) {
+		if (!currentType || !options.includes(currentType)) {
 			currentType = 'all';
 		}
 		selectType.value = currentType || 'all';
@@ -192,7 +195,7 @@ switch (sortParam) {
 		const selectRarity = document.querySelector('#rarity') as HTMLSelectElement;
 		let currentRarity = new URL(window.location.href).searchParams.get('rarity');
 		const optionsRarity = Array.from(selectRarity.options).map(option => option.value.toLowerCase());
-		if (!optionsRarity.includes(currentRarity)) {
+		if (!currentRarity || !optionsRarity.includes(currentRarity)) {
 			currentRarity = 'all';
 		}
 		selectRarity.value = currentRarity || 'all';
@@ -203,7 +206,7 @@ switch (sortParam) {
 		const selectSet = document.querySelector('#set') as HTMLSelectElement;
 		let currentSet = new URL(window.location.href).searchParams.get('set');
 		const optionsSet = Array.from(selectSet.options).map(option => option.value.toLowerCase());
-		if (!optionsSet.includes(currentSet)) {
+		if (!currentSet || !optionsSet.includes(currentSet)) {
 			currentSet = 'all';
 		}
 		selectSet.value = currentSet || 'all';
@@ -212,10 +215,10 @@ switch (sortParam) {
 
 		/*NUMERO FILTER*/
 		const inputNumero = document.querySelector('input[name="numero"]') as HTMLInputElement;
-		let currentNumero = new URL(window.location.href).searchParams.get('numero');
+		let currentNumero = parseInt(new URL(window.location.href).searchParams.get('numero') ?? '');
 		if (currentNumero && !(currentNumero >= 1 && currentNumero <= 151)) currentNumero = null;
 
-		inputNumero.value = currentNumero || '';
+		inputNumero.value = currentNumero?.toString() ?? '';
 
 		addFilterToUrl(inputNumero, 'numero', '', false);
 
@@ -232,10 +235,10 @@ switch (sortParam) {
 		currentSort = currentSort ? `sort-${currentSort}` : null;
 
 		const optionsSort = Array.from(selectSort.options).map(option => option.value.toLowerCase());
-		if (!optionsSort.includes(currentSort)) {
+		if (!currentSort || !optionsSort.includes(currentSort)) {
 			currentSort = 'sort-numero';
 		}
-		selectSort.value = currentSort || '';
+		selectSort.value = currentSort ?? '';
 
 		addFilterToUrl(selectSort, 'sort', '', true);
 
@@ -279,7 +282,7 @@ switch (sortParam) {
 		});
 
 		function addFilterToUrl(element, paramName, removeName, split) {
-			element.addEventListener('change', (event) => {
+			element.addEventListener('change', event => {
 				const target = event.target as HTMLSelectElement;
 				const url = new URL(window.location.href);
 				url.searchParams.set(paramName, split ? target.value.split('-')[1] : target.value);

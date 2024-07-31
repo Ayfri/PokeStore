@@ -1,5 +1,4 @@
-import fs from 'fs';
-import holoCards from './holo_cards.json' assert {type: "json"};
+import holoCards from './holo_cards.json' assert {type: 'json'};
 
 // card image example: https://images.pokemontcg.io/sm9/1_hires.png
 // get foil : https://cdn.malie.io/file/malie-io/tcgl/cards/png/en/sm9/sm9_en_001_std.foil.png
@@ -21,4 +20,3 @@ async function getMask() {
 }
 
 await getMask();
-

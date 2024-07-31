@@ -9,7 +9,7 @@ interface Props {
 
 const {card} = Astro.props;
 const {
-	imageUrl,
+	image,
 	pokemon,
 	price,
 	rarity,
@@ -21,7 +21,7 @@ const {
 } = pokemon;
 ---
 
-<a class="card-link" href={`/card?numero=${pokemon.numero}&id=${card.id}`} draggable="false">
+<a class="card-link" href={`/card?numero=${pokemon.id}&id=${card.id}`} draggable="false">
 	<div class="card-pokestore">
 		<div class:list={rarity.toLowerCase()}></div>
 		<div
@@ -34,7 +34,7 @@ const {
 		<Image
 			alt={name.charAt(0).toUpperCase() + name.slice(1)}
 			height="420"
-			src={imageUrl}
+			src={image}
 			draggable="false"
 			width="300"
 		/>
