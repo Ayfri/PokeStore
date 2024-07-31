@@ -1,7 +1,8 @@
-import pokemon from 'pokemontcgsdk';
 import {configDotenv} from 'dotenv';
 import fs from 'fs/promises';
-import {numberOfPokemons} from './constants.mjs';
+import pokemon from 'pokemontcgsdk';
+import {numberOfPokemons} from '../constants.ts';
+import type {Card} from '../types';
 
 // Load and configure environment variables
 const dotenv = configDotenv({path: '.env'});
@@ -13,24 +14,66 @@ if (!apiKey) {
 
 pokemon.configure({apiKey});
 
-async function fetchPokemon(index) {
+type FetchedCard = {
+	name: string;
+	rarity: string;
+	images: {
+		large: string;
+	};
+	nationalPokedexNumbers: number[];
+	set: {
+		name: string;
+	};
+	cardmarket: {
+		prices: {
+			averageSellPrice: number;
+		};
+	};
+	tcgplayer?: {
+		prices?: {
+			holofoil?: {
+				market?: number;
+			};
+			reverseHolofoil?: {
+				market?: number;
+			};
+			normal?: {
+				market?: number;
+			};
+			"1stEditionHolofoil"?: {
+				market?: number;
+			};
+			"1stEditionNormal"?: {
+				market?: number;
+			};
+		};
+	};
+	types: string[];
+};
+
+async function fetchPokemon(index: number) {
 	try {
 		return await pokemon.card.all({
 			q: `nationalPokedexNumbers:${index}`,
 			orderBy: 'nationalPokedexNumbers',
 			select: 'name,rarity,images,set,cardmarket,types,nationalPokedexNumbers',
-		});
+		}) as FetchedCard[];
 	} catch (e) {
-		console.error(`Pokedex: ${index}/${numberOfPokemons}, error: ${e.message}, retrying...`);
-		await new Promise(resolve => setTimeout(resolve, 2000));
-		return fetchPokemon(index);
+		if (!(e instanceof Error)) {
+			console.error(`Pokedex: ${index}/${numberOfPokemons}, error: ${e}, retrying...`);
+			await new Promise(resolve => setTimeout(resolve, 2000));
+			return fetchPokemon(index);
+		}
+
+		if (e.message.includes('429')) {
+			console.error(`Pokedex: ${index}/${numberOfPokemons}, rate limit reached, retrying...`);
+			await new Promise(resolve => setTimeout(resolve, 4000));
+			return fetchPokemon(index);
+		}
 	}
 }
 
-async function getPokemon(index) {
-	/**
-	 * @type {import('pokemontcgsdk').Card[]}
-	 */
+async function getPokemon(index: number) {
 	const cards = await fetchPokemon(index);
 
 	if (!cards) {
@@ -45,26 +88,35 @@ async function getPokemon(index) {
 
 	console.log(`Pokedex: ${index}/${numberOfPokemons}, caught ${cards[0].name}! (${cards.length} cards)`);
 
-	return cards.map(card => ({
-		name: card.name,
-		rarity: card.rarity,
-		image: card.images.large,
-		numero: card.nationalPokedexNumbers.join(', '),
-		set_name: card.set.name,
-		price: card?.cardmarket?.prices?.averageSellPrice || card?.tcgplayer?.prices?.holofoil?.market || card?.tcgplayer?.prices?.reverseHolofoil?.market ||
+	return cards.map((card: FetchedCard) => {
+		const price = card?.cardmarket?.prices?.averageSellPrice || card?.tcgplayer?.prices?.holofoil?.market ||
+			card?.tcgplayer?.prices?.reverseHolofoil?.market ||
 			card?.tcgplayer?.prices?.normal?.market || card?.tcgplayer?.prices?.["1stEditionHolofoil"]?.market ||
-			card?.tcgplayer?.prices?.["1stEditionNormal"]?.market,
-		types: card.types.join(', '),
-	})).sort((a, b) => b.price - a.price);
+			card?.tcgplayer?.prices?.["1stEditionNormal"]?.market;
+
+		return {
+			name: card.name,
+			rarity: card.rarity,
+			image: card.images.large,
+			numero: card.nationalPokedexNumbers.join(', '),
+			set_name: card.set.name,
+			price,
+			types: card.types.join(', '),
+		};
+	}).sort((a, b) => (b.price ?? 0) - (a.price ?? 0));
 }
 
+type FetchedSet = {
+	name: string;
+	images: {
+		logo: string;
+	};
+};
+
 async function fetchAndFilterSets() {
-	/**
-	 * @type {import('pokemontcgsdk').Set[]}
-	 */
 	const sets = await pokemon.set.all({
 		select: 'name,images',
-	});
+	}) as FetchedSet[];
 
 	console.log(`Found ${sets.length} sets!`);
 
@@ -76,13 +128,13 @@ async function fetchAndFilterSets() {
 	try {
 		const cardsJson = JSON.parse(await fs.readFile('cards-full.json', 'utf-8'));
 
-		const cards = cardsJson.default.flat();
+		const cards = cardsJson.flat() as Card[];
 		const setsWithCards = sets.filter(set => cards.some(card => card.set_name === set.name));
 		const uniqueNames = [...new Set(setsWithCards.map(set => set.name))];
 
 		return uniqueNames.map(name => ({
 			name,
-			logo: sets.find(set => set.name === name).images.logo,
+			logo: sets.find(set => set.name === name)?.images?.logo,
 		}));
 	} catch (error) {
 		console.error('Error reading cards-full.json', error);

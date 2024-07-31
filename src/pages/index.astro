@@ -3,11 +3,8 @@ import {getCards, getPokemons, getRarities, getSets, getTypes} from '../helpers/
 import Layout from '../layouts/Layout.astro';
 import CardList from "../components/CardList.astro";
 import PageTitle from "../components/PageTitle.astro";
-import {scrapEverything} from '../scrappers/scrap_everything';
 import type {Card, Set} from "../types";
 import {numberOfPokemons} from '../constants';
-
-await scrapEverything();
 
 
 const filters = [

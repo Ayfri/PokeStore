@@ -1,8 +1,8 @@
 import fs from 'fs';
-import {fetchHoloCards} from '../scrappers/holo_scraper.mjs';
-import {fetchPokemons} from '../scrappers/pokemon_scraper.mjs';
-import {fetchCards, fetchSets} from '../scrappers/tcg_call.mjs';
-import {fetchPokemonTypes} from '../scrappers/types_scraper.mjs';
+import {fetchHoloCards} from '../scrappers/holo_scraper';
+import {fetchPokemons} from '../scrappers/pokemon_scraper';
+import {fetchCards, fetchSets} from '../scrappers/tcg_call';
+import {fetchPokemonTypes} from '../scrappers/types_scraper';
 import type {Card, Pokemon, Set} from '../types';
 
 export async function getPokemons() {

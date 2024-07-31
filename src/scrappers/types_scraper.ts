@@ -1,10 +1,11 @@
 import fs from 'fs/promises';
+import type {Card} from '../types';
 
 
 export async function fetchPokemonTypes() {
-	const cardsTypes = new Set();
+	const cardsTypes = new Set<string>();
 
-	const cards = JSON.parse(await fs.readFile('cards-full.json', 'utf-8')).flat();
+	const cards = JSON.parse(await fs.readFile('cards-full.json', 'utf-8')).flat() as Card[];
 
 	cards.flat().forEach(group => {
 		const cardTypes = group.types.includes(',') ? group.types.split(', ') : [group.types];
