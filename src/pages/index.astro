@@ -75,7 +75,6 @@ for (const [key,] of searchParams.entries()) {
 
 let cards = await getCards();
 const pokemons = await getPokemons();
-// console.log(pokemons);
 cards.map(card => card.pokemon = pokemons.find(pokemon => pokemon.id === parseInt(card.numero)));
 
 cards = cards.filter(card => card.pokemon);

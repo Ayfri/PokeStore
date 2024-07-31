@@ -1,4 +1,5 @@
 ---
+import {getCards} from '../helpers/data';
 import Layout from '../layouts/Layout.astro';
 import PageTitle from "../components/PageTitle.astro";
 import "../styles/colors.css";
@@ -28,9 +29,8 @@ for (const [key,] of searchParams.entries()) {
 	}
 }
 
-const response = await fetch(`${import.meta.env.API_URL}/cards?${searchParams.toString()}`);
-let cards = await response.json() as Card[];
-cards = cards.sort((a, b) => a.pokemon.numero - b.pokemon.numero || b.price - a.price);
+let cards = await getCards();
+cards = cards.sort((a, b) => a.pokemon.id - b.pokemon.id || b.price - a.price);
 
 if (cards.length === 0) {
 	Astro.url.searchParams.delete('numero');
@@ -39,7 +39,7 @@ if (cards.length === 0) {
 
 if (Astro.url.searchParams.has('id')) {
 	const id = Astro.url.searchParams.get('id');
-	const index = cards.findIndex(card => card.id === parseInt(id));
+	const index = cards.findIndex(card => parseInt(card.numero) === parseInt(id));
 	if (index !== -1) Astro.url.searchParams.set('index', index.toString());
 	Astro.url.searchParams.delete('id');
 	return Astro.redirect(Astro.url.href);
@@ -63,7 +63,7 @@ const pokemonName = centeredCard.pokemon.name;
 								class:list={[`set ${index}`]}
 								draggable="false"
 								height="105"
-								src={set.imageUrl}
+								src={set.logo}
 								width="75"
 							/>)}
 					</div>
@@ -94,7 +94,7 @@ const pokemonName = centeredCard.pokemon.name;
 										draggable="false"
 										loading="eager"
 										height="420"
-										src={card.imageUrl}
+										src={card.image}
 										width="300"
 									/>,
 								)
@@ -108,7 +108,7 @@ const pokemonName = centeredCard.pokemon.name;
 								class:list={[`set ${index + 5}`]}
 								draggable="false"
 								height="105"
-								src={set.imageUrl}
+								src={set.logo}
 								width="75"
 							/>)}
 					</div>
@@ -141,13 +141,6 @@ const pokemonName = centeredCard.pokemon.name;
 						<p data-values={cards.map(card => card.price)} id="card-price">
 							{centeredCard.price ? `${centeredCard.price} $` : 'Priceless'}
 						</p>
-						<button
-							data-route={`${import.meta.env.API_URL}/cards/${centeredCard.id}`}
-							data-values={cards.map(card => card.id)}
-							id="add-to-card"
-						>
-							Add to cart
-						</button>
 					</div>
 				</div>
 			</div>
@@ -155,14 +148,10 @@ const pokemonName = centeredCard.pokemon.name;
 	</main>
 </Layout>
 <script>
-	import {getCart} from '../utils/cart';
-	import type {Card} from '../types';
-
 	const sets = document.querySelectorAll('.set') as NodeListOf<HTMLImageElement>;
 	const url = new URL(window.location.href);
 	const mainImages = document.querySelectorAll('.image') as NodeListOf<HTMLImageElement>;
 
-	const addToCart = document.querySelector('#add-to-card') as HTMLButtonElement;
 	const cardAura = document.querySelector('#card-aura') as HTMLDivElement;
 	const cardPrice = document.querySelector('#card-price') as HTMLParagraphElement;
 	const cardTypes = document.querySelector('#card-types') as HTMLDivElement;
@@ -171,9 +160,7 @@ const pokemonName = centeredCard.pokemon.name;
 
 	let urlIndex = url.searchParams.get('index');
 
-	if (cardPrice.textContent === 'Priceless') addToCart.disabled = true;
-
-	function handleDynamicValue<T>(element: T, callback: (element: T, value: string) => void) {
+	function handleDynamicValue<T extends HTMLElement>(element: T, callback: (element: T, value: string) => void) {
 		urlIndex = url.searchParams.get('index');
 		const values = element.dataset.values?.split(',') as string[];
 		const index = urlIndex ? parseInt(urlIndex as string) : 0;
@@ -193,8 +180,8 @@ const pokemonName = centeredCard.pokemon.name;
 		set.addEventListener('click', () => {
 			urlIndex = url.searchParams.get('index');
 
-			const index = set.classList[1];
-			url.searchParams.set('index', index);
+			const index = parseInt(set.classList[1]);
+			url.searchParams.set('index', index.toString());
 			window.history.pushState({}, '', url.toString());
 
 			mainImages.forEach(image => image.classList.add('hidden'));
@@ -215,47 +202,16 @@ const pokemonName = centeredCard.pokemon.name;
 				cardAura.classList.remove(...cardAura.classList);
 				cardAura.classList.add('card-aura', firstType);
 
-				const rarity = centerCard.dataset.values?.split(',')[index];
+				const rarity = centerCard.dataset.values?.split(',')[index] ?? 'unknown';
 				centerCard.classList.remove(...centerCard.classList);
 				centerCard.classList.add('center-card', firstType, ...rarity.split(' '), 'inactive');
 			});
 
 			handleDynamicValue(cardPrice, (element, price) => {
 				element.textContent = price ? `${price} $` : 'Priceless';
-				addToCart.disabled = !price;
-			});
-
-			handleDynamicValue(addToCart, (element, value) => {
-				const cart = getCart();
-				element.dataset.route = element.dataset.route?.replace(/\d+$/, value);
-				if (cart.find(c => c.id === parseInt(value))) {
-					element.classList.add('success');
-				} else {
-					element.classList.remove('success');
-				}
 			});
 		});
 	});
-
-	const cart = getCart();
-	const cartCount = document.querySelector('#cart-count') as HTMLSpanElement;
-	addToCart.addEventListener('click', async event => {
-		const target = event.target as HTMLButtonElement;
-		const route = target.dataset.route;
-		const response = await fetch(route);
-		const card = await response.json() as Card;
-
-		if (cart.find(c => c.id === card.id)) return;
-		cart.push(card);
-
-		localStorage.setItem('cart', JSON.stringify(cart));
-		addToCart.classList.add('success');
-		cartCount.innerText = cart.length.toString();
-	});
-
-	if (cart.find(c => c.id === parseInt(addToCart.dataset.route.split('/').pop() as string))) {
-		addToCart.classList.add('success');
-	}
 
 	/*CARD EFFECT*/
 	const card = document.querySelector('.center-card') as HTMLDivElement;

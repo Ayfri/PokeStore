@@ -3,6 +3,7 @@ export interface Card {
 	pokemon: Pokemon;
 	price: number;
 	numero: string;
+	set_name: string;
 	rarity: string;
 	set: Set;
 	types: string;
@@ -16,7 +17,7 @@ export interface Pokemon {
 
 export interface Set {
 	name: string;
-	imageUrl: string;
+	logo: string;
 }
 
 export interface User {
