@@ -22,7 +22,6 @@ export async function fetchPokemonTypes() {
 
 	try {
 		await fs.writeFile('types.json', JSON.stringify([...cardsTypes], null, 2));
-		console.log('types.json has been saved.');
 	} catch (error) {
 		console.error('Error writing to file', error);
 	}
