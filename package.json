@@ -9,15 +9,12 @@
 	},
 	"dependencies": {
 		"@astrojs/check": "^0.9.0",
-		"@astrojs/node": "^6.0.2",
-		"astro": "^3.6.5",
 		"@astrojs/node": "^8.3.2",
 		"astro": "^4.12.3",
 		"pokemontcgsdk": "^2.0.0",
 		"typescript": "^5.5.4"
 	},
 	"devDependencies": {
-		"@types/node": "^22.0.2",
-		"dotenv": "^16.4.5"
+		"@types/node": "^22.0.2"
 	}
 }

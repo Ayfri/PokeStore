@@ -1,4 +1,3 @@
-import {configDotenv} from 'dotenv';
 import * as fs from 'node:fs/promises';
 import pokemon from 'pokemontcgsdk';
 import {POKEMONS_COUNT} from '../constants';
@@ -6,11 +5,10 @@ import type {Card} from '../types';
 import {CARDS, SETS} from './files.ts';
 
 // Load and configure environment variables
-const dotenv = configDotenv({path: '.env'});
-const apiKey = dotenv?.parsed?.POKEMON_TCG_API_KEY;
+const apiKey = import.meta.env.POKEMON_TCG_API_KEY;
 
 if (!apiKey) {
-	throw new Error('Pokémon TCG API key is missing from .env file');
+	throw new Error('Pokémon TCG API key is missing from .env file, key: POKEMON_TCG_API_KEY');
 }
 
 pokemon.configure({apiKey});
