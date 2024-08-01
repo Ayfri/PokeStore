@@ -1,7 +1,7 @@
 import {configDotenv} from 'dotenv';
-import fs from 'fs/promises';
+import * as fs from 'node:fs/promises';
 import pokemon from 'pokemontcgsdk';
-import {numberOfPokemons} from '../constants.ts';
+import {numberOfPokemons} from '../constants';
 import type {Card} from '../types';
 
 // Load and configure environment variables

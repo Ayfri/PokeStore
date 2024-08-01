@@ -21,9 +21,9 @@ export async function getCards() {
 		const cardData = JSON.parse(fs.readFileSync('./cards-full.json', 'utf-8')).flat() as Card[];
 		return cardData.map(card => {
 			card.rarity ??= 'Unknown';
-
 			card.pokemon = pokemons.find(pokemon => pokemon.id === parseInt(card.numero));
 			card.set = sets.find(set => set.name === card.set_name);
+
 			return card;
 		}).filter(card => card.pokemon);
 	}

@@ -3,7 +3,7 @@
 // get foil : https://cdn.malie.io/file/malie-io/tcgl/cards/png/en/sm9/sm9_en_001_std.foil.png
 // get etch : https://cdn.malie.io/file/malie-io/tcgl/cards/png/en/sm9/sm9_en_001_std.etch.png
 
-import fs from 'fs/promises';
+import * as fs from 'node:fs/promises';
 import type {Card} from '../types';
 
 async function getCardMasks() {
