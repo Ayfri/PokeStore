@@ -9,7 +9,6 @@ const types = await getTypes();
 const rarity = await getRarities();
 const sets = await getSets();
 
-
 let cards = await getCards();
 cards = cards.filter((card, index, self) => card.pokemon && self.findIndex(c => c.pokemon.id === card.pokemon.id) === index);
 cards = cards.sort((a, b) => a.pokemon.id - b.pokemon.id || b.price - a.price);
@@ -31,7 +30,7 @@ cards = cards.map(card => {
 		</button>
 		<div class="fixed-container">
 			<div class="top-container">
-				<PageTitle title="Card List"></PageTitle>
+				<PageTitle title="Card List"/>
 				<div class="filters-container">
 					<div class="filters-top">
 						<button class="sort-order-btn filter" data-sort="asc">
@@ -75,24 +74,23 @@ cards = cards.map(card => {
 
 		<div class="cards-grid">
 			{cards.map(card =>
-				<Card card={card}/>)}
+				<Card card={card}/>
+			)}
 		</div>
 	</main>
-	<script>
-		/*SCROLL BUTTON*/
-		const scrollBtn = document.querySelector<HTMLButtonElement>('#scroll-btn');
-		scrollBtn!.addEventListener('click', () => {
-			const cardsGrid = document.querySelector<HTMLDivElement>('.cards-grid');
-			cardsGrid!.scrollTo({
-				top: cardsGrid!.scrollHeight,
-				behavior: 'smooth',
-			});
-		});
-	</script>
 </Layout>
 
-
 <script>
+	/*SCROLL BUTTON*/
+	const scrollBtn = document.querySelector<HTMLButtonElement>('#scroll-btn');
+	scrollBtn!.addEventListener('click', () => {
+		const cardsGrid = document.querySelector<HTMLDivElement>('.cards-grid');
+		cardsGrid!.scrollTo({
+			top: cardsGrid!.scrollHeight,
+			behavior: 'smooth',
+		});
+	});
+
 	const filters = {
 		numero: document.querySelector<HTMLInputElement>('#numero')!,
 		name: document.querySelector<HTMLInputElement>('#name')!,
