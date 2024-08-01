@@ -46,8 +46,10 @@ const setLogoFirstHalf = cards.slice(0, 5).map(card => card.set);
 const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set);
 const pokemonName = card.pokemon.name;
 const index = 0;
+
 ---
-<Layout title="Pokéstore">
+
+<Layout title={pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1)} description={card.pokemon.description}>
 	<main>
 		<div class:list={[`filter ${card.types.toLowerCase().split(',')[0]}`]} id="filter"></div>
 		<div class="main-container">
