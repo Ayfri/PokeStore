@@ -124,9 +124,9 @@ cards = cards.map(card => {
 
 			if (matchesNumero && matchesName && matchesType && matchesRarity && matchesSet) {
 				card.classList.remove('hidden');
+				visibleCount++;
 			} else {
 				card.classList.add('hidden');
-				visibleCount++;
 			}
 		});
 
