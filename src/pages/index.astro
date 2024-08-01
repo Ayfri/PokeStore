@@ -112,6 +112,14 @@ cards = cards.map(card => {
 		const rarityFilter = filters.rarity.value;
 		const setFilter = filters.set.value;
 
+		localStorage.setItem('filters', JSON.stringify({
+			numero: numeroFilter,
+			name: nameFilter,
+			type: typeFilter,
+			rarity: rarityFilter,
+			set: setFilter,
+		}));
+
 		let visibleCount = 0;
 
 		cards.forEach(card => {
@@ -197,7 +205,16 @@ cards = cards.map(card => {
 		applyFilters();
 	});
 
-	applyFilters();
+	if (localStorage.getItem('filters')) {
+		const filters = JSON.parse(localStorage.getItem('filters')!);
+		Object.entries(filters).forEach(([key, value]) => {
+			const filter = document.querySelector<HTMLInputElement | HTMLSelectElement>(`#${key}`);
+			if (filter) {
+				filter.value = String(value);
+			}
+		});
+		applyFilters();
+	}
 </script>
 
 <style>
