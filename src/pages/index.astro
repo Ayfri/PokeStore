@@ -246,9 +246,11 @@ cards = cards.map(card => {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
 		justify-content: center;
+		overflow-x: hidden;
 		overflow-y: scroll;
 		place-items: center;
 		scroll-behavior: smooth;
+		width: 100%;
 	}
 
 	.cards-grid::-webkit-scrollbar, html::-webkit-scrollbar, body::-webkit-scrollbar {
