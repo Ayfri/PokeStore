@@ -5,5 +5,14 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
 	output: 'static',
 	site: 'https://pokestore.ayfri.com',
-	integrations: [sitemap()],
+	integrations: [
+		sitemap({
+			i18n: {
+				defaultLocale: 'en',
+				locales: {
+					en: 'en-US',
+				},
+			},
+		}),
+	],
 });
