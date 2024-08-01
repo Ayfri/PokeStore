@@ -160,11 +160,7 @@ const index = 0;
 	}
 
 	sets.forEach(set => {
-		if (currentIndex === set.classList[1]) {
-			set.classList.add('shadow');
-		}
-
-		if (!currentIndex && set.classList[1] === '0') {
+		if (currentIndex.toString() === set.classList[1] || set.classList[1] === '0') {
 			set.classList.add('shadow');
 		}
 
