@@ -10,6 +10,7 @@
 	"dependencies": {
 		"@astrojs/check": "^0.9.0",
 		"@astrojs/node": "^8.3.2",
+		"@astrojs/sitemap": "^3.1.6",
 		"astro": "^4.12.3",
 		"pokemontcgsdk": "^2.0.0",
 		"typescript": "^5.5.4"
