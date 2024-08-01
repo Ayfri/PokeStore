@@ -14,7 +14,6 @@ const {
 } = Astro.props;
 
 const pageDescription = `A Pokémon TCG list. ${description}`.trim();
-
 ---
 
 <!doctype html>
@@ -39,6 +38,20 @@ const pageDescription = `A Pokémon TCG list. ${description}`.trim();
 		<meta name="generator" content={Astro.generator}/>
 		<meta name="twitter:card" content="summary_large_image"/>
 		<link rel="icon" type="image/png" href="/favicon.png"/>
+
+		<!-- Google tag (gtag.js) -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-PS0GZ8MEB8"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+
+			function gtag() {
+				dataLayer.push(arguments);
+			}
+
+			gtag('js', new Date());
+
+			gtag('config', 'G-PS0GZ8MEB8');
+		</script>
 
 		<title>{title} - PokéStore</title>
 	</head>
