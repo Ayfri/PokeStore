@@ -10,8 +10,10 @@ interface Props {
 
 const {card} = Astro.props;
 const {
+	numero,
 	image,
 	pokemon,
+	set_name,
 	price,
 	rarity,
 	types,
@@ -22,7 +24,17 @@ const {
 } = pokemon;
 ---
 
-<a class="card-link" href={`/card/${pokemon.id}`} draggable="false">
+<a
+	class="card-link"
+	href={`/card/${pokemon.id}`}
+	draggable="false"
+	data-name={name}
+	data-numero={numero}
+	data-price={price}
+	data-rarity={rarity.toLowerCase()}
+	data-set={set_name.toLowerCase()}
+	data-types={types.toLowerCase()}
+>
 	<div class="card-pokestore">
 		<div class:list={rarity.toLowerCase()}></div>
 		<div
@@ -43,10 +55,15 @@ const {
 		<h3>{price && price !== 100_000 ? `${price} $` : 'Priceless'}</h3>
 	</div>
 </a>
+
 <style>
 	.card-link {
 		text-decoration: none;
 		color: white;
+	}
+
+	.card-link:global(.hidden) {
+		display: none;
 	}
 
 	h2, h3 {

@@ -6,20 +6,6 @@ import PageTitle from "../components/PageTitle.astro";
 import type {Card, Set} from "../types";
 
 
-const filters = [
-	'numero',
-	'types',
-	'rarity',
-	'set',
-	'name',
-	'sort',
-	'order',
-];
-const orders = [
-	'asc',
-	'desc',
-];
-
 const types = await getTypes();
 const rarity = await getRarities();
 const sets = await getSets();
@@ -32,7 +18,7 @@ const numeroParam = searchParams.has('numero') ? searchParams.get('numero') : nu
 const sortParam = searchParams.has('sort') ? searchParams.get('sort') : null;
 const orderParam = searchParams.has('order') ? searchParams.get('order') : null;
 
-if (typesParam && (typesParam === 'all' || !types.map(type => type.toLowerCase()).includes(typesParam))) {
+/* if (typesParam && (typesParam === 'all' || !types.map(type => type.toLowerCase()).includes(typesParam))) {
 	Astro.url.searchParams.delete('types');
 	return Astro.redirect(Astro.url.href);
 }
@@ -67,7 +53,7 @@ for (const [key,] of searchParams.entries()) {
 		Astro.url.searchParams.delete(key);
 		return Astro.redirect(Astro.url.href);
 	}
-}
+} */
 
 let cards = await getCards();
 cards = cards.filter(card => card.pokemon);
@@ -131,32 +117,36 @@ switch (sortParam) {
 				<PageTitle title="Card List"></PageTitle>
 				<div class="filters-container">
 					<div class="filters-top">
-						<button class="sort-order-btn filter"></button>
+						<button class="sort-order-btn filter" data-sort="asc">
+							<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512">
+								<path d="M151.6 42.4C145.5 35.8 137 32 128 32s-17.5 3.8-23.6 10.4l-88 96c-11.9 13-11.1 33.3 2 45.2s33.3 11.1 45.2-2L96 146.3V448c0 17.7 14.3 32 32 32s32-14.3 32-32V146.3l32.4 35.4c11.9 13 32.2 13.9 45.2 2s13.9-32.2 2-45.2l-88-96zM320 480h32c17.7 0 32-14.3 32-32s-14.3-32-32-32H320c-17.7 0-32 14.3-32 32s14.3 32 32 32zm0-128h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H320c-17.7 0-32 14.3-32 32s14.3 32 32 32zm0-128H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H320c-17.7 0-32 14.3-32 32s14.3 32 32 32zm0-128H544c17.7 0 32-14.3 32-32s-14.3-32-32-32H320c-17.7 0-32 14.3-32 32s14.3 32 32 32z"/>
+							</svg>
+						</button>
 						<button class="reset-btn filter">Reset filters</button>
-						<input type="text" placeholder="ID" name="numero" class="filter">
-						<input type="text" placeholder="Name" name="name" class="filter">
+						<input type="text" placeholder="ID" name="numero" class="filter" id="numero">
+						<input type="text" placeholder="Name" name="name" class="filter" id="name">
 					</div>
 					<div class="filters-bottom">
 						<output class="filters-result">Cards : {cards.length}</output>
 						<select name="sort" id="sort" class="filter">
-							<option value="sort-numero">Sort by pokédex</option>
+							<option value="sort-numero" selected>Sort by pokédex</option>
 							<option value="sort-price">Sort by price</option>
 							<option value="sort-name">Sort by name</option>
 						</select>
 						<select name="set" id="set" class="filter">
-							<option value="all">All sets</option>
+							<option value="all" selected>All sets</option>
 							{sets.sort((a, b) => a.name.localeCompare(b.name))
 							     .map(set =>
 								     <option value={set.name.toLowerCase()}>{set.name}</option>)}
 						</select>
 						<select name="type" id="type" class="filter">
-							<option value="all">All types</option>
+							<option value="all" selected>All types</option>
 							{types.sort((a, b) => a.localeCompare(b))
 							      .map(type =>
 								      <option value={type.toLowerCase()}>{type}</option>)}
 						</select>
 						<select name="rarity" id="rarity" class="filter">
-							<option value="all">All rarities</option>
+							<option value="all" selected>All rarities</option>
 							{rarity.sort((a, b) => a.localeCompare(b))
 							       .map(rarity =>
 								       <option value={rarity.toLowerCase()}>{rarity}</option>)}
@@ -172,122 +162,121 @@ switch (sortParam) {
 		</div>
 	</main>
 	<script>
-		import {POKEMONS_COUNT} from '../constants';
-
-		/*TYPE FILTER*/
-		const selectType = document.querySelector('#type') as HTMLSelectElement;
-		let currentType = new URL(window.location.href).searchParams.get('types');
-		const options = Array.from(selectType.options).map(option => option.value.toLowerCase());
-		if (!currentType || !options.includes(currentType)) {
-			currentType = 'all';
-		}
-		selectType.value = currentType || 'all';
-
-		addFilterToUrl(selectType, 'types', 'all', false);
-
-		/*RARITY FILTER*/
-		const selectRarity = document.querySelector('#rarity') as HTMLSelectElement;
-		let currentRarity = new URL(window.location.href).searchParams.get('rarity');
-		const optionsRarity = Array.from(selectRarity.options).map(option => option.value.toLowerCase());
-		if (!currentRarity || !optionsRarity.includes(currentRarity)) {
-			currentRarity = 'all';
-		}
-		selectRarity.value = currentRarity || 'all';
-
-		addFilterToUrl(selectRarity, 'rarity', 'all', false);
-
-		/*SET FILTER*/
-		const selectSet = document.querySelector('#set') as HTMLSelectElement;
-		let currentSet = new URL(window.location.href).searchParams.get('set');
-		const optionsSet = Array.from(selectSet.options).map(option => option.value.toLowerCase());
-		if (!currentSet || !optionsSet.includes(currentSet)) {
-			currentSet = 'all';
-		}
-		selectSet.value = currentSet || 'all';
-
-		addFilterToUrl(selectSet, 'set', 'all', false);
-
-		/*NUMERO FILTER*/
-		const inputNumero = document.querySelector('input[name="numero"]') as HTMLInputElement;
-		let currentNumero = parseInt(new URL(window.location.href).searchParams.get('numero') ?? '');
-		if (currentNumero && !(currentNumero >= 1 && currentNumero <= POKEMONS_COUNT)) currentNumero = null;
-
-		inputNumero.value = currentNumero?.toString() ?? '';
-
-		addFilterToUrl(inputNumero, 'numero', '', false);
-
-		/*NAME FILTER*/
-		const inputName = document.querySelector('input[name="name"]') as HTMLInputElement;
-		const currentName = new URL(window.location.href).searchParams.get('name');
-		inputName.value = currentName || '';
-
-		addFilterToUrl(inputName, 'name', '', false);
-
-		/*SORT FILTER*/
-		const selectSort = document.querySelector('#sort') as HTMLSelectElement;
-		let currentSort = new URL(window.location.href).searchParams.get('sort');
-		currentSort = currentSort ? `sort-${currentSort}` : null;
-
-		const optionsSort = Array.from(selectSort.options).map(option => option.value.toLowerCase());
-		if (!currentSort || !optionsSort.includes(currentSort)) {
-			currentSort = 'sort-numero';
-		}
-		selectSort.value = currentSort ?? '';
-
-		addFilterToUrl(selectSort, 'sort', '', true);
-
-		/*RESET BUTTON*/
-		const resetBtn = document.querySelector('.reset-btn') as HTMLButtonElement;
-
-		resetBtn.addEventListener('click', () => {
-			window.location.href = new URL(window.location.href).origin;
-		});
-
-		/*ORDER BUTTON*/
-		const orderBtn = document.querySelector('.sort-order-btn') as HTMLButtonElement;
-		const url = new URL(window.location.href);
-		const order = url.searchParams.get('order');
-
-		if (order === 'asc') {
-			orderBtn.innerHTML =
-				`<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><path d="M151.6 42.4C145.5 35.8 137 32 128 32s-17.5 3.8-23.6 10.4l-88 96c-11.9 13-11.1 33.3 2 45.2s33.3 11.1 45.2-2L96 146.3V448c0 17.7 14.3 32 32 32s32-14.3 32-32V146.3l32.4 35.4c11.9 13 32.2 13.9 45.2 2s13.9-32.2 2-45.2l-88-96zM320 480h32c17.7 0 32-14.3 32-32s-14.3-32-32-32H320c-17.7 0-32 14.3-32 32s14.3 32 32 32zm0-128h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H320c-17.7 0-32 14.3-32 32s14.3 32 32 32zm0-128H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H320c-17.7 0-32 14.3-32 32s14.3 32 32 32zm0-128H544c17.7 0 32-14.3 32-32s-14.3-32-32-32H320c-17.7 0-32 14.3-32 32s14.3 32 32 32z"/></svg>`;
-		} else if (order === 'desc') {
-			orderBtn.innerHTML =
-				`<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><path d="M151.6 469.6C145.5 476.2 137 480 128 480s-17.5-3.8-23.6-10.4l-88-96c-11.9-13-11.1-33.3 2-45.2s33.3-11.1 45.2 2L96 365.7V64c0-17.7 14.3-32 32-32s32 14.3 32 32V365.7l32.4-35.4c11.9-13 32.2-13.9 45.2-2s13.9 32.2 2 45.2l-88 96zM320 480c-17.7 0-32-14.3-32-32s14.3-32 32-32h32c17.7 0 32 14.3 32 32s-14.3 32-32 32H320zm0-128c-17.7 0-32-14.3-32-32s14.3-32 32-32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H320zm0-128c-17.7 0-32-14.3-32-32s14.3-32 32-32H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H320zm0-128c-17.7 0-32-14.3-32-32s14.3-32 32-32H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H320z"/></svg>`;
-		}
-
-		orderBtn.addEventListener('click', () => {
-			if (order === 'asc') {
-				url.searchParams.set('order', 'desc');
-			} else {
-				url.searchParams.set('order', 'asc');
-			}
-			window.location.href = url.toString();
-		});
-
 		/*SCROLL BUTTON*/
-		const scrollBtn = document.querySelector('#scroll-btn') as HTMLButtonElement;
-		scrollBtn.addEventListener('click', () => {
-			const cardsGrid = document.querySelector('.cards-grid') as HTMLDivElement;
-			cardsGrid.scrollTo({
-				top: cardsGrid.scrollHeight,
+		const scrollBtn = document.querySelector<HTMLButtonElement>('#scroll-btn');
+		scrollBtn!.addEventListener('click', () => {
+			const cardsGrid = document.querySelector<HTMLDivElement>('.cards-grid');
+			cardsGrid!.scrollTo({
+				top: cardsGrid!.scrollHeight,
 				behavior: 'smooth',
 			});
 		});
-
-		function addFilterToUrl(element: HTMLElement, paramName: string, removeName: string, split: boolean) {
-			element.addEventListener('change', event => {
-				const target = event.target as HTMLSelectElement;
-				const url = new URL(window.location.href);
-				url.searchParams.set(paramName, split ? target.value.split('-')[1] : target.value);
-				if (target.value === removeName) {
-					url.searchParams.delete(paramName);
-				}
-				window.location.href = url.toString();
-			});
-		}
 	</script>
 </Layout>
+
+
+<script>
+	const filters = {
+		numero: document.querySelector<HTMLInputElement>('#numero')!,
+		name: document.querySelector<HTMLInputElement>('#name')!,
+		type: document.querySelector<HTMLSelectElement>('#type')!,
+		rarity: document.querySelector<HTMLSelectElement>('#rarity')!,
+		set: document.querySelector<HTMLSelectElement>('#set')!,
+		sort: document.querySelector<HTMLSelectElement>('#sort')!,
+	};
+
+	const cards = Array.from(document.querySelectorAll<HTMLDivElement>('.card-link'));
+
+	function applyFilters() {
+		const numeroFilter = filters.numero.value.trim();
+		const nameFilter = filters.name.value.trim().toLowerCase();
+		const typeFilter = filters.type.value.toLowerCase();
+		const rarityFilter = filters.rarity.value;
+		const setFilter = filters.set.value;
+
+		cards.forEach(card => {
+			const matchesNumero = !numeroFilter || card.dataset.numero === numeroFilter;
+			const matchesName = !nameFilter || card.dataset.name!.includes(nameFilter);
+			const types = card.dataset.types!.split(',');
+			const matchesType = typeFilter === 'all' || types.includes(typeFilter);
+			const matchesRarity = rarityFilter === 'all' || card.dataset.rarity === rarityFilter;
+			const matchesSet = setFilter === 'all' || card.dataset.set === setFilter;
+
+			if (matchesNumero && matchesName && matchesType && matchesRarity && matchesSet) {
+				card.classList.remove('hidden');
+			} else {
+				card.classList.add('hidden');
+			}
+		});
+
+		sortCards();
+	}
+
+	function sortCards() {
+		const sortValue = filters.sort.value;
+		console.log(`Sorting by ${sortValue}`);
+		const cardsContainer = document.querySelector<HTMLDivElement>('.cards-grid')!;
+		const sortedCards = Array.from(cards).filter(card => !card.classList.contains('hidden'));
+		const reversed = document.querySelector<HTMLButtonElement>('.sort-order-btn')!.dataset.sort === 'desc';
+
+		sortedCards.sort((a, b) => {
+			if (reversed) {
+				[
+					a,
+					b,
+				] =
+					[
+						b,
+						a,
+					];
+			}
+			switch (sortValue) {
+				case 'sort-numero':
+					return parseInt(a.dataset.numero!) - parseInt(b.dataset.numero!);
+				case 'sort-price':
+					return parseInt(a.dataset.price!) - parseInt(b.dataset.price!);
+				case 'sort-name':
+					return a.dataset.name!.localeCompare(b.dataset.name!);
+				default:
+					return 0;
+			}
+		});
+
+		cardsContainer.innerHTML = '';
+		sortedCards.forEach(card => cardsContainer.appendChild(card));
+	}
+
+	Object.values(filters).forEach(filter => filter.addEventListener('change', applyFilters));
+
+	document.querySelector<HTMLButtonElement>('.reset-btn')!.addEventListener('click', () => {
+		Object.values(filters).forEach(filter => {
+			if (filter.tagName === 'SELECT') {
+				filter.value = 'all';
+			} else {
+				filter.value = '';
+			}
+		});
+		applyFilters();
+	});
+
+	const sortOrderButton = document.querySelector<HTMLButtonElement>('.sort-order-btn');
+	sortOrderButton!.addEventListener('click', () => {
+		const sortOrder = sortOrderButton!.dataset.sort === 'asc' ? 'desc' : 'asc';
+		sortOrderButton!.dataset.sort = sortOrder;
+
+		if (sortOrder === 'asc') {
+			sortOrderButton!.innerHTML =
+				`<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><path d="M151.6 42.4C145.5 35.8 137 32 128 32s-17.5 3.8-23.6 10.4l-88 96c-11.9 13-11.1 33.3 2 45.2s33.3 11.1 45.2-2L96 146.3V448c0 17.7 14.3 32 32 32s32-14.3 32-32V146.3l32.4 35.4c11.9 13 32.2 13.9 45.2 2s13.9-32.2 2-45.2l-88-96zM320 480h32c17.7 0 32-14.3 32-32s-14.3-32-32-32H320c-17.7 0-32 14.3-32 32s14.3 32 32 32zm0-128h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H320c-17.7 0-32 14.3-32 32s14.3 32 32 32zm0-128H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H320c-17.7 0-32 14.3-32 32s14.3 32 32 32zm0-128H544c17.7 0 32-14.3 32-32s-14.3-32-32-32H320c-17.7 0-32 14.3-32 32s14.3 32 32 32z"/></svg>`;
+		} else {
+			sortOrderButton!.innerHTML =
+				`<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><path d="M151.6 469.6C145.5 476.2 137 480 128 480s-17.5-3.8-23.6-10.4l-88-96c-11.9-13-11.1-33.3 2-45.2s33.3-11.1 45.2 2L96 365.7V64c0-17.7 14.3-32 32-32s32 14.3 32 32V365.7l32.4-35.4c11.9-13 32.2-13.9 45.2-2s13.9 32.2 2 45.2l-88 96zM320 480c-17.7 0-32-14.3-32-32s14.3-32 32-32h32c17.7 0 32 14.3 32 32s-14.3 32-32 32H320zm0-128c-17.7 0-32-14.3-32-32s14.3-32 32-32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H320zm0-128c-17.7 0-32-14.3-32-32s14.3-32 32-32H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H320zm0-128c-17.7 0-32-14.3-32-32s14.3-32 32-32H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H320z"/></svg>`;
+		}
+		applyFilters();
+	});
+
+	applyFilters();
+</script>
+
 <style>
 	:root {
 		--card-margin: 1rem;
