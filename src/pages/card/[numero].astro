@@ -171,11 +171,7 @@ const index = 0;
 		}
 
 		set.addEventListener('click', () => {
-			urlIndex = url.searchParams.get('index');
-
 			const index = parseInt(set.classList[1]);
-			url.searchParams.set('index', index.toString());
-			window.history.pushState({}, '', url.toString());
 
 			mainImages.forEach(image => image.classList.add('hidden'));
 			mainImages[index].classList.remove('hidden');
