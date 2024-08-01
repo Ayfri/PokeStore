@@ -38,5 +38,5 @@ export async function fetchPokemons() {
 	});
 
 	const pokemonsWithDescriptions = await Promise.all(fetchPromises);
-	fs.writeFileSync(POKEMONS, JSON.stringify(pokemonsWithDescriptions, null, 2));
+	fs.writeFileSync(POKEMONS, JSON.stringify(pokemonsWithDescriptions));
 }

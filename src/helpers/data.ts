@@ -38,7 +38,7 @@ export async function getSets() {
 		return JSON.parse(fs.readFileSync(SETS, 'utf-8')) as Set[];
 	}
 
-	await fetchCards();
+	await getCards();
 	await fetchSets();
 	return getSets();
 }
@@ -48,7 +48,7 @@ export async function getTypes() {
 		return JSON.parse(fs.readFileSync(TYPES, 'utf-8')) as string[];
 	}
 
-	await fetchCards();
+	await getCards();
 	await fetchPokemonTypes();
 	return getTypes();
 }
@@ -63,7 +63,7 @@ export async function getHoloFoilsCards() {
 		return JSON.parse(fs.readFileSync(HOLO_CARDS, 'utf-8')) as Card[];
 	}
 
-	await fetchCards();
+	await getCards();
 	await fetchHoloCards();
 	return getHoloFoilsCards();
 }

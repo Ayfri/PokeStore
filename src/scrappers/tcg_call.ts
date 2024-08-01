@@ -60,13 +60,13 @@ async function fetchPokemon(index: number) {
 	} catch (e) {
 		if (!(e instanceof Error)) {
 			console.error(`Pokedex: ${index}/${POKEMONS_COUNT}, error: ${e}, retrying...`);
-			await new Promise(resolve => setTimeout(resolve, 2000));
+			await new Promise(resolve => setTimeout(resolve, 3000));
 			return fetchPokemon(index);
 		}
 
 		if (e.message.includes('429')) {
 			console.error(`Pokedex: ${index}/${POKEMONS_COUNT}, rate limit reached, retrying...`);
-			await new Promise(resolve => setTimeout(resolve, 4000));
+			await new Promise(resolve => setTimeout(resolve, 5000));
 			return fetchPokemon(index);
 		}
 	}
@@ -146,19 +146,19 @@ export async function fetchCards() {
 	const interval = 10;
 
 	for (let i = 0; i <= POKEMONS_COUNT; i += interval) {
-		await new Promise(resolve => setTimeout(resolve, 5000));
+		await new Promise(resolve => setTimeout(resolve, 7500));
 		const promises = Array.from({length: interval}, (_, j) => getPokemon(i + j + 1));
 		const result = await Promise.all(promises);
 		pokemonGroups.push(...result);
 	}
 
-	await fs.writeFile(CARDS, JSON.stringify(pokemonGroups.flat(), null, 2));
+	await fs.writeFile(CARDS, JSON.stringify(pokemonGroups.flat()));
 	console.log(`Finished writing Pokémon cards to ${CARDS}`);
 }
 
 export async function fetchSets() {
 	const sets = await fetchAndFilterSets();
 	console.log(`Filtered sets, writing ${sets.length} sets!`);
-	await fs.writeFile(SETS, JSON.stringify(sets, null, 2));
+	await fs.writeFile(SETS, JSON.stringify(sets));
 	console.log(`Finished writing sets to ${SETS}`);
 }

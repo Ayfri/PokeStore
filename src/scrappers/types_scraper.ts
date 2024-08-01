@@ -23,7 +23,7 @@ export async function fetchPokemonTypes() {
 	console.log(cardsTypes.size); // Total number of unique types
 
 	try {
-		await fs.writeFile(TYPES, JSON.stringify([...cardsTypes], null, 2));
+		await fs.writeFile(TYPES, JSON.stringify([...cardsTypes]));
 	} catch (error) {
 		console.error('Failed to write types to file:', error);
 	}

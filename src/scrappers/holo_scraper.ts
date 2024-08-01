@@ -12,7 +12,7 @@ export async function fetchHoloCards() {
 	});
 
 	try {
-		await fs.writeFile(HOLO_CARDS, JSON.stringify(holoCards, null, 2));
+		await fs.writeFile(HOLO_CARDS, JSON.stringify(holoCards));
 	} catch (error) {
 		console.error('Failed to write holo cards to file:', error);
 	}
