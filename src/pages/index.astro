@@ -145,7 +145,6 @@ cards = cards.map(card => {
 
 	function sortCards() {
 		const sortValue = filters.sort.value;
-		console.log(`Sorting by ${sortValue}`);
 		const cardsContainer = document.querySelector<HTMLDivElement>('.cards-grid')!;
 		const sortedCards = Array.from(cards).filter(card => !card.classList.contains('hidden'));
 		const reversed = document.querySelector<HTMLButtonElement>('.sort-order-btn')!.dataset.sort === 'desc';
