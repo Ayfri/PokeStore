@@ -290,7 +290,7 @@ cards = cards.map(card => {
 		color: white;
 		font-family: "Clash Display", serif;
 		font-weight: 500;
-		padding: 0.2rem;
+		padding: 0.2rem 0.4rem;
 		width: 10rem;
 		box-sizing: content-box;
 	}
@@ -315,7 +315,7 @@ cards = cards.map(card => {
 		color: white;
 		font-family: "Clash Display", serif;
 		font-weight: 500;
-		padding: 0.2rem;
+		padding: 0.2rem 0.4rem;
 		width: 10rem;
 		box-sizing: content-box;
 		background-image: linear-gradient(to right, #FFF, #FFF);
@@ -327,6 +327,15 @@ cards = cards.map(card => {
 	}
 
 	@media (max-width: 1024px) {
+		:root {
+			--header-padding: 0.5rem;
+		}
+
+		main {
+			height: calc(100vh - 4rem);
+			gap: 0.5rem;
+		}
+
 		.filters-top, .filters-bottom {
 			flex-direction: column;
 			gap: 0.5rem;
