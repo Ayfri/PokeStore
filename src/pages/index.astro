@@ -1,106 +1,12 @@
 ---
-import {getCards, getPokemons, getRarities, getSets, getTypes} from '../helpers/data';
+import {getRarities, getSets, getTypes} from '../helpers/data';
 import Layout from '../layouts/Layout.astro';
 import CardList from "../components/CardList.astro";
 import PageTitle from "../components/PageTitle.astro";
-import type {Card, Set} from "../types";
-
 
 const types = await getTypes();
 const rarity = await getRarities();
 const sets = await getSets();
-
-const searchParams = Astro.url.searchParams;
-const typesParam = searchParams.has('types') ? searchParams.get('types') : null;
-const rarityParam = searchParams.has('rarity') ? searchParams.get('rarity') : null;
-const setParam = searchParams.has('set') ? searchParams.get('set') : null;
-const numeroParam = searchParams.has('numero') ? searchParams.get('numero') : null;
-const sortParam = searchParams.has('sort') ? searchParams.get('sort') : null;
-const orderParam = searchParams.has('order') ? searchParams.get('order') : null;
-
-/* if (typesParam && (typesParam === 'all' || !types.map(type => type.toLowerCase()).includes(typesParam))) {
-	Astro.url.searchParams.delete('types');
-	return Astro.redirect(Astro.url.href);
-}
-
-if (rarityParam && (rarityParam === 'all' || !rarity.map(rarity => rarity.toLowerCase()).includes(rarityParam))) {
-	Astro.url.searchParams.delete('rarity');
-	return Astro.redirect(Astro.url.href);
-}
-
-if (setParam && (setParam === 'all' || !sets.map(set => set.name.toLowerCase()).includes(setParam))) {
-	Astro.url.searchParams.delete('set');
-	return Astro.redirect(Astro.url.href);
-}
-
-if (numeroParam && !(parseInt(numeroParam) >= 1 && parseInt(numeroParam) <= numberOfPokemons)) {
-	Astro.url.searchParams.delete('numero');
-	return Astro.redirect(Astro.url.href);
-}
-
-if (orderParam && !orders.includes(orderParam)) {
-	Astro.url.searchParams.delete('order');
-	return Astro.redirect(Astro.url.href);
-}
-
-if (!orderParam) {
-	Astro.url.searchParams.set('order', 'asc');
-	return Astro.redirect(Astro.url.href);
-}
-
-for (const [key,] of searchParams.entries()) {
-	if (!filters.includes(key)) {
-		Astro.url.searchParams.delete(key);
-		return Astro.redirect(Astro.url.href);
-	}
-} */
-
-let cards = await getCards();
-cards = cards.filter(card => card.pokemon);
-cards = cards.sort((a, b) => a.pokemon.id - b.pokemon.id || b.price - a.price);
-
-const searchParamSize = new Map(searchParams.entries()).size;
-
-// keep first card of each Pokémon
-if (
-	searchParamSize === 0 ||
-	sortParam && searchParamSize === 1 ||
-	sortParam && orderParam && searchParamSize === 2 ||
-	orderParam && searchParamSize === 1
-) {
-	cards = cards.filter((card, index, self) => self.findIndex(c => c.pokemon.id === card.pokemon.id) === index);
-}
-
-if (orderParam === 'desc' && searchParamSize === 1) {
-	cards = cards.reverse();
-}
-
-if (searchParamSize === 1 && orderParam === 'asc') {
-	Astro.url.searchParams.set('sort', 'numero');
-	return Astro.redirect(Astro.url.href);
-}
-
-cards.map(card => card.price ||= 100_000);
-switch (sortParam) {
-	case 'numero':
-		cards = cards.sort((a, b) => a.pokemon.id - b.pokemon.id || a.price - b.price);
-		if (orderParam === 'desc') {
-			cards = cards.sort((a, b) => b.pokemon.id - a.pokemon.id || b.price - a.price);
-		}
-		break;
-	case 'price':
-		cards = cards.sort((a, b) => a.price - b.price || a.pokemon.id - b.pokemon.id);
-		if (orderParam === 'desc') {
-			cards = cards.sort((a, b) => b.price - a.price || a.pokemon.id - b.pokemon.id);
-		}
-		break;
-	case 'name':
-		cards = cards.sort((a, b) => a.pokemon.name.localeCompare(b.pokemon.name) || b.price - a.price);
-		if (orderParam === 'desc') {
-			cards = cards.sort((a, b) => b.pokemon.name.localeCompare(a.pokemon.name) || b.price - a.price);
-		}
-		break;
-}
 ---
 
 <Layout title="Pokéstore">
