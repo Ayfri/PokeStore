@@ -1,58 +1,59 @@
 ---
-import {getCards} from '../helpers/data';
-import Layout from '../layouts/Layout.astro';
-import PageTitle from "../components/PageTitle.astro";
-import "../styles/colors.css";
+import "../../styles/colors.css";
+
+import type {GetStaticPaths} from 'astro';
+import {getCards, getPokemons} from '../../helpers/data';
+import Layout from '../../layouts/Layout.astro';
+import PageTitle from "../../components/PageTitle.astro";
 import {Image} from "astro:assets";
-import type {Card} from "../types";
-import {numberOfPokemons} from '../constants';
+import type {Card} from "../../types";
 
-const filters = [
-	'numero',
-	'index',
-	'id',
-];
-const searchParams = Astro.url.searchParams;
-const numeroParam = searchParams.has('numero') ? searchParams.get('numero') : null;
 
-const centeredCardId = Astro.url.searchParams.get('index') ? parseInt(Astro.url.searchParams.get('index')) : 0;
+export const getStaticPaths = (async () => {
+	const pokemons = await getPokemons();
+	let allCards = await getCards();
+	allCards = allCards.sort((a, b) => a.pokemon.id - b.pokemon.id || b.price - a.price);
 
-if (numeroParam && !(numeroParam >= 1 && numeroParam <= numberOfPokemons)) {
-	Astro.url.searchParams.delete('numero');
-	return Astro.redirect("/");
+	return pokemons.map(pokemon => {
+		const pokemonCards = allCards.filter(c => parseInt(c.numero) === pokemon.id && c.set);
+		if (!pokemonCards.length) return undefined;
+
+		const card = pokemonCards[0];
+
+		return {
+			params: {
+				numero: pokemon.id,
+			},
+			props: {
+				card,
+				cards: pokemonCards,
+				numero: pokemon.id,
+			},
+		};
+	}).filter(Boolean);
+}) satisfies GetStaticPaths;
+
+interface Props {
+	card: Card;
+	cards: Card[];
+	index: number;
+	numero: number;
 }
 
-for (const [key,] of searchParams.entries()) {
-	if (!filters.includes(key)) {
-		Astro.url.searchParams.delete(key);
-		return Astro.redirect(Astro.url.href);
-	}
-}
-
-let cards = await getCards();
-cards = cards.sort((a, b) => a.pokemon.id - b.pokemon.id || b.price - a.price);
-
-if (cards.length === 0) {
-	Astro.url.searchParams.delete('numero');
-	return Astro.redirect("/");
-}
-
-if (Astro.url.searchParams.has('id')) {
-	const id = Astro.url.searchParams.get('id');
-	const index = cards.findIndex(card => parseInt(card.numero) === parseInt(id));
-	if (index !== -1) Astro.url.searchParams.set('index', index.toString());
-	Astro.url.searchParams.delete('id');
-	return Astro.redirect(Astro.url.href);
-}
+const {
+	card,
+	cards,
+	numero,
+} = Astro.props;
 
 const setLogoFirstHalf = cards.slice(0, 5).map(card => card.set);
 const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set);
-const centeredCard = cards[centeredCardId];
-const pokemonName = centeredCard.pokemon.name;
+const pokemonName = card.pokemon.name;
+const index = 0;
 ---
 <Layout title="Pokéstore">
 	<main>
-		<div class:list={[`filter ${centeredCard.types.toLowerCase().split(',')[0]}`]} id="filter"></div>
+		<div class:list={[`filter ${card.types.toLowerCase().split(',')[0]}`]} id="filter"></div>
 		<div class="main-container">
 			<div class="top-container">
 				<div class="card-container">
@@ -68,37 +69,33 @@ const pokemonName = centeredCard.pokemon.name;
 							/>)}
 					</div>
 					<div
-						class:list={[`center-card ${centeredCard.types.toLowerCase().split(',')[0]} ${centeredCard.rarity.toLowerCase()}`]}
+						class:list={[`center-card ${card.types.toLowerCase().split(',')[0]} ${card.rarity.toLowerCase()}`]}
 						data-values={cards.map(card => card.rarity.toLowerCase())}
 						id="center-card"
 					>
 						<div
 							class:list={[
 								'card-aura',
-								centeredCard.types.toLowerCase().split(',')[0],
+								card.types.toLowerCase().split(',')[0],
 							]}
 							id="card-aura"
 						>
 						</div>
 						<div class="images">
-							{
-								cards.map((card, index) =>
-									<img
-										alt={card.pokemon.name}
-										class:list={{
-											image: true,
-											hidden: index !== centeredCardId,
-										}}
-										decoding="async"
-										hidden={index !== centeredCardId}
-										draggable="false"
-										loading="eager"
-										height="420"
-										src={card.image}
-										width="300"
-									/>,
-								)
-							}
+							{cards.map((card, cardIndex) => <img
+								alt={card.pokemon.name}
+								class:list={{
+									image: true,
+									hidden: cardIndex !== index,
+								}}
+								decoding="async"
+								hidden={cardIndex !== index}
+								draggable="false"
+								loading="eager"
+								height="420"
+								src={card.image}
+								width="300"
+							/>)}
 						</div>
 					</div>
 					<div class="right-card">
@@ -124,22 +121,25 @@ const pokemonName = centeredCard.pokemon.name;
 							data-values={cards.map(card => card.types.toLowerCase().replace(',', ' ').split(','))}
 							id="card-types"
 						>
-							{centeredCard.types.toLowerCase().split(',').map(type =>
-								<p
-									class:list={[
-										'card-type',
-										type,
-									]}
-								>
-									{type}
-								</p>,
-							)}
+							{card.types.toLowerCase()
+							     .split(',')
+							     .map(type =>
+								     <p
+									     class:list={[
+										     'card-type',
+										     type,
+									     ]}
+								     >
+									     {type}
+								     </p>,
+							     )
+							}
 						</div>
-						<p>{centeredCard.pokemon.description}</p>
+						<p>{card.pokemon.description}</p>
 					</div>
 					<div class="purchase-button">
 						<p data-values={cards.map(card => card.price)} id="card-price">
-							{centeredCard.price ? `${centeredCard.price} $` : 'Priceless'}
+							{card.price ? `${card.price} $` : 'Priceless'}
 						</p>
 					</div>
 				</div>
@@ -213,9 +213,11 @@ const pokemonName = centeredCard.pokemon.name;
 		});
 	});
 
+	sets[0].click();
+
 	/*CARD EFFECT*/
 	const card = document.querySelector('.center-card') as HTMLDivElement;
-	const style = document.getElementById('card') as HTMLStyleElement;
+	const style = document.querySelector('#card') as HTMLStyleElement;
 
 	card.addEventListener('mousemove', e => {
 		card.classList.remove('inactive');

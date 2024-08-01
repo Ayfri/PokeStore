@@ -1,6 +1,7 @@
 ---
-import {Card} from "../types";
 import "../styles/colors.css";
+
+import type {Card} from "../types";
 import {Image} from "astro:assets";
 
 interface Props {
@@ -21,7 +22,7 @@ const {
 } = pokemon;
 ---
 
-<a class="card-link" href={`/card?numero=${pokemon.id}&id=${card.id}`} draggable="false">
+<a class="card-link" href={`/card/${pokemon.id}`} draggable="false">
 	<div class="card-pokestore">
 		<div class:list={rarity.toLowerCase()}></div>
 		<div
