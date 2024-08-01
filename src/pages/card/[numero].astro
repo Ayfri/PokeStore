@@ -27,23 +27,19 @@ export const getStaticPaths = (async () => {
 			props: {
 				card,
 				cards: pokemonCards,
-				numero: pokemon.id,
 			},
 		};
-	}).filter(Boolean);
+	}).filter(x => !!x);
 }) satisfies GetStaticPaths;
 
 interface Props {
 	card: Card;
 	cards: Card[];
-	index: number;
-	numero: number;
 }
 
 const {
 	card,
 	cards,
-	numero,
 } = Astro.props;
 
 const setLogoFirstHalf = cards.slice(0, 5).map(card => card.set);
@@ -149,15 +145,15 @@ const index = 0;
 </Layout>
 <script>
 	const sets = document.querySelectorAll('.set') as NodeListOf<HTMLImageElement>;
-	const url = new URL(window.location.href);
 	const mainImages = document.querySelectorAll('.image') as NodeListOf<HTMLImageElement>;
-
 	const cardAura = document.querySelector('#card-aura') as HTMLDivElement;
+
 	const cardPrice = document.querySelector('#card-price') as HTMLParagraphElement;
 	const cardTypes = document.querySelector('#card-types') as HTMLDivElement;
 	const centerCard = document.querySelector('#center-card') as HTMLDivElement;
 	const filter = document.querySelector('#filter') as HTMLDivElement;
 
+	const url = new URL(window.location.href);
 	let urlIndex = url.searchParams.get('index');
 
 	function handleDynamicValue<T extends HTMLElement>(element: T, callback: (element: T, value: string) => void) {
@@ -212,8 +208,6 @@ const index = 0;
 			});
 		});
 	});
-
-	sets[0].click();
 
 	/*CARD EFFECT*/
 	const card = document.querySelector('.center-card') as HTMLDivElement;
