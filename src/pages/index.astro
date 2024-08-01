@@ -1,12 +1,18 @@
 ---
-import {getRarities, getSets, getTypes} from '../helpers/data';
+import {getCards, getRarities, getSets, getTypes} from '../helpers/data';
 import Layout from '../layouts/Layout.astro';
 import CardList from "../components/Card.astro";
 import PageTitle from "../components/PageTitle.astro";
 
+
 const types = await getTypes();
 const rarity = await getRarities();
 const sets = await getSets();
+
+
+let cards = await getCards();
+cards = cards.filter(card => card.pokemon);
+cards = cards.sort((a, b) => a.pokemon.id - b.pokemon.id || b.price - a.price);
 ---
 
 <Layout title="Pokéstore">
