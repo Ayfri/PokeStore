@@ -70,12 +70,9 @@ for (const [key,] of searchParams.entries()) {
 }
 
 let cards = await getCards();
-const pokemons = await getPokemons();
-cards.map(card => card.pokemon = pokemons.find(pokemon => pokemon.id === parseInt(card.numero)));
-
 cards = cards.filter(card => card.pokemon);
-
 cards = cards.sort((a, b) => a.pokemon.id - b.pokemon.id || b.price - a.price);
+
 const searchParamSize = new Map(searchParams.entries()).size;
 
 // keep first card of each Pokémon
