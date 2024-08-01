@@ -535,4 +535,75 @@ const index = 0;
 		width: 300px;
 		z-index: -1;
 	}
+
+	@media (max-width: 768px) {
+		.main-container {
+			margin-top: 2rem;
+		}
+
+		.top-container {
+			height: inherit;
+			display: flex;
+			flex-direction: column;
+			gap: 2rem;
+			flex-wrap: wrap;
+			align-content: center;
+		}
+
+		.card-container {
+			gap: 2rem;
+			display: grid;
+			place-items: center;
+			grid-template-areas:
+					'center'
+					'left'
+					'right';
+		}
+
+		.center-card {
+			grid-area: center;
+		}
+
+		.center-card .card-aura {
+			height: 50vh;
+			width: 80vw;
+			top: 35%;
+		}
+
+		.images, .image {
+			height: 112.5vw;
+			width: 75vw;
+		}
+
+		.left-card, .right-card {
+			width: 90vw;
+			height: 5rem;
+			flex-direction: row;
+		}
+
+		.left-card {
+			grid-area: left;
+		}
+
+		.right-card {
+			grid-area: right;
+		}
+
+		.left-card > img, .right-card > img {
+			width: 3rem;
+		}
+
+		.bottom-container {
+			width: 100%;
+			gap: 0;
+			height: auto;
+		}
+
+		.bottom-half-bottom {
+			flex-direction: column;
+			gap: 1rem;
+			align-items: center;
+		}
+	}
+
 </style>
