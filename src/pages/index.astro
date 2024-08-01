@@ -16,7 +16,6 @@ cards = cards.map(card => {
 	card.price ||= 100_000;
 	return card;
 });
-
 ---
 
 <Layout title="Card List">
@@ -74,7 +73,7 @@ cards = cards.map(card => {
 
 		<div class="cards-grid">
 			{cards.map(card =>
-				<Card card={card}/>
+				<Card card={card}/>,
 			)}
 		</div>
 	</main>
@@ -218,12 +217,6 @@ cards = cards.map(card => {
 		width: calc(100% - var(--header-padding) * 2);
 	}
 
-	@media (max-width: 768px) {
-		.fixed-container {
-			width: 100%;
-		}
-	}
-
 	.cards-grid {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
@@ -257,7 +250,11 @@ cards = cards.map(card => {
 		gap: 1rem;
 	}
 
-	@media (max-width: 768px) {
+	@media (max-width: 1280px) {
+		.fixed-container {
+			width: 100%;
+		}
+
 		.top-container {
 			flex-direction: column;
 			margin-left: 0;
@@ -329,7 +326,7 @@ cards = cards.map(card => {
 		background-color: transparent;
 	}
 
-	@media (max-width: 768px) {
+	@media (max-width: 1024px) {
 		.filters-top, .filters-bottom {
 			flex-direction: column;
 			gap: 0.5rem;

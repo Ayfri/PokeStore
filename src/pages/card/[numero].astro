@@ -46,7 +46,6 @@ const setLogoFirstHalf = cards.slice(0, 5).map(card => card.set);
 const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set);
 const pokemonName = card.pokemon.name;
 const index = 0;
-
 ---
 
 <Layout title={pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1)} description={card.pokemon.description}>
@@ -258,7 +257,6 @@ const index = 0;
 		font-size: 20px;
 		line-height: 1.6;
 		max-width: 100vw;
-		max-height: 100vh;
 	}
 
 	img {
