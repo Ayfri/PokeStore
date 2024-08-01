@@ -1,5 +1,5 @@
 import * as fs from "node:fs";
-import {numberOfPokemons} from '../constants';
+import {POKEMONS_COUNT} from '../constants';
 import {POKEMONS} from './files.ts';
 
 type SearchResults = {
@@ -19,7 +19,7 @@ type DescriptionData = {
 };
 
 export async function fetchPokemons() {
-	const response = await fetch(`https://pokeapi.co/api/v2/pokemon-species?limit=${numberOfPokemons}`);
+	const response = await fetch(`https://pokeapi.co/api/v2/pokemon-species?limit=${POKEMONS_COUNT}`);
 	const json = await response.json() as SearchResults;
 	console.log(`Fetched ${json.results.length} pokemons`);
 

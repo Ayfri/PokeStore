@@ -1,7 +1,7 @@
 import {configDotenv} from 'dotenv';
 import * as fs from 'node:fs/promises';
 import pokemon from 'pokemontcgsdk';
-import {numberOfPokemons} from '../constants';
+import {POKEMONS_COUNT} from '../constants';
 import type {Card} from '../types';
 import {CARDS, SETS} from './files.ts';
 
@@ -61,13 +61,13 @@ async function fetchPokemon(index: number) {
 		}) as FetchedCard[];
 	} catch (e) {
 		if (!(e instanceof Error)) {
-			console.error(`Pokedex: ${index}/${numberOfPokemons}, error: ${e}, retrying...`);
+			console.error(`Pokedex: ${index}/${POKEMONS_COUNT}, error: ${e}, retrying...`);
 			await new Promise(resolve => setTimeout(resolve, 2000));
 			return fetchPokemon(index);
 		}
 
 		if (e.message.includes('429')) {
-			console.error(`Pokedex: ${index}/${numberOfPokemons}, rate limit reached, retrying...`);
+			console.error(`Pokedex: ${index}/${POKEMONS_COUNT}, rate limit reached, retrying...`);
 			await new Promise(resolve => setTimeout(resolve, 4000));
 			return fetchPokemon(index);
 		}
@@ -78,16 +78,16 @@ async function getPokemon(index: number) {
 	const cards = await fetchPokemon(index);
 
 	if (!cards) {
-		console.log(`Pokedex: ${index}/${numberOfPokemons}, no cards found for this Pokémon!`);
+		console.log(`Pokedex: ${index}/${POKEMONS_COUNT}, no cards found for this Pokémon!`);
 		return [];
 	}
 
 	if (cards.length === 0) {
-		console.log(`Pokedex: ${index}/${numberOfPokemons}, no cards found!`);
+		console.log(`Pokedex: ${index}/${POKEMONS_COUNT}, no cards found!`);
 		return [];
 	}
 
-	console.log(`Pokedex: ${index}/${numberOfPokemons}, caught ${cards[0].name}! (${cards.length} cards)`);
+	console.log(`Pokedex: ${index}/${POKEMONS_COUNT}, caught ${cards[0].name}! (${cards.length} cards)`);
 
 	return cards.map((card: FetchedCard) => {
 		const price = card?.cardmarket?.prices?.averageSellPrice || card?.tcgplayer?.prices?.holofoil?.market ||
@@ -147,7 +147,7 @@ export async function fetchCards() {
 	const pokemonGroups = [];
 	const interval = 10;
 
-	for (let i = 0; i <= numberOfPokemons; i += interval) {
+	for (let i = 0; i <= POKEMONS_COUNT; i += interval) {
 		await new Promise(resolve => setTimeout(resolve, 5000));
 		const promises = Array.from({length: interval}, (_, j) => getPokemon(i + j + 1));
 		const result = await Promise.all(promises);

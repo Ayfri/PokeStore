@@ -4,7 +4,6 @@ import Layout from '../layouts/Layout.astro';
 import CardList from "../components/CardList.astro";
 import PageTitle from "../components/PageTitle.astro";
 import type {Card, Set} from "../types";
-import {numberOfPokemons} from '../constants';
 
 
 const filters = [
@@ -176,6 +175,8 @@ switch (sortParam) {
 		</div>
 	</main>
 	<script>
+		import {POKEMONS_COUNT} from '../constants';
+
 		/*TYPE FILTER*/
 		const selectType = document.querySelector('#type') as HTMLSelectElement;
 		let currentType = new URL(window.location.href).searchParams.get('types');
@@ -212,7 +213,7 @@ switch (sortParam) {
 		/*NUMERO FILTER*/
 		const inputNumero = document.querySelector('input[name="numero"]') as HTMLInputElement;
 		let currentNumero = parseInt(new URL(window.location.href).searchParams.get('numero') ?? '');
-		if (currentNumero && !(currentNumero >= 1 && currentNumero <= 151)) currentNumero = null;
+		if (currentNumero && !(currentNumero >= 1 && currentNumero <= POKEMONS_COUNT)) currentNumero = null;
 
 		inputNumero.value = currentNumero?.toString() ?? '';
 
@@ -277,7 +278,7 @@ switch (sortParam) {
 			});
 		});
 
-		function addFilterToUrl(element, paramName, removeName, split) {
+		function addFilterToUrl(element: HTMLElement, paramName: string, removeName: string, split: boolean) {
 			element.addEventListener('change', event => {
 				const target = event.target as HTMLSelectElement;
 				const url = new URL(window.location.href);
