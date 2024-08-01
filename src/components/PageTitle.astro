@@ -14,18 +14,19 @@ const {title} = Astro.props;
 
 <style>
 	.title {
-		position: relative;
-		width: fit-content;
+		align-items: center;
 		display: flex;
 		flex-direction: column;
-		align-items: center;
+		overflow: hidden;
+		position: relative;
 		text-wrap: nowrap;
+		width: fit-content;
 	}
 
 	h1 {
-		position: absolute;
 		color: rgba(24, 24, 24, 0.8);
 		font-size: 7rem;
+		position: absolute;
 		top: -2.5rem;
 		width: max-content;
 		z-index: -1;
