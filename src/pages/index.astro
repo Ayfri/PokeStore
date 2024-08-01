@@ -218,11 +218,18 @@ cards = cards.map(card => {
 		width: calc(100% - var(--header-padding) * 2);
 	}
 
+	@media (max-width: 768px) {
+		.fixed-container {
+			width: 100%;
+		}
+	}
+
 	.cards-grid {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
-		place-items: center;
+		justify-content: center;
 		overflow-y: scroll;
+		place-items: center;
 		scroll-behavior: smooth;
 	}
 
@@ -248,6 +255,20 @@ cards = cards.map(card => {
 		flex-flow: column;
 		align-items: flex-end;
 		gap: 1rem;
+	}
+
+	@media (max-width: 768px) {
+		.top-container {
+			flex-direction: column;
+			margin-left: 0;
+			margin-right: 0;
+			padding-bottom: 1rem;
+			border-bottom-width: 4px;
+		}
+
+		.filters-container {
+			flex-flow: row;
+		}
 	}
 
 	.filters-result {
@@ -306,6 +327,18 @@ cards = cards.map(card => {
 		background-size: 100% 0;
 		transition: background-size 0.4s cubic-bezier(0.22, 1, 0.36, 1), color 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 		background-color: transparent;
+	}
+
+	@media (max-width: 768px) {
+		.filters-top, .filters-bottom {
+			flex-direction: column;
+			gap: 0.5rem;
+		}
+
+		input, select, .reset-btn, .sort-order-btn {
+			border-width: 2px;
+			font-size: 0.8rem;
+		}
 	}
 
 	.filter {
