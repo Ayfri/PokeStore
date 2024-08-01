@@ -42,7 +42,9 @@ cards = cards.map(card => {
 						<input type="text" placeholder="Name" name="name" class="filter" id="name">
 					</div>
 					<div class="filters-bottom">
-						<output class="filters-result">Cards : {cards.length}</output>
+						<output class="filters-result">Cards :
+							<span>{cards.length}</span>
+						</output>
 						<select name="sort" id="sort" class="filter">
 							<option value="sort-numero" selected>Sort by pokédex</option>
 							<option value="sort-price">Sort by price</option>
@@ -99,6 +101,8 @@ cards = cards.map(card => {
 		sort: document.querySelector<HTMLSelectElement>('#sort')!,
 	};
 
+	const cardsCount = document.querySelector<HTMLSpanElement>('.filters-result span')!;
+
 	const cards = Array.from(document.querySelectorAll<HTMLDivElement>('.card-link'));
 
 	function applyFilters() {
@@ -107,6 +111,8 @@ cards = cards.map(card => {
 		const typeFilter = filters.type.value.toLowerCase();
 		const rarityFilter = filters.rarity.value;
 		const setFilter = filters.set.value;
+
+		let visibleCount = 0;
 
 		cards.forEach(card => {
 			const matchesNumero = !numeroFilter || card.dataset.numero === numeroFilter;
@@ -120,8 +126,11 @@ cards = cards.map(card => {
 				card.classList.remove('hidden');
 			} else {
 				card.classList.add('hidden');
+				visibleCount++;
 			}
 		});
+
+		cardsCount.textContent = `${visibleCount}`;
 
 		sortCards();
 	}
