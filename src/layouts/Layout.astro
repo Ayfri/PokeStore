@@ -14,20 +14,23 @@ const {title} = Astro.props;
 <html lang="en">
 	<head>
 		<meta charset="UTF-8"/>
-		<meta name="description" content="A Pokémon TCG Card list"/>
+		<meta name="description" content="A Pokémon TCG list"/>
 
 		<meta name="theme-color" content="#000"/>
+		<meta name="color-scheme" content="dark light"/>
 		<meta name="robots" content="index, follow"/>
+		<meta name="language" content="en"/>
 		<meta name="author" content="Ayfri,Anta,Bahsiik"/>
 		<meta name="keywords" content="Pokémon,TCG,Card,Game"/>
 
 		<meta name="og:title" content={title}/>
-		<meta name="og:description" content="A Pokémon TCG Card list"/>
+		<meta name="og:description" content="A Pokémon TCG list"/>
 		<meta name="og:type" content="website"/>
 		<meta name="og:url" content="https://pokestore.ayfri.com"/>
 
 		<meta name="viewport" content="width=device-width"/>
 		<meta name="generator" content={Astro.generator}/>
+		<meta name="twitter:card" content="summary_large_image"/>
 		<link rel="icon" type="image/png" href="/favicon.png"/>
 
 		<title>{title}</title>
