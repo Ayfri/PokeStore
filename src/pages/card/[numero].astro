@@ -151,28 +151,26 @@ const index = 0;
 	const centerCard = document.querySelector('#center-card') as HTMLDivElement;
 	const filter = document.querySelector('#filter') as HTMLDivElement;
 
-	const url = new URL(window.location.href);
-	let urlIndex = url.searchParams.get('index');
+	let currentIndex = 0;
 
 	function handleDynamicValue<T extends HTMLElement>(element: T, callback: (element: T, value: string) => void) {
-		urlIndex = url.searchParams.get('index');
-		const values = element.dataset.values?.split(',') as string[];
-		const index = urlIndex ? parseInt(urlIndex as string) : 0;
-		const value = values[index];
+		const values = element.dataset.values!.split(',');
+		const value = values[currentIndex];
 		callback(element, value);
 	}
 
 	sets.forEach(set => {
-		if (urlIndex === set.classList[1]) {
+		if (currentIndex === set.classList[1]) {
 			set.classList.add('shadow');
 		}
 
-		if (!urlIndex && set.classList[1] === '0') {
+		if (!currentIndex && set.classList[1] === '0') {
 			set.classList.add('shadow');
 		}
 
 		set.addEventListener('click', () => {
 			const index = parseInt(set.classList[1]);
+			currentIndex = index;
 
 			mainImages.forEach(image => image.classList.add('hidden'));
 			mainImages[index].classList.remove('hidden');
