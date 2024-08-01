@@ -1,11 +1,12 @@
 import * as fs from 'node:fs/promises';
 import type {Card} from '../types';
+import {CARDS, TYPES} from './files.ts';
 
 
 export async function fetchPokemonTypes() {
 	const cardsTypes = new Set<string>();
 
-	const cards = JSON.parse(await fs.readFile('cards-full.json', 'utf-8')).flat() as Card[];
+	const cards = JSON.parse(await fs.readFile(CARDS, 'utf-8')).flat() as Card[];
 
 	cards.flat().forEach(group => {
 		const cardTypes = group.types.includes(',') ? group.types.split(', ') : [group.types];
@@ -22,8 +23,8 @@ export async function fetchPokemonTypes() {
 	console.log(cardsTypes.size); // Total number of unique types
 
 	try {
-		await fs.writeFile('types.json', JSON.stringify([...cardsTypes], null, 2));
+		await fs.writeFile(TYPES, JSON.stringify([...cardsTypes], null, 2));
 	} catch (error) {
-		console.error('Error writing to file', error);
+		console.error('Failed to write types to file:', error);
 	}
 }

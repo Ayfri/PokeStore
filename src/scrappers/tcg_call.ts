@@ -3,6 +3,7 @@ import * as fs from 'node:fs/promises';
 import pokemon from 'pokemontcgsdk';
 import {numberOfPokemons} from '../constants';
 import type {Card} from '../types';
+import {CARDS, SETS} from './files.ts';
 
 // Load and configure environment variables
 const dotenv = configDotenv({path: '.env'});
@@ -126,7 +127,7 @@ async function fetchAndFilterSets() {
 	}));
 
 	try {
-		const cardsJson = JSON.parse(await fs.readFile('cards-full.json', 'utf-8'));
+		const cardsJson = JSON.parse(await fs.readFile(CARDS, 'utf-8'));
 
 		const cards = cardsJson.flat() as Card[];
 		const setsWithCards = sets.filter(set => cards.some(card => card.set_name === set.name));
@@ -137,7 +138,7 @@ async function fetchAndFilterSets() {
 			logo: sets.find(set => set.name === name)?.images?.logo,
 		}));
 	} catch (error) {
-		console.error('Error reading cards-full.json', error);
+		console.error(`Error reading ${CARDS}`, error);
 		return setsData;
 	}
 }
@@ -153,13 +154,13 @@ export async function fetchCards() {
 		pokemonGroups.push(...result);
 	}
 
-	await fs.writeFile('cards-full.json', JSON.stringify(pokemonGroups.flat(), null, 2));
-	console.log('Finished writing Pokémon cards to cards-full.json');
+	await fs.writeFile(CARDS, JSON.stringify(pokemonGroups.flat(), null, 2));
+	console.log(`Finished writing Pokémon cards to ${CARDS}`);
 }
 
 export async function fetchSets() {
 	const sets = await fetchAndFilterSets();
 	console.log(`Filtered sets, writing ${sets.length} sets!`);
-	await fs.writeFile('sets-full.json', JSON.stringify(sets, null, 2));
-	console.log('Finished writing sets to sets-full.json');
+	await fs.writeFile(SETS, JSON.stringify(sets, null, 2));
+	console.log(`Finished writing sets to ${SETS}`);
 }

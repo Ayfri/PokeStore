@@ -1,5 +1,6 @@
 import * as fs from "node:fs";
 import {numberOfPokemons} from '../constants';
+import {POKEMONS} from './files.ts';
 
 type SearchResults = {
 	results: {
@@ -37,5 +38,5 @@ export async function fetchPokemons() {
 	});
 
 	const pokemonsWithDescriptions = await Promise.all(fetchPromises);
-	fs.writeFileSync('pokemons-full.json', JSON.stringify(pokemonsWithDescriptions, null, 2));
+	fs.writeFileSync(POKEMONS, JSON.stringify(pokemonsWithDescriptions, null, 2));
 }

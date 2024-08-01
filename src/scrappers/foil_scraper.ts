@@ -5,9 +5,10 @@
 
 import * as fs from 'node:fs/promises';
 import type {Card} from '../types';
+import {HOLO_CARDS} from './files.ts';
 
 async function getCardMasks() {
-	const holoCards = JSON.parse(await fs.readFile('holo-cards.json', 'utf-8')).flat() as Card[];
+	const holoCards = JSON.parse(await fs.readFile(HOLO_CARDS, 'utf-8')).flat() as Card[];
 
 	for (const card of holoCards) {
 		const urlSegments = card.image.split('/');
