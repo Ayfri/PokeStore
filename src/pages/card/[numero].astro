@@ -48,7 +48,14 @@ const pokemonName = card.pokemon.name;
 const index = 0;
 ---
 
-<Layout title={pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1)} description={card.pokemon.description}>
+<Layout
+	title={pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1)}
+	description={card.pokemon.description}
+	image={{
+		url: card.image,
+		alt: card.pokemon.description,
+	}}
+>
 	<main>
 		<div class:list={[`filter ${card.types.toLowerCase().split(',')[0]}`]} id="filter"></div>
 		<div class="main-container">

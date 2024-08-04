@@ -6,11 +6,16 @@ import Header from '../components/Header.astro';
 interface Props {
 	title: string;
 	description?: string;
+	image?: {
+		url: string;
+		alt: string;
+	};
 }
 
 const {
 	title,
 	description = "",
+	image,
 } = Astro.props;
 
 const pageDescription = `A Pokémon TCG list. ${description}`.trim();
@@ -29,6 +34,7 @@ const pageDescription = `A Pokémon TCG list. ${description}`.trim();
 		<meta name="author" content="Ayfri;Anta;Bahsiik"/>
 		<meta name="keywords" content="Pokémon,TCG,Card,Game"/>
 
+		<meta property="og:site_name" content="PokéStore"/>
 		<meta property="og:title" content={title}/>
 		<meta property="og:description" content={pageDescription}/>
 		<meta property="og:type" content="website"/>
@@ -37,6 +43,14 @@ const pageDescription = `A Pokémon TCG list. ${description}`.trim();
 		<meta name="viewport" content="width=device-width"/>
 		<meta name="generator" content={Astro.generator}/>
 		<meta name="twitter:card" content="summary_large_image"/>
+
+		{image &&
+			<>
+			<meta property="og:image" content={image.url}/>
+			<meta property="og:image:alt" content={image.alt}/>
+			<meta name="twitter:image" content={image.url}/>
+			<meta name="twitter:image:alt" content={image.alt}/>
+			</>}
 
 		<link rel="sitemap" href="/sitemap-index.xml"/>
 		<link rel="icon" type="image/png" href="/favicon.png"/>
