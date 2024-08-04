@@ -46,11 +46,12 @@ const setLogoFirstHalf = cards.slice(0, 5).map(card => card.set);
 const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set);
 const pokemonName = card.pokemon.name;
 const index = 0;
+const capitalizedPokemonName = pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1);
 ---
 
 <Layout
-	title={pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1)}
-	description={card.pokemon.description}
+	title={`${capitalizedPokemonName} - Cards`}
+	description={`${capitalizedPokemonName}: ${card.pokemon.description}`}
 	image={{
 		url: card.image,
 		alt: card.pokemon.description,
@@ -116,7 +117,8 @@ const index = 0;
 				</div>
 			</div>
 			<div class="bottom-container">
-				<PageTitle title={pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1)}/>
+				<PageTitle title={capitalizedPokemonName}/>
+
 				<div class="bottom-half-bottom">
 					<div class="pokemon-info">
 						<div
