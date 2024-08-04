@@ -6,7 +6,7 @@
 		"dev": "astro dev",
 		"build": "astro build",
 		"preview": "astro preview",
-		"jampack": "jampack ./dist"
+		"jampack": "jampack ./dist --cache_folder ./node_modules/.cache/jampack"
 	},
 	"dependencies": {
 		"@astrojs/check": "^0.9.0",
