@@ -17,8 +17,12 @@ export async function getPokemons() {
 
 export async function getCards() {
 	const pokemons = await getPokemons();
-	const sets = await getSets();
 	if (fs.existsSync(CARDS)) {
+		if (!fs.existsSync(SETS)) {
+			await fetchSets();
+		}
+
+		const sets = await getSets();
 		const cardData = JSON.parse(fs.readFileSync(CARDS, 'utf-8')).flat() as Card[];
 		return cardData.map(card => {
 			card.rarity ??= 'Unknown';

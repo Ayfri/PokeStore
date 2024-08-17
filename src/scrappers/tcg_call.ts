@@ -1,6 +1,7 @@
 import * as fs from 'node:fs/promises';
 import pokemon from 'pokemontcgsdk';
 import {POKEMONS_COUNT} from '../constants';
+import {getPokemons} from '../helpers/data.ts';
 import type {Card} from '../types';
 import {CARDS, SETS} from './files.ts';
 
@@ -52,42 +53,54 @@ type FetchedCard = {
 	types: string[];
 };
 
-async function fetchPokemon(index: number) {
+export async function fetchPokemon(name: string, index: number) {
 	try {
-		return await pokemon.card.all({
-			q: `nationalPokedexNumbers:${index}`,
+		const searchOptions = {
 			orderBy: 'nationalPokedexNumbers',
 			select: 'name,rarity,images,set,cardmarket,types,nationalPokedexNumbers',
+		};
+
+		const cardsData = await pokemon.card.all({
+			q: `nationalPokedexNumbers:${index} supertype:Pokémon`,
+			...searchOptions,
 		}) as FetchedCard[];
+
+		if (!cardsData.toString()) {
+			console.log(`Pokédex: ${index}/${POKEMONS_COUNT}, no cards found for this Pokémon, retrying with name...`);
+			return await pokemon.card.all({
+				q: `name:${name} supertype:Pokémon`,
+				...searchOptions,
+			}) as FetchedCard[];
+		}
+		return cardsData;
 	} catch (e) {
 		if (!(e instanceof Error)) {
-			console.error(`Pokedex: ${index}/${POKEMONS_COUNT}, error: ${e}, retrying...`);
+			console.error(`Pokédex: ${index}/${POKEMONS_COUNT}, error: ${e}, retrying...`);
 			await new Promise(resolve => setTimeout(resolve, 3000));
-			return fetchPokemon(index);
+			return fetchPokemon(name, index);
 		}
 
 		if (e.message.includes('429')) {
-			console.error(`Pokedex: ${index}/${POKEMONS_COUNT}, rate limit reached, retrying...`);
+			console.error(`Pokédex: ${index}/${POKEMONS_COUNT}, rate limit reached, retrying...`);
 			await new Promise(resolve => setTimeout(resolve, 5000));
-			return fetchPokemon(index);
+			return fetchPokemon(name, index);
 		}
 	}
 }
 
-async function getPokemon(index: number) {
-	const cards = await fetchPokemon(index);
-
+async function getPokemon(name: string, index: number) {
+	const cards = await fetchPokemon(name, index);
 	if (!cards) {
-		console.log(`Pokedex: ${index}/${POKEMONS_COUNT}, no cards found for this Pokémon!`);
+		console.log(`Pokédex: ${index}/${POKEMONS_COUNT}, no cards found for this Pokémon!`);
 		return [];
 	}
 
 	if (cards.length === 0) {
-		console.log(`Pokedex: ${index}/${POKEMONS_COUNT}, no cards found!`);
+		console.log(`Pokédex: ${index}/${POKEMONS_COUNT}, no cards found!`);
 		return [];
 	}
 
-	console.log(`Pokedex: ${index}/${POKEMONS_COUNT}, caught ${cards[0].name}! (${cards.length} cards)`);
+	console.log(`Pokédex: ${index}/${POKEMONS_COUNT}, caught ${name} ! (${cards.length} cards)`);
 
 	const fetchedCards = cards.map(async (card: FetchedCard) => {
 		const tcgplayerPrices = card?.tcgplayer?.prices ?? {};
@@ -117,12 +130,13 @@ async function getPokemon(index: number) {
 		).map(Math.round);
 		const meanColorHex = meanColor.map(val => val.toString(16).padStart(2, '0')).join('');
 
+		const nationalPokedexNumbers = card.nationalPokedexNumbers ?? [index];
 		return {
 			id: card.id,
 			image: card.images.large,
 			meanColor: meanColorHex,
 			name: card.name,
-			numero: card.nationalPokedexNumbers.join(', '),
+			numero: nationalPokedexNumbers.join(', '),
 			price,
 			rarity: card.rarity,
 			set_name: card.set.name,
@@ -172,10 +186,14 @@ async function fetchAndFilterSets() {
 export async function fetchCards() {
 	const pokemonGroups = [];
 	const interval = 10;
+	const pokemons = await getPokemons();
 
 	for (let i = 0; i <= POKEMONS_COUNT; i += interval) {
 		await new Promise(resolve => setTimeout(resolve, 7500));
-		const promises = Array.from({length: interval}, (_, j) => getPokemon(i + j + 1));
+		const promises = Array.from({length: interval}, (_, j) => {
+			const name = pokemons[i + j]?.name;
+			return getPokemon(name, i + j + 1);
+		});
 		const result = await Promise.all(promises);
 		pokemonGroups.push(...result);
 	}
