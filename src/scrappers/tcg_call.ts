@@ -14,9 +14,11 @@ if (!apiKey) {
 pokemon.configure({apiKey});
 
 type FetchedCard = {
+	id: string;
 	name: string;
 	rarity: string;
 	images: {
+		small: string;
 		large: string;
 	};
 	nationalPokedexNumbers: number[];
@@ -87,22 +89,48 @@ async function getPokemon(index: number) {
 
 	console.log(`Pokedex: ${index}/${POKEMONS_COUNT}, caught ${cards[0].name}! (${cards.length} cards)`);
 
-	return cards.map((card: FetchedCard) => {
-		const price = card?.cardmarket?.prices?.averageSellPrice || card?.tcgplayer?.prices?.holofoil?.market ||
-			card?.tcgplayer?.prices?.reverseHolofoil?.market ||
-			card?.tcgplayer?.prices?.normal?.market || card?.tcgplayer?.prices?.["1stEditionHolofoil"]?.market ||
-			card?.tcgplayer?.prices?.["1stEditionNormal"]?.market;
+	const fetchedCards = cards.map(async (card: FetchedCard) => {
+		const tcgplayerPrices = card?.tcgplayer?.prices ?? {};
+
+		const price = card.cardmarket?.prices?.averageSellPrice || tcgplayerPrices.holofoil?.market ||
+			tcgplayerPrices.reverseHolofoil?.market ||
+			tcgplayerPrices.normal?.market || tcgplayerPrices["1stEditionHolofoil"]?.market ||
+			tcgplayerPrices["1stEditionNormal"]?.market;
+
+		const smallImageURL = card.images.small;
+		const image = await fetch(smallImageURL);
+		const buffer = await image.arrayBuffer();
+		const bufferView = new Uint8Array(buffer);
+		const meanColor = bufferView.reduce(
+			(acc, val, i, arr) => {
+				if (i % 4 === 3) return acc;
+				const index = Math.floor(i / 4);
+				const color = index % 3;
+				acc[color] += val / (arr.length / 4);
+				return acc;
+			},
+			[
+				0,
+				0,
+				0,
+			],
+		).map(Math.round);
+		const meanColorHex = meanColor.map(val => val.toString(16).padStart(2, '0')).join('');
 
 		return {
-			name: card.name,
-			rarity: card.rarity,
+			id: card.id,
 			image: card.images.large,
+			meanColor: meanColorHex,
+			name: card.name,
 			numero: card.nationalPokedexNumbers.join(', '),
-			set_name: card.set.name,
 			price,
+			rarity: card.rarity,
+			set_name: card.set.name,
 			types: card.types.join(', '),
 		};
-	}).sort((a, b) => (b.price ?? 0) - (a.price ?? 0));
+	});
+	const allCards = await Promise.all(fetchedCards);
+	return allCards.sort((a, b) => (b.price ?? 0) - (a.price ?? 0));
 }
 
 type FetchedSet = {

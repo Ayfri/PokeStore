@@ -21,10 +21,9 @@ type DescriptionData = {
 export async function fetchPokemons() {
 	const response = await fetch(`https://pokeapi.co/api/v2/pokemon-species?limit=${POKEMONS_COUNT}`);
 	const json = await response.json() as SearchResults;
-	console.log(`Fetched ${json.results.length} pokémons`);
+	console.log(`Fetched ${json.results.length} pokémons, fetching descriptions...`);
 
 	const fetchPromises = json.results.map(async (pokemon, index) => {
-
 		try {
 			const descriptionResponse = await fetch(pokemon.url);
 			const descriptionJson = await descriptionResponse.json() as DescriptionData;
