@@ -66,22 +66,23 @@ export async function fetchPokemon(name: string, index: number) {
 		}) as FetchedCard[];
 
 		if (!cardsData.toString()) {
-			console.log(`Pokédex: ${index}/${POKEMONS_COUNT}, no cards found for this Pokémon, retrying with name...`);
+			const searchName = name.replaceAll('-', ' ');
+			console.log(`Pokédex: ${index}/${POKEMONS_COUNT} (${name}), no cards found for this Pokémon, retrying with name '${searchName}'...`);
 			return await pokemon.card.all({
-				q: `name:${name} supertype:Pokémon`,
+				q: `name:"${searchName}" supertype:Pokémon`,
 				...searchOptions,
 			}) as FetchedCard[];
 		}
 		return cardsData;
 	} catch (e) {
 		if (!(e instanceof Error)) {
-			console.error(`Pokédex: ${index}/${POKEMONS_COUNT}, error: ${e}, retrying...`);
+			console.error(`Pokédex: ${index}/${POKEMONS_COUNT} (${name}), error: ${e}, retrying...`);
 			await new Promise(resolve => setTimeout(resolve, 3000));
 			return fetchPokemon(name, index);
 		}
 
 		if (e.message.includes('429')) {
-			console.error(`Pokédex: ${index}/${POKEMONS_COUNT}, rate limit reached, retrying...`);
+			console.error(`Pokédex: ${index}/${POKEMONS_COUNT} (${name}), rate limit reached, retrying...`);
 			await new Promise(resolve => setTimeout(resolve, 5000));
 			return fetchPokemon(name, index);
 		}
@@ -90,17 +91,12 @@ export async function fetchPokemon(name: string, index: number) {
 
 async function getPokemon(name: string, index: number) {
 	const cards = await fetchPokemon(name, index);
-	if (!cards) {
-		console.log(`Pokédex: ${index}/${POKEMONS_COUNT}, no cards found for this Pokémon!`);
+	if (!cards || cards?.length === 0) {
+		console.log(`Pokédex: ${index}/${POKEMONS_COUNT} (${name}), no cards found for this Pokémon !`);
 		return [];
 	}
 
-	if (cards.length === 0) {
-		console.log(`Pokédex: ${index}/${POKEMONS_COUNT}, no cards found!`);
-		return [];
-	}
-
-	console.log(`Pokédex: ${index}/${POKEMONS_COUNT}, caught ${name} ! (${cards.length} cards)`);
+	console.log(`Pokédex: ${index}/${POKEMONS_COUNT} (${name}), found ${cards.length} cards !`);
 
 	const fetchedCards = cards.map(async (card: FetchedCard) => {
 		const tcgplayerPrices = card?.tcgplayer?.prices ?? {};
@@ -192,6 +188,7 @@ export async function fetchCards() {
 		await new Promise(resolve => setTimeout(resolve, 7500));
 		const promises = Array.from({length: interval}, (_, j) => {
 			const name = pokemons[i + j]?.name;
+			if (!name) return [];
 			return getPokemon(name, i + j + 1);
 		});
 		const result = await Promise.all(promises);
