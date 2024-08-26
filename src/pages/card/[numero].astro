@@ -114,7 +114,7 @@ const evolvesTo = card.pokemon.evolves_to?.map(evolution => {
 							/>)}
 						</div>
 					</div>
-					<div class="right-card">
+					<div class={`right-card ${setLogoSecondHalf.length ? '' : 'empty'}`}>
 						{setLogoSecondHalf.map((set, index) =>
 							<Image
 								alt={set.name}
@@ -615,6 +615,10 @@ const evolvesTo = card.pokemon.evolves_to?.map(evolution => {
 
 		.right-card {
 			grid-area: right;
+		}
+
+		.right-card.empty {
+			display: none;
 		}
 
 		.left-card > img, .right-card > img {
