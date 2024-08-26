@@ -5,7 +5,8 @@
 		"module": "ES2022",
 		"lib": [
 			"ESNext",
-			"DOM"
+			"DOM",
+			"DOM.Iterable"
 		],
 		"moduleResolution": "NodeNext",
 		"esModuleInterop": true
