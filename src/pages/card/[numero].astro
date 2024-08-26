@@ -3,6 +3,7 @@ import "../../styles/colors.css";
 
 import type {GetStaticPaths} from 'astro';
 import {getCards, getPokemons} from '../../helpers/data';
+import {pascalCase} from '../../helpers/strings';
 import Layout from '../../layouts/Layout.astro';
 import PageTitle from "../../components/PageTitle.astro";
 import {Image} from "astro:assets";
@@ -47,6 +48,16 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set);
 const pokemonName = card.pokemon.name;
 const index = 0;
 const capitalizedPokemonName = pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1);
+
+const pokemons = await getPokemons();
+
+const evolvesTo = card.pokemon.evolves_to?.map(evolution => {
+	const pokemon = pokemons.find(pokemon => pokemon.id === evolution)!;
+	return {
+		id: evolution,
+		name: pokemon.name,
+	};
+}) ?? [];
 ---
 
 <Layout
@@ -117,6 +128,10 @@ const capitalizedPokemonName = pokemonName.charAt(0).toUpperCase() + pokemonName
 				</div>
 			</div>
 			<div class="bottom-container">
+				<p data-values={cards.map(card => card.price)} id="card-price">
+					{card.price ? `${card.price} $` : 'Priceless'}
+				</p>
+
 				<PageTitle title={capitalizedPokemonName}/>
 
 				<div class="bottom-half-bottom">
@@ -141,10 +156,32 @@ const capitalizedPokemonName = pokemonName.charAt(0).toUpperCase() + pokemonName
 							}
 						</div>
 						<p>{card.pokemon.description}</p>
+						{card.pokemon.evolves_from &&
+							<p class="evolves-from">
+								Evolves from:
+								<a href={`/card/${card.pokemon.evolves_from}`}>
+									{pokemons.find(pokemon => pokemon.id === card.pokemon.evolves_from)?.name}
+								</a>
+							</p>
+						}
+
+						{card.pokemon.evolves_to &&
+							<p class="evolves-to">
+								Evolves to: {
+								evolvesTo.toSorted((a, b) => a.name.localeCompare(b.name)).map((evolution, i, evolves_to) =>
+									<>
+									<a href={`/card/${evolution.id}`}>
+										{pascalCase(evolution.name)}
+									</a>
+									{
+										i === evolves_to.length - 1 ? '' : ', '
+									}
+									</>,
+								)
+							}
+							</p>
+						}
 					</div>
-					<p data-values={cards.map(card => card.price)} id="card-price">
-						{card.price ? `${card.price} $` : 'Priceless'}
-					</p>
 				</div>
 			</div>
 		</div>
@@ -596,7 +633,16 @@ const capitalizedPokemonName = pokemonName.charAt(0).toUpperCase() + pokemonName
 		}
 	}
 
+	.evolves-to {
+		color: #fbc54a;
+	}
+
 	#card-price {
 		margin: 0;
+		font-size: 1.5rem;
+		background-color: rgba(35, 35, 35, 0.75);
+		border-radius: 1rem;
+		border: #f3d02c solid 3px;
+		padding: 0.2rem 1.2rem;
 	}
 </style>
