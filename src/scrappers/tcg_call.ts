@@ -1,3 +1,4 @@
+import {getAverageColor} from 'fast-average-color-node';
 import * as fs from 'node:fs/promises';
 import pokemon from 'pokemontcgsdk';
 import {POKEMONS_COUNT} from '../constants';
@@ -107,24 +108,8 @@ async function getPokemon(name: string, index: number) {
 			tcgplayerPrices["1stEditionNormal"]?.market;
 
 		const smallImageURL = card.images.small;
-		const image = await fetch(smallImageURL);
-		const buffer = await image.arrayBuffer();
-		const bufferView = new Uint8Array(buffer);
-		const meanColor = bufferView.reduce(
-			(acc, val, i, arr) => {
-				if (i % 4 === 3) return acc;
-				const index = Math.floor(i / 4);
-				const color = index % 3;
-				acc[color] += val / (arr.length / 4);
-				return acc;
-			},
-			[
-				0,
-				0,
-				0,
-			],
-		).map(Math.round);
-		const meanColorHex = meanColor.map(val => val.toString(16).padStart(2, '0')).join('');
+		const meanColor = await getAverageColor(smallImageURL, {algorithm: 'simple'});
+		const meanColorHex = meanColor.hex.substring(1);
 
 		const nationalPokedexNumbers = card.nationalPokedexNumbers ?? [index];
 		return {
