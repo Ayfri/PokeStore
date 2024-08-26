@@ -1,3 +1,13 @@
 {
-  "extends": "astro/tsconfigs/strict"
+	"extends": "astro/tsconfigs/strict",
+	"compilerOptions": {
+		"target": "ES2021",
+		"module": "ES2022",
+		"lib": [
+			"ESNext",
+			"DOM"
+		],
+		"moduleResolution": "NodeNext",
+		"esModuleInterop": true
+	}
 }

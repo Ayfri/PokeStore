@@ -1,5 +1,5 @@
 import * as fs from "node:fs";
-import {POKEMONS_COUNT} from '../constants';
+import {POKEMONS_COUNT} from '../constants.ts';
 import {POKEMONS} from './files.ts';
 
 type SearchResults = {

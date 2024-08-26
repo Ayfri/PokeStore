@@ -1,9 +1,9 @@
 import {getAverageColor} from 'fast-average-color-node';
 import * as fs from 'node:fs/promises';
 import pokemon from 'pokemontcgsdk';
-import {POKEMONS_COUNT} from '../constants';
+import {POKEMONS_COUNT} from '../constants.ts';
 import {getPokemons} from '../helpers/data.ts';
-import type {Card} from '../types';
+import type {Card} from '../types.ts';
 import {CARDS, SETS} from './files.ts';
 
 // Load and configure environment variables

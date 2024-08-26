@@ -1,5 +1,5 @@
 import * as fs from 'node:fs/promises';
-import type {Card} from '../types';
+import type {Card} from '../types.ts';
 import {CARDS, HOLO_CARDS} from './files.ts'; // Using fs/promises for async operations
 
 
