@@ -45,7 +45,7 @@ const {
 				types.toLowerCase().split(','),
 			]}
 		></div>
-		<div class="loader"></div>
+		<div class="loader" style={`--card-color: #${card.meanColor};`}></div>
 		<Image
 			alt={name.charAt(0).toUpperCase() + name.slice(1)}
 			height="420"
@@ -57,6 +57,17 @@ const {
 		<h3>{price && price !== 100_000 ? `${price} $` : 'Priceless'}</h3>
 	</div>
 </a>
+
+<script>
+	const cardImages = document.querySelectorAll<HTMLImageElement>(".card-pokestore img");
+	const cardLoaders = document.querySelectorAll<HTMLDivElement>(".card-pokestore .loader");
+
+	cardImages.forEach((cardImage, index) => {
+		cardImage.addEventListener("load", () => {
+			cardLoaders[index].remove();
+		});
+	});
+</script>
 
 <style>
 	.card-link {
@@ -115,8 +126,10 @@ const {
 		filter: blur(2.5rem);
 	}
 
-	.card-pokestore img {
+	img {
 		border-radius: 0.5rem;
+		height: 420px;
+		width: 300px;
 	}
 
 	.holo::after {
@@ -344,8 +357,7 @@ const {
 		animation-iteration-count: infinite;
 		animation-name: placeHolderShimmer;
 		animation-timing-function: linear;
-		background: #f6f7f8;
-		background: linear-gradient(to right, #afafaf 8%, #9a9999 38%, #afafaf 54%);
+		background: linear-gradient(to right, var(--card-color) 8%, color-mix(in oklab, var(--card-color), white 30%) 38%, var(--card-color) 54%);
 		background-size: auto;
 		position: absolute;
 		width: 300px;
