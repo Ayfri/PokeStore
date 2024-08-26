@@ -89,137 +89,137 @@ cards = cards.map(card => {
 
 <script>
 	/*SCROLL BUTTON*/
-	const scrollBtn = document.querySelector<HTMLButtonElement>('#scroll-btn');
-	scrollBtn!.addEventListener('click', () => {
-		const cardsGrid = document.querySelector<HTMLDivElement>('.cards-grid');
-		cardsGrid!.scrollTo({
-			top: cardsGrid!.scrollHeight,
-			behavior: 'smooth',
-		});
-	});
+		const scrollBtn = document.querySelector<HTMLButtonElement>('#scroll-btn');
+		scrollBtn!.addEventListener('click', () => {
+			const cardsGrid = document.querySelector<HTMLDivElement>('.cards-grid');
+			cardsGrid!.scrollTo({
+				top: cardsGrid!.scrollHeight,
+				behavior: 'smooth',
+				});
+			});
 
-	const filters = {
-		numero: document.querySelector<HTMLInputElement>('#numero')!,
-		name: document.querySelector<HTMLInputElement>('#name')!,
-		type: document.querySelector<HTMLSelectElement>('#type')!,
-		rarity: document.querySelector<HTMLSelectElement>('#rarity')!,
-		set: document.querySelector<HTMLSelectElement>('#set')!,
-		sort: document.querySelector<HTMLSelectElement>('#sort')!,
-	};
+		const filters = {
+			numero: document.querySelector<HTMLInputElement>('#numero')!,
+			name: document.querySelector<HTMLInputElement>('#name')!,
+			type: document.querySelector<HTMLSelectElement>('#type')!,
+			rarity: document.querySelector<HTMLSelectElement>('#rarity')!,
+			set: document.querySelector<HTMLSelectElement>('#set')!,
+			sort: document.querySelector<HTMLSelectElement>('#sort')!,
+			};
 
-	const cardsCount = document.querySelector<HTMLSpanElement>('.filters-result span')!;
+		const cardsCount = document.querySelector<HTMLSpanElement>('.filters-result span')!;
 
-	const cards = Array.from(document.querySelectorAll<HTMLDivElement>('.card-link'));
+		const cards = Array.from(document.querySelectorAll<HTMLDivElement>('.card-link'));
 
-	function applyFilters() {
-		const numeroFilter = filters.numero.value.trim();
-		const nameFilter = filters.name.value.trim().toLowerCase();
-		const typeFilter = filters.type.value.toLowerCase();
-		const rarityFilter = filters.rarity.value;
-		const setFilter = filters.set.value;
+		function applyFilters() {
+			const numeroFilter = filters.numero.value.trim();
+			const nameFilter = filters.name.value.trim().toLowerCase();
+			const typeFilter = filters.type.value.toLowerCase();
+			const rarityFilter = filters.rarity.value;
+			const setFilter = filters.set.value;
 
-		localStorage.setItem('filters', JSON.stringify({
-			numero: numeroFilter,
-			name: nameFilter,
-			type: typeFilter,
-			rarity: rarityFilter,
-			set: setFilter,
-		}));
+			localStorage.setItem('filters', JSON.stringify({
+				numero: numeroFilter,
+				name: nameFilter,
+				type: typeFilter,
+				rarity: rarityFilter,
+				set: setFilter,
+				}));
 
-		let visibleCount = 0;
+			let visibleCount = 0;
 
-		cards.forEach(card => {
-			const matchesNumero = !numeroFilter || card.dataset.numero === numeroFilter;
-			const matchesName = !nameFilter || card.dataset.name!.includes(nameFilter);
-			const types = card.dataset.types!.split(',');
-			const matchesType = typeFilter === 'all' || types.includes(typeFilter);
-			const matchesRarity = rarityFilter === 'all' || card.dataset.rarity === rarityFilter;
-			const matchesSet = setFilter === 'all' || card.dataset.set === setFilter;
+			cards.forEach(card => {
+				const matchesNumero = !numeroFilter || card.dataset.numero === numeroFilter;
+				const matchesName = !nameFilter || card.dataset.name!.includes(nameFilter);
+				const types = card.dataset.types!.split(',');
+				const matchesType = typeFilter === 'all' || types.includes(typeFilter);
+				const matchesRarity = rarityFilter === 'all' || card.dataset.rarity === rarityFilter;
+				const matchesSet = setFilter === 'all' || card.dataset.set === setFilter;
 
-			if (matchesNumero && matchesName && matchesType && matchesRarity && matchesSet) {
-				card.classList.remove('hidden');
-				visibleCount++;
-			} else {
-				card.classList.add('hidden');
+				if (matchesNumero && matchesName && matchesType && matchesRarity && matchesSet) {
+					card.classList.remove('hidden');
+					visibleCount++;
+					} else {
+					card.classList.add('hidden');
+					}
+				});
+
+			cardsCount.textContent = `${visibleCount}`;
+
+			sortCards();
 			}
-		});
 
-		cardsCount.textContent = `${visibleCount}`;
+		function sortCards() {
+			const sortValue = filters.sort.value;
+			const cardsContainer = document.querySelector<HTMLDivElement>('.cards-grid')!;
+			const sortedCards = Array.from(cards).filter(card => !card.classList.contains('hidden'));
+			const reversed = document.querySelector<HTMLButtonElement>('.sort-order-btn')!.dataset.sort === 'desc';
 
-		sortCards();
-	}
-
-	function sortCards() {
-		const sortValue = filters.sort.value;
-		const cardsContainer = document.querySelector<HTMLDivElement>('.cards-grid')!;
-		const sortedCards = Array.from(cards).filter(card => !card.classList.contains('hidden'));
-		const reversed = document.querySelector<HTMLButtonElement>('.sort-order-btn')!.dataset.sort === 'desc';
-
-		sortedCards.sort((a, b) => {
-			if (reversed) {
-				[
-					a,
-					b,
-				] =
+			sortedCards.sort((a, b) => {
+				if (reversed) {
 					[
-						b,
 						a,
-					];
+						b,
+						] =
+						[
+							b,
+							a,
+							];
+					}
+				switch (sortValue) {
+					case 'sort-numero':
+						return parseInt(a.dataset.numero!) - parseInt(b.dataset.numero!);
+					case 'sort-price':
+						return parseInt(a.dataset.price!) - parseInt(b.dataset.price!);
+					case 'sort-name':
+						return a.dataset.name!.localeCompare(b.dataset.name!);
+					default:
+						return 0;
+					}
+				});
+
+			cardsContainer.innerHTML = '';
+			sortedCards.forEach(card => cardsContainer.appendChild(card));
 			}
-			switch (sortValue) {
-				case 'sort-numero':
-					return parseInt(a.dataset.numero!) - parseInt(b.dataset.numero!);
-				case 'sort-price':
-					return parseInt(a.dataset.price!) - parseInt(b.dataset.price!);
-				case 'sort-name':
-					return a.dataset.name!.localeCompare(b.dataset.name!);
-				default:
-					return 0;
+
+		Object.values(filters).forEach(filter => filter.addEventListener('change', applyFilters));
+
+		document.querySelector<HTMLButtonElement>('.reset-btn')!.addEventListener('click', () => {
+			Object.values(filters).forEach(filter => {
+				if (filter.tagName === 'SELECT') {
+					filter.value = 'all';
+					} else {
+					filter.value = '';
+					}
+				});
+			applyFilters();
+			});
+
+		const sortOrderButton = document.querySelector<HTMLButtonElement>('.sort-order-btn');
+		sortOrderButton!.addEventListener('click', () => {
+			const sortOrder = sortOrderButton!.dataset.sort === 'asc' ? 'desc' : 'asc';
+			sortOrderButton!.dataset.sort = sortOrder;
+
+			if (sortOrder === 'asc') {
+				sortOrderButton!.innerHTML =
+					`<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><path d="M151.6 42.4C145.5 35.8 137 32 128 32s-17.5 3.8-23.6 10.4l-88 96c-11.9 13-11.1 33.3 2 45.2s33.3 11.1 45.2-2L96 146.3V448c0 17.7 14.3 32 32 32s32-14.3 32-32V146.3l32.4 35.4c11.9 13 32.2 13.9 45.2 2s13.9-32.2 2-45.2l-88-96zM320 480h32c17.7 0 32-14.3 32-32s-14.3-32-32-32H320c-17.7 0-32 14.3-32 32s14.3 32 32 32zm0-128h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H320c-17.7 0-32 14.3-32 32s14.3 32 32 32zm0-128H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H320c-17.7 0-32 14.3-32 32s14.3 32 32 32zm0-128H544c17.7 0 32-14.3 32-32s-14.3-32-32-32H320c-17.7 0-32 14.3-32 32s14.3 32 32 32z"/></svg>`;
+				} else {
+				sortOrderButton!.innerHTML =
+					`<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><path d="M151.6 469.6C145.5 476.2 137 480 128 480s-17.5-3.8-23.6-10.4l-88-96c-11.9-13-11.1-33.3 2-45.2s33.3-11.1 45.2 2L96 365.7V64c0-17.7 14.3-32 32-32s32 14.3 32 32V365.7l32.4-35.4c11.9-13 32.2-13.9 45.2-2s13.9 32.2 2 45.2l-88 96zM320 480c-17.7 0-32-14.3-32-32s14.3-32 32-32h32c17.7 0 32 14.3 32 32s-14.3 32-32 32H320zm0-128c-17.7 0-32-14.3-32-32s14.3-32 32-32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H320zm0-128c-17.7 0-32-14.3-32-32s14.3-32 32-32H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H320zm0-128c-17.7 0-32-14.3-32-32s14.3-32 32-32H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H320z"/></svg>`;
+				}
+			applyFilters();
+			});
+
+		if (localStorage.getItem('filters')) {
+			const filters = JSON.parse(localStorage.getItem('filters')!);
+			Object.entries(filters).forEach(([key, value]) => {
+				const filter = document.querySelector<HTMLInputElement | HTMLSelectElement>(`#${key}`);
+				if (filter) {
+					filter.value = String(value);
+					}
+				});
+			applyFilters();
 			}
-		});
-
-		cardsContainer.innerHTML = '';
-		sortedCards.forEach(card => cardsContainer.appendChild(card));
-	}
-
-	Object.values(filters).forEach(filter => filter.addEventListener('change', applyFilters));
-
-	document.querySelector<HTMLButtonElement>('.reset-btn')!.addEventListener('click', () => {
-		Object.values(filters).forEach(filter => {
-			if (filter.tagName === 'SELECT') {
-				filter.value = 'all';
-			} else {
-				filter.value = '';
-			}
-		});
-		applyFilters();
-	});
-
-	const sortOrderButton = document.querySelector<HTMLButtonElement>('.sort-order-btn');
-	sortOrderButton!.addEventListener('click', () => {
-		const sortOrder = sortOrderButton!.dataset.sort === 'asc' ? 'desc' : 'asc';
-		sortOrderButton!.dataset.sort = sortOrder;
-
-		if (sortOrder === 'asc') {
-			sortOrderButton!.innerHTML =
-				`<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><path d="M151.6 42.4C145.5 35.8 137 32 128 32s-17.5 3.8-23.6 10.4l-88 96c-11.9 13-11.1 33.3 2 45.2s33.3 11.1 45.2-2L96 146.3V448c0 17.7 14.3 32 32 32s32-14.3 32-32V146.3l32.4 35.4c11.9 13 32.2 13.9 45.2 2s13.9-32.2 2-45.2l-88-96zM320 480h32c17.7 0 32-14.3 32-32s-14.3-32-32-32H320c-17.7 0-32 14.3-32 32s14.3 32 32 32zm0-128h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H320c-17.7 0-32 14.3-32 32s14.3 32 32 32zm0-128H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H320c-17.7 0-32 14.3-32 32s14.3 32 32 32zm0-128H544c17.7 0 32-14.3 32-32s-14.3-32-32-32H320c-17.7 0-32 14.3-32 32s14.3 32 32 32z"/></svg>`;
-		} else {
-			sortOrderButton!.innerHTML =
-				`<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><path d="M151.6 469.6C145.5 476.2 137 480 128 480s-17.5-3.8-23.6-10.4l-88-96c-11.9-13-11.1-33.3 2-45.2s33.3-11.1 45.2 2L96 365.7V64c0-17.7 14.3-32 32-32s32 14.3 32 32V365.7l32.4-35.4c11.9-13 32.2-13.9 45.2-2s13.9 32.2 2 45.2l-88 96zM320 480c-17.7 0-32-14.3-32-32s14.3-32 32-32h32c17.7 0 32 14.3 32 32s-14.3 32-32 32H320zm0-128c-17.7 0-32-14.3-32-32s14.3-32 32-32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H320zm0-128c-17.7 0-32-14.3-32-32s14.3-32 32-32H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H320zm0-128c-17.7 0-32-14.3-32-32s14.3-32 32-32H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H320z"/></svg>`;
-		}
-		applyFilters();
-	});
-
-	if (localStorage.getItem('filters')) {
-		const filters = JSON.parse(localStorage.getItem('filters')!);
-		Object.entries(filters).forEach(([key, value]) => {
-			const filter = document.querySelector<HTMLInputElement | HTMLSelectElement>(`#${key}`);
-			if (filter) {
-				filter.value = String(value);
-			}
-		});
-		applyFilters();
-	}
 </script>
 
 <style>
@@ -292,13 +292,13 @@ cards = cards.map(card => {
 			flex-direction: column;
 			margin-left: 0;
 			margin-right: 0;
-			padding-bottom: 1rem;
+			padding-bottom: 0.75rem;
 			border-bottom-width: 4px;
 		}
 
 		.filters-container {
 			flex-flow: row;
-			margin-top: -0.75rem;
+			margin-top: -1.2rem;
 		}
 	}
 
@@ -372,7 +372,11 @@ cards = cards.map(card => {
 
 		.filters-top, .filters-bottom {
 			flex-direction: column;
-			gap: 0.5rem;
+			gap: 0.4rem;
+		}
+
+		.filters-result {
+			margin-bottom: -0.4rem;
 		}
 
 		input, select, .reset-btn, .sort-order-btn {
