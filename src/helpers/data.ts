@@ -1,10 +1,10 @@
 import fs from 'fs';
 import {CARDS, HOLO_CARDS, POKEMONS, SETS, TYPES} from '../scrappers/files.ts';
-import {fetchHoloCards} from '../scrappers/holo_scraper';
-import {fetchPokemons} from '../scrappers/pokemon_scraper';
-import {fetchCards, fetchSets} from '../scrappers/tcg_call';
-import {fetchPokemonTypes} from '../scrappers/types_scraper';
-import type {Card, Pokemon, Set} from '../types';
+import {fetchHoloCards} from '../scrappers/holo_scraper.ts';
+import {fetchPokemons} from '../scrappers/pokemon_scraper.ts';
+import {fetchCards, fetchSets} from '../scrappers/tcg_call.ts';
+import {fetchPokemonTypes} from '../scrappers/types_scraper.ts';
+import type {Card, Pokemon, Set} from '../types.ts';
 
 export async function getPokemons() {
 	if (fs.existsSync(POKEMONS)) {
