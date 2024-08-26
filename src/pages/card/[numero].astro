@@ -58,6 +58,8 @@ const evolvesTo = card.pokemon.evolves_to?.map(evolution => {
 		name: pokemon.name,
 	};
 }) ?? [];
+
+const evolvesFrom = card.pokemon.evolves_from ? pokemons.find(pokemon => pokemon.id === card.pokemon.evolves_from)! : undefined;
 ---
 
 <Layout
@@ -156,11 +158,11 @@ const evolvesTo = card.pokemon.evolves_to?.map(evolution => {
 							}
 						</div>
 						<p>{card.pokemon.description}</p>
-						{card.pokemon.evolves_from &&
+						{evolvesFrom &&
 							<p class="evolves-from">
 								Evolves from:
-								<a href={`/card/${card.pokemon.evolves_from}`}>
-									{pokemons.find(pokemon => pokemon.id === card.pokemon.evolves_from)?.name}
+								<a href={`/card/${evolvesFrom.id}/`}>
+									{pascalCase(evolvesFrom.name)}
 								</a>
 							</p>
 						}
@@ -170,7 +172,7 @@ const evolvesTo = card.pokemon.evolves_to?.map(evolution => {
 								Evolves to: {
 								evolvesTo.toSorted((a, b) => a.name.localeCompare(b.name)).map((evolution, i, evolves_to) =>
 									<>
-									<a href={`/card/${evolution.id}`}>
+									<a href={`/card/${evolution.id}/`}>
 										{pascalCase(evolution.name)}
 									</a>
 									{
@@ -637,7 +639,7 @@ const evolvesTo = card.pokemon.evolves_to?.map(evolution => {
 		}
 	}
 
-	.evolves-to {
+	.evolves-from, .evolves-to {
 		color: #fbc54a;
 	}
 
