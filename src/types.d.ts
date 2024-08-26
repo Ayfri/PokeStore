@@ -15,6 +15,8 @@ export interface Pokemon {
 	id: number;
 	name: string;
 	description: string;
+	evolves_from?: number;
+	evolves_to?: number[];
 }
 
 export interface Set {
