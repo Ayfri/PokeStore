@@ -57,7 +57,7 @@ const evolvesTo = card.pokemon.evolves_to?.map(evolution => {
 		id: evolution,
 		name: pokemon.name,
 	};
-}) ?? [];
+})?.sort((a, b) => a.name.localeCompare(b.name)) ?? [];
 
 const evolvesFrom = card.pokemon.evolves_from ? pokemons.find(pokemon => pokemon.id === card.pokemon.evolves_from)! : undefined;
 ---
@@ -175,7 +175,7 @@ const evolvesFrom = card.pokemon.evolves_from ? pokemons.find(pokemon => pokemon
 						{card.pokemon.evolves_to &&
 							<p class="evolves-to">
 								Evolves to: {
-								evolvesTo.toSorted((a, b) => a.name.localeCompare(b.name)).map((evolution, i, evolves_to) =>
+								evolvesTo.map((evolution, i, evolves_to) =>
 									<>
 									<a href={`/card/${evolution.id}/`} title={`${pascalCase(card.pokemon.name)} can evolve to ${pascalCase(evolution.name)}`}>
 										{pascalCase(evolution.name)}
