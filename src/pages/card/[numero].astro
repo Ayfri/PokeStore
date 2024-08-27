@@ -82,6 +82,7 @@ const evolvesFrom = card.pokemon.evolves_from ? pokemons.find(pokemon => pokemon
 								class:list={[`set ${index}`]}
 								draggable="false"
 								height="105"
+								title={`Click to see card in ${set.name} set`}
 								src={set.logo}
 								width="75"
 							/>)}
@@ -109,7 +110,7 @@ const evolvesFrom = card.pokemon.evolves_from ? pokemons.find(pokemon => pokemon
 								decoding="async"
 								hidden={cardIndex !== index}
 								draggable="false"
-								loading="eager"
+								loading={cardIndex === index ? 'eager' : 'lazy'}
 								height="420"
 								src={card.image}
 								width="300"
@@ -123,6 +124,7 @@ const evolvesFrom = card.pokemon.evolves_from ? pokemons.find(pokemon => pokemon
 								class:list={[`set ${index + 5}`]}
 								draggable="false"
 								height="105"
+								title={`Click to see card in ${set.name} set`}
 								src={set.logo}
 								width="75"
 							/>)}
@@ -130,7 +132,7 @@ const evolvesFrom = card.pokemon.evolves_from ? pokemons.find(pokemon => pokemon
 				</div>
 			</div>
 			<div class="bottom-container">
-				<p data-values={cards.map(card => card.price)} id="card-price">
+				<p data-values={cards.map(card => card.price)} id="card-price" title="Average current price">
 					{card.price ? `${card.price} $` : 'Priceless'}
 				</p>
 
