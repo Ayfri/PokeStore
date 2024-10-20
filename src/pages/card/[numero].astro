@@ -2,10 +2,9 @@
 import "../../styles/colors.css";
 
 import type {GetStaticPaths} from 'astro';
+import PokemonInfo from '../../components/card/PokemonInfo.astro';
 import {getCards, getPokemons} from '../../helpers/data';
-import {pascalCase} from '../../helpers/strings';
 import Layout from '../../layouts/Layout.astro';
-import PageTitle from "../../components/PageTitle.astro";
 import {Image} from "astro:assets";
 import type {Card} from "../../types";
 
@@ -48,18 +47,6 @@ const setLogoSecondHalf = cards.slice(5, 10).map(card => card.set);
 const pokemonName = card.pokemon.name;
 const index = 0;
 const capitalizedPokemonName = pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1);
-
-const pokemons = await getPokemons();
-
-const evolvesTo = card.pokemon.evolves_to?.map(evolution => {
-	const pokemon = pokemons.find(pokemon => pokemon.id === evolution)!;
-	return {
-		id: evolution,
-		name: pokemon.name,
-	};
-})?.sort((a, b) => a.name.localeCompare(b.name)) ?? [];
-
-const evolvesFrom = card.pokemon.evolves_from ? pokemons.find(pokemon => pokemon.id === card.pokemon.evolves_from)! : undefined;
 ---
 
 <Layout
@@ -128,81 +115,19 @@ const evolvesFrom = card.pokemon.evolves_from ? pokemons.find(pokemon => pokemon
 					</div>
 				</div>
 			</div>
-			<div class="mb-8 flex flex-col items-center gap-4 max-lg:gap-0">
-				<p
-					class="m-0 px-5 py-2 bg-gray-800 border-[3px] border-gold-400 rounded-[1rem] text-2xl"
-					data-values={cards.map(card => card.price)}
-					id="card-price"
-					title="Average current price"
-				>
-					{card.price ? `${card.price} $` : 'Priceless'}
-				</p>
-
-				<PageTitle title={capitalizedPokemonName}/>
-
-				<div class="flex flex-col items-center gap-4 max-lg:flex-col max-lg:items-center">
-					<div
-						class="flex gap-4"
-						data-values={cards.map(card => card.types.toLowerCase().replace(',', ' ').split(','))}
-						id="card-types"
-					>
-						{card.types.toLowerCase()
-						     .split(',')
-						     .map(type =>
-							     <p class={`card-type ${type}`}>
-								     {type}
-							     </p>,
-						     )
-						}
-					</div>
-					<p class="text-center">{card.pokemon.description}</p>
-					{evolvesFrom &&
-						<p class="text-gold-400">
-							Evolves from:
-							<a
-								class="text-blue-300 underline"
-								href={`/card/${evolvesFrom.id}/`}
-								title={`${pascalCase(card.pokemon.name)} is the evolution of ${pascalCase(evolvesFrom.name)}`}
-							>
-								{pascalCase(evolvesFrom.name)}
-							</a>
-						</p>
-					}
-
-					{card.pokemon.evolves_to &&
-						<p class="text-gold-400">
-							Evolves to: {
-							evolvesTo.map((evolution, i, evolves_to) =>
-								<>
-								<a
-									class="text-blue-300 underline"
-									href={`/card/${evolution.id}/`}
-									title={`${pascalCase(card.pokemon.name)} can evolve to ${pascalCase(evolution.name)}`}
-								>
-									{pascalCase(evolution.name)}
-								</a>
-								{
-									i === evolves_to.length - 1 ? '' : ', '
-								}
-								</>,
-							)
-						}
-						</p>
-					}
-				</div>
-			</div>
+			<PokemonInfo cards={cards} card={card}/>
 		</div>
 	</main>
 </Layout>
 <script>
-	const sets = document.querySelectorAll('.set') as NodeListOf<HTMLImageElement>;
-	const mainImages = document.querySelectorAll('.image') as NodeListOf<HTMLImageElement>;
-	const cardAura = document.querySelector('#card-aura') as HTMLDivElement;
+	const sets = document.querySelectorAll<HTMLImageElement>('.set')!;
+	const mainImages = document.querySelectorAll<HTMLImageElement>('.image')!;
+	const cardAura = document.querySelector<HTMLDivElement>('#card-aura')!;
 
-	const cardPrice = document.querySelector('#card-price') as HTMLParagraphElement;
-	const cardTypes = document.querySelector('#card-types') as HTMLDivElement;
-	const centerCard = document.querySelector('#center-card') as HTMLDivElement;
-	const filter = document.querySelector('#filter') as HTMLDivElement;
+	const cardPrice = document.querySelector<HTMLParagraphElement>('#card-price')!;
+	const cardTypes = document.querySelector<HTMLDivElement>('#card-types')!;
+	const centerCard = document.querySelector<HTMLDivElement>('#center-card')!;
+	const filter = document.querySelector<HTMLDivElement>('#filter')!;
 
 	let currentIndex = 0;
 
@@ -251,11 +176,10 @@ const evolvesFrom = card.pokemon.evolves_from ? pokemons.find(pokemon => pokemon
 	});
 
 	/*CARD EFFECT*/
-	const card = document.querySelector('.center-card') as HTMLDivElement;
-	const style = document.querySelector('#card') as HTMLStyleElement;
+	const style = document.querySelector<HTMLStyleElement>('#card')!;
 
-	card.addEventListener('mousemove', e => {
-		card.classList.remove('inactive');
+	centerCard.addEventListener('mousemove', e => {
+		centerCard.classList.remove('inactive');
 		const pos = [
 			e.offsetX,
 			e.offsetY,
@@ -263,8 +187,8 @@ const evolvesFrom = card.pokemon.evolves_from ? pokemons.find(pokemon => pokemon
 		e.preventDefault();
 		const l = pos[0];
 		const t = pos[1];
-		const h = card.getBoundingClientRect().height;
-		const w = card.getBoundingClientRect().width;
+		const h = centerCard.getBoundingClientRect().height;
+		const w = centerCard.getBoundingClientRect().width;
 		const px = Math.abs(Math.floor(100 / w * l) - 100);
 		const py = Math.abs(Math.floor(100 / h * t) - 100);
 		const pa = (50 - px) + (50 - py);
@@ -283,14 +207,14 @@ const evolvesFrom = card.pokemon.evolves_from ? pokemons.find(pokemon => pokemon
 		const tf = `transform: rotateX(${ty}deg) rotateY(${tx}deg);`;
 		const style2 = `.holo:hover::before {${gradPos}} !important`;
 		const style3 = `.holo:hover::after {${sparkPos} ${opc}} !important`;
-		card.setAttribute('style', tf);
+		centerCard.setAttribute('style', tf);
 		style.innerHTML = `${style2} \n${style3}}`;
 	});
 
-	card.addEventListener('mouseleave', () => {
-		card.classList.add('inactive');
-		card.removeAttribute('style');
-		card.style.transform = `rotateY(0deg) rotateX(0deg)`;
+	centerCard.addEventListener('mouseleave', () => {
+		centerCard.classList.add('inactive');
+		centerCard.removeAttribute('style');
+		centerCard.style.transform = `rotateY(0deg) rotateX(0deg)`;
 		style.innerHTML = '';
 	});
 </script>
