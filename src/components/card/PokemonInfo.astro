@@ -1,8 +1,8 @@
 ---
-import {getPokemons} from '../../helpers/data';
-import {pascalCase} from '../../helpers/strings';
-import type {Card} from '../../types';
-import PageTitle from '../PageTitle.astro';
+import {getPokemons} from '$helpers/data';
+import {pascalCase} from '$helpers/strings';
+import type {Card} from '~/types';
+import PageTitle from '@components/PageTitle.astro';
 
 interface Props {
 	cards: Card[];

@@ -1,10 +1,10 @@
 ---
-import Filters from '../components/list/Filters.astro';
-import ScrollToBottom from '../components/list/ScrollToBottom.astro';
-import {getCards} from '../helpers/data';
-import Layout from '../layouts/Layout.astro';
-import Card from "../components/list/Card.astro";
-import PageTitle from "../components/PageTitle.astro";
+import Filters from '@components/list/Filters.astro';
+import ScrollToBottom from '@components/list/ScrollToBottom.astro';
+import {getCards} from '$helpers/data.ts';
+import Layout from '@layouts/Layout.astro';
+import Card from "@components/list/Card.astro";
+import PageTitle from "@components/PageTitle.astro";
 
 let cards = await getCards();
 cards = cards.filter((card, index, self) => card.pokemon && self.findIndex(c => c.pokemon.id === card.pokemon.id) === index);

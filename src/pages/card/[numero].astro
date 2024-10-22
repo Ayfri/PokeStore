@@ -1,12 +1,12 @@
 ---
-import "../../styles/colors.css";
+import "~/styles/colors.css";
 
 import type {GetStaticPaths} from 'astro';
-import PokemonInfo from '../../components/card/PokemonInfo.astro';
-import {getCards, getPokemons} from '../../helpers/data';
-import Layout from '../../layouts/Layout.astro';
+import PokemonInfo from '@components/card/PokemonInfo.astro';
+import {getCards, getPokemons} from '$helpers/data';
+import Layout from '@layouts/Layout.astro';
 import {Image} from "astro:assets";
-import type {Card} from "../../types";
+import type {Card} from "~/types";
 
 
 export const getStaticPaths = (async () => {
