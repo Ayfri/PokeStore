@@ -11,7 +11,7 @@
 		"forceConsistentCasingInFileNames": true,
 		"moduleResolution": "NodeNext",
 		"skipLibCheck": true,
-		"esModuleInterop": false,
+		"esModuleInterop": true,
 		"baseUrl": ".",
 		"paths": {
 			"@components/*": [
@@ -22,6 +22,9 @@
 			],
 			"$helpers/*": [
 				"src/helpers/*"
+			],
+			"$scrappers/*": [
+				"src/scrappers/*"
 			],
 			"~/*": [
 				"src/*"

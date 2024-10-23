@@ -1,12 +1,12 @@
-import fs from 'fs';
-import {CARDS, HOLO_CARDS, POKEMONS, SETS, TYPES} from '../scrappers/files.ts';
-import {fetchHoloCards} from '../scrappers/holo_scraper.ts';
-import {fetchPokemons} from '../scrappers/pokemon_scraper.ts';
-import {fetchCards, fetchSets} from '../scrappers/tcg_call.ts';
-import {fetchPokemonTypes} from '../scrappers/types_scraper.ts';
-import type {Card, Pokemon, Set} from '../types.ts';
+import {CARDS, HOLO_CARDS, POKEMONS, SETS, TYPES} from '$scrappers/files.ts';
+import {fetchHoloCards} from '$scrappers/holo_scraper.ts';
+import {fetchPokemons} from '$scrappers/pokemon_scraper.ts';
+import {fetchCards, fetchSets} from '$scrappers/tcg_call.ts';
+import {fetchPokemonTypes} from '$scrappers/types_scraper.ts';
+import * as fs from 'node:fs';
+import type {Card, Pokemon, Set} from '~/types.ts';
 
-export async function getPokemons() {
+export async function getPokemons(): Promise<Pokemon[]> {
 	if (fs.existsSync(POKEMONS)) {
 		return JSON.parse(fs.readFileSync(POKEMONS, 'utf-8')) as Pokemon[];
 	}
@@ -15,7 +15,7 @@ export async function getPokemons() {
 	return getPokemons();
 }
 
-export async function getCards() {
+export async function getCards(): Promise<Card[]> {
 	const pokemons = await getPokemons();
 	if (fs.existsSync(CARDS)) {
 		if (!fs.existsSync(SETS)) {
@@ -37,7 +37,7 @@ export async function getCards() {
 	return getCards();
 }
 
-export async function getSets() {
+export async function getSets(): Promise<Set[]> {
 	if (fs.existsSync(SETS)) {
 		return JSON.parse(fs.readFileSync(SETS, 'utf-8')) as Set[];
 	}
@@ -47,7 +47,7 @@ export async function getSets() {
 	return getSets();
 }
 
-export async function getTypes() {
+export async function getTypes(): Promise<string[]> {
 	if (fs.existsSync(TYPES)) {
 		return JSON.parse(fs.readFileSync(TYPES, 'utf-8')) as string[];
 	}
@@ -57,12 +57,12 @@ export async function getTypes() {
 	return getTypes();
 }
 
-export async function getRarities() {
+export async function getRarities(): Promise<string[]> {
 	const cards = await getCards();
 	return [...new Set(cards.map(card => card.rarity).filter(rarity => rarity))];
 }
 
-export async function getHoloFoilsCards() {
+export async function getHoloFoilsCards(): Promise<Card[]> {
 	if (fs.existsSync(HOLO_CARDS)) {
 		return JSON.parse(fs.readFileSync(HOLO_CARDS, 'utf-8')) as Card[];
 	}

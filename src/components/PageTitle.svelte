@@ -1,12 +1,7 @@
----
-import type {HTMLAttributes} from 'astro/types';
+<script lang="ts">
+	export let title: string;
+</script>
 
-interface Props extends HTMLAttributes<'div'> {
-	title: string;
-}
-
-const {title} = Astro.props;
----
 <div class="relative flex flex-col items-center w-fit text-nowrap font-bold">
 	<h1 class="absolute p-0 m-0 -top-10 max-md:-top-8 left-1/2 w-max max-w-[100vw] -translate-x-1/2 overflow-hidden -z-10 select-none text-8xl leading-snug max-md:text-7xl max-md:leading-snug text-white opacity-10">{title}</h1>
 	<h2 class="p-0 m-0 text-white text-6xl max-md:text-5xl">{title}</h2>

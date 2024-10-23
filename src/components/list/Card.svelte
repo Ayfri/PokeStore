@@ -1,55 +1,55 @@
----
-import "~/styles/colors.css";
+<script lang="ts">
+	import {filterName, filterNumero, filterRarity, filterSet, filterType, isVisible} from '$helpers/filters.js';
+	import {onMount} from 'svelte';
+	import type {Card} from '~/types.js';
 
-import type {Card} from "~/types";
-import {Image} from "astro:assets";
+	export let card: Card;
 
-interface Props {
-	card: Card;
-}
+	const {
+		image,
+		pokemon,
+		price,
+		rarity,
+		types,
+	} = card;
 
-const {card} = Astro.props;
-const {
-	numero,
-	image,
-	pokemon,
-	set_name,
-	price,
-	rarity,
-	types,
-} = card;
-const {
-	description,
-	name,
-} = pokemon;
----
+	const {name} = pokemon;
+
+	let imageElement: HTMLImageElement | undefined = undefined;
+	let loaderElement: HTMLDivElement | undefined = undefined;
+
+	onMount(() => {
+		imageElement?.addEventListener('load', () => loaderElement?.remove(), {once: true});
+	});
+
+	let visible: boolean = true;
+	$: if ($filterName || $filterNumero || $filterRarity || $filterSet || $filterType) {
+		visible = isVisible(card);
+	}
+</script>
 
 <a
+	aria-label={`Go to the card page of ${name}`}
 	class="card-link text-white"
+	class:hidden={!visible}
+	draggable="false"
 	href={`/card/${pokemon.id}/`}
 	rel="dofollow"
-	aria-label={`Go to the card page of ${name}`}
-	draggable="false"
-	data-name={name}
-	data-numero={numero}
-	data-price={price}
-	data-rarity={rarity.toLowerCase()}
-	data-set={set_name.toLowerCase()}
-	data-types={types.toLowerCase()}
 >
 	<div class="card-pokestore group relative p-8 max-lg:p-5 flex flex-col items-center w-fit cursor-pointer transition-transform duration-500 ease-out hover:scale-[1.025]">
 		<div class:list={rarity.toLowerCase()}></div>
 		<div
 			class={`aura h-[26rem] w-[20rem] absolute left-[1.4rem] blur-[1.5rem] rounded-[15rem] -z-10 bg-[var(--type-color)]
-			transition-all duration-700 ease-out group:hover:blur-[2.5rem] ${types.toLowerCase().split(',')}`}
+			transition-all duration-700 ease-out group-hover:blur-[2.5rem] ${types.toLowerCase().split(',')}`}
 		></div>
-		<div class="loader" style={`--card-color: #${card.meanColor};`}></div>
-		<Image
+		<div bind:this={loaderElement} class="loader" style={`--card-color: #${card.meanColor};`}></div>
+		<img
 			alt={name.charAt(0).toUpperCase() + name.slice(1)}
+			bind:this={imageElement}
 			class="rounded-lg h-[420px] w-[300px]"
+			draggable="false"
 			height="420"
 			src={image}
-			draggable="false"
 			width="300"
 		/>
 		<h2 class="text-center font-bold text-2xl">{name.charAt(0).toUpperCase() + name.slice(1)}</h2>
@@ -57,22 +57,7 @@ const {
 	</div>
 </a>
 
-<script>
-	const cardImages = document.querySelectorAll<HTMLImageElement>(".card-pokestore img");
-	const cardLoaders = document.querySelectorAll<HTMLDivElement>(".card-pokestore .loader");
-
-	cardImages.forEach((cardImage, index) => {
-		cardImage.addEventListener("load", () => {
-			cardLoaders[index].remove();
-		});
-	});
-</script>
-
 <style>
-	.card-link:global(.hidden) {
-		display: none;
-	}
-
 	.holo::after {
 		background-image: url("https://assets.codepen.io/13471/sparkles.gif"), url(https://assets.codepen.io/13471/holo.png), linear-gradient(125deg, #ff008450 15%, #fca40040 30%, #ffff0030 40%, #00ff8a20 60%, #00cfff40 70%, #cc4cfa50 85%);
 		background-position: 50% 50%;
@@ -300,11 +285,11 @@ const {
 		animation-timing-function: linear;
 		background: linear-gradient(to right, var(--card-color) 8%, color-mix(in oklab, var(--card-color), white 30%) 38%, var(--card-color) 54%);
 		background-size: auto;
+		border-radius: 0.5rem;
+		height: 420px;
 		position: absolute;
 		width: 300px;
-		height: 420px;
 		z-index: -1;
-		border-radius: 0.5rem;
 	}
 
 	@keyframes placeHolderShimmer {
