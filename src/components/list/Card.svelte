@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {onMount} from 'svelte';
+	import {fade} from 'svelte/transition';
 	import type {Card} from '~/types.js';
 
 	export let card: Card;
@@ -13,13 +13,7 @@
 	} = card;
 
 	const {name} = pokemon;
-
-	let imageElement: HTMLImageElement | undefined = undefined;
-	let loaderElement: HTMLDivElement | undefined = undefined;
-
-	onMount(() => {
-		imageElement?.addEventListener('load', () => loaderElement?.remove(), {once: true});
-	});
+	let loaded = false;
 </script>
 
 <a
@@ -35,15 +29,18 @@
 			class={`aura h-[26rem] w-[20rem] absolute blur-[1.5rem] rounded-[15rem] -z-10 bg-[var(--type-color)]
 			transition-all duration-700 ease-out group-hover:blur-[2.5rem] ${types.toLowerCase().split(',')}`}
 		></div>
-		<div bind:this={loaderElement} class="loader" style={`--card-color: #${card.meanColor};`}></div>
+		{#if !loaded}
+			<div class="loader" style={`--card-color: #${card.meanColor};`} transition:fade></div>
+		{/if}
 		<img
 			alt={name.charAt(0).toUpperCase() + name.slice(1)}
-			bind:this={imageElement}
-			class="rounded-lg h-[420px] w-[300px]"
+			class="rounded-lg h-[420px] w-[300px] transition-opacity duration-300"
+			class:opacity-0={!loaded}
 			decoding="async"
 			draggable="false"
 			height="420"
 			loading="lazy"
+			on:load={() => loaded = true}
 			src={image}
 			width="300"
 		/>
