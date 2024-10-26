@@ -1,5 +1,4 @@
 ---
-import ScrollToBottom from '@components/list/ScrollToBottom.astro';
 import {getCards, getRarities, getSets, getTypes} from '$helpers/data.ts';
 import Layout from '@layouts/Layout.astro';
 import CardGrid from '@components/list/CardGrid.svelte';
@@ -26,9 +25,7 @@ types.sort((a, b) => a.localeCompare(b));
 		alt: "Pokémon TCG Card List",
 	}}
 >
-	<main class="p-2 max-lg:px-0 text-white text-lg flex flex-col h-[calc(100lvh-3rem)] gap-2 mb-40">
-		<ScrollToBottom/>
-
+	<main class="py-2 max-lg:px-0 text-white text-lg flex flex-col h-[calc(100lvh-3rem)] gap-2 mb-40">
 		<CardGrid client:load {cards} {sets} {rarities} {types}/>
 	</main>
 </Layout>
