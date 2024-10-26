@@ -166,11 +166,11 @@ async function fetchAndFilterSets() {
 
 export async function fetchCards() {
 	const pokemonGroups = [];
-	const interval = 10;
+	const interval = 3;
 	const pokemons = await getPokemons();
 
-	for (let i = 0; i <= POKEMONS_COUNT; i += interval) {
-		await new Promise(resolve => setTimeout(resolve, 7500));
+	for (let i = 0; i <= POKEMONS_COUNT + 2; i += interval) {
+		await new Promise(resolve => setTimeout(resolve, 2000));
 		const promises = Array.from({length: interval}, (_, j) => {
 			const name = pokemons[i + j]?.name;
 			if (!name) return [];

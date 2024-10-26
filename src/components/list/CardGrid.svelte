@@ -1,8 +1,9 @@
 <script lang="ts">
 	import "~/styles/colors.css";
-	import {sortBy, sortOrder} from '$helpers/filters.js';
+	import {displayAll, filterName, filterNumero, filterRarity, filterSet, filterType, isVisible, sortBy, sortOrder} from '$helpers/filters.js';
 	import CardComponent from '@components/list/Card.svelte';
 	import Filters from '@components/list/Filters.svelte';
+	import VirtualGrid from '@components/list/VirtualGrid.svelte';
 	import PageTitle from '@components/PageTitle.svelte';
 	import type {Card, Set} from '~/types.js';
 
@@ -11,8 +12,12 @@
 	export let rarities: string[];
 	export let types: string[];
 
+	let displayedCards = cards;
+	$: displayedCards =
+		$displayAll ? cards : cards.filter((card, index, self) => card.pokemon && self.findIndex(c => c.pokemon.id === card.pokemon.id) === index);
+
 	$: if ($sortOrder || $sortBy) {
-		cards = cards.sort((a, b) => {
+		displayedCards = displayedCards.sort((a, b) => {
 			const aNumero = parseInt(a.numero);
 			const bNumero = parseInt(b.numero);
 			if ($sortBy === 'sort-price') {
@@ -24,22 +29,22 @@
 			return $sortOrder === 'asc' ? aNumero - bNumero : bNumero - aNumero;
 		});
 	}
+
+	let filteredCards = displayedCards;
+	$: if ($filterName || $filterNumero || $filterRarity || $filterSet || $filterType || $displayAll) {
+		filteredCards = displayedCards.filter(isVisible);
+	}
 </script>
 
 <div class="w-full mx-auto max-lg:px-2">
 	<div class="flex max-lg:flex-col justify-between mx-28 max-lg:m-0 pb-2 lg:pb-3 items-center border-b-white border-b-[6px] max-lg:border-b-4">
 		<PageTitle title="Card List"/>
 		<div class="flex flex-col max-lg:flex-row items-end gap-3 leading-normal max-lg:-mt-1.5">
-			<Filters {cards} {rarities} {sets} {types}/>
+			<Filters cards={displayedCards} {rarities} {sets} {types}/>
 		</div>
 	</div>
 </div>
 
-<div
-	class="grid grid-cols-[repeat(auto-fit,minmax(30rem,1fr))] place-items-center justify-center w-full overflow-y-scroll overflow-x-hidden scrollbar-hide"
-	id="cards-grid"
->
-	{#each cards as card(card.image)}
-		<CardComponent {card}/>
-	{/each}
-</div>
+<VirtualGrid itemHeight={544} itemWidth={340} items={filteredCards} let:item>
+	<CardComponent card={item}/>
+</VirtualGrid>

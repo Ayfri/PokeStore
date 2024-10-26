@@ -5,12 +5,10 @@ import Layout from '@layouts/Layout.astro';
 import CardGrid from '@components/list/CardGrid.svelte';
 
 let cards = await getCards();
-cards = cards.filter((card, index, self) => card.pokemon && self.findIndex(c => c.pokemon.id === card.pokemon.id) === index);
-cards = cards.sort((a, b) => a.pokemon.id - b.pokemon.id || b.price - a.price);
-cards = cards.map(card => {
-	card.price ||= 100_000;
-	return card;
-});
+
+// unique by image
+cards = cards.filter((card, index, self) => self.findIndex(c => c.image === card.image) === index);
+cards = cards.filter((card) => card.price);
 
 const sets = await getSets();
 const rarities = await getRarities();

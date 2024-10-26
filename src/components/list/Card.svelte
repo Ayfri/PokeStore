@@ -1,5 +1,4 @@
 <script lang="ts">
-	import {filterName, filterNumero, filterRarity, filterSet, filterType, isVisible} from '$helpers/filters.js';
 	import {onMount} from 'svelte';
 	import type {Card} from '~/types.js';
 
@@ -21,17 +20,11 @@
 	onMount(() => {
 		imageElement?.addEventListener('load', () => loaderElement?.remove(), {once: true});
 	});
-
-	let visible: boolean = true;
-	$: if ($filterName || $filterNumero || $filterRarity || $filterSet || $filterType) {
-		visible = isVisible(card);
-	}
 </script>
 
 <a
 	aria-label={`Go to the card page of ${name}`}
 	class="card-link text-white"
-	class:hidden={!visible}
 	draggable="false"
 	href={`/card/${pokemon.id}/`}
 	rel="dofollow"
@@ -47,8 +40,10 @@
 			alt={name.charAt(0).toUpperCase() + name.slice(1)}
 			bind:this={imageElement}
 			class="rounded-lg h-[420px] w-[300px]"
+			decoding="async"
 			draggable="false"
 			height="420"
+			loading="lazy"
 			src={image}
 			width="300"
 		/>

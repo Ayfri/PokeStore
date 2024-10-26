@@ -1,9 +1,8 @@
 <script lang="ts">
-	import {filterName, filterNumero, filterRarity, filterSet, filterType, isVisible, sortBy, sortOrder} from '$helpers/filters.js';
+	import {displayAll, filterName, filterNumero, filterRarity, filterSet, filterType, isVisible, sortBy, sortOrder} from '$helpers/filters.js';
 	import type {Card, Set} from '~/types.js';
 
 	export let cards: Card[];
-
 	export let sets: Set[];
 	export let rarities: string[];
 	export let types: string[];
@@ -14,10 +13,21 @@
 		$filterSet = 'all';
 		$filterType = 'all';
 		$filterRarity = 'all';
+		$displayAll = false;
 	}
+
+	let visibleCardsCount = 0;
+	$: if ($filterName || $filterNumero || $filterRarity || $filterSet || $filterType || $displayAll) {
+		visibleCardsCount = cards.filter(isVisible).length;
+	}
+
 </script>
 
 <div class="flex items-center gap-4 max-lg:flex-col max-lg:gap-1.5">
+	<label class="text-white flex items-center gap-2" for="display-all">
+		Display all cards
+		<input bind:checked={$displayAll} class="!w-min" id="display-all" name="display-all" type="checkbox">
+	</label>
 	<button class="sort-order-btn fill-white !w-8 hover:fill-black" on:click={() => $sortOrder = $sortOrder === 'asc' ? 'desc' : 'asc'}>
 		<svg class="inline align-text-top" height="1em" viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg">
 			{#if $sortOrder === 'asc'}
@@ -34,7 +44,7 @@
 
 <div class="flex items-center gap-4 max-lg:flex-col max-lg:gap-1.5">
 	<output class="text-gold-400 text-[1rem] font-semibold lg:mr-2 max-lg:-mb-2">Cards :
-		<span>{cards.filter(isVisible).length}</span>
+		<span>{visibleCardsCount}</span>
 	</output>
 
 	<select bind:value={$sortBy} class="filter" id="sort" name="sort">
