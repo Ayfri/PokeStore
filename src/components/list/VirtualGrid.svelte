@@ -11,6 +11,7 @@
 	export let marginTop: number = 0;
 
 	const marginRows = 2;
+	const scrollThreshold = itemHeight * 0.8;
 
 	let container: HTMLDivElement;
 	let clientWidth: number;
@@ -18,6 +19,7 @@
 	let visibleRows: number = 0;
 	let visibleItems: Card[] = [];
 	let scrollingTo: boolean = false;
+	let previousScroll: number = 0;
 
 	$: if (container && items) updateVisibleItems();
 	$: if ('window' in globalThis) visibleRows = Math.ceil(window.innerHeight / (itemHeight + gapY));
@@ -31,7 +33,16 @@
 		const scrollTop = container.scrollTop;
 		const start = Math.floor(scrollTop / (itemHeight + gapY)) * itemsPerRow;
 		const end = start + visibleRows * itemsPerRow;
-		visibleItems = items.slice(start, end + itemsPerRow * marginRows);
+		visibleItems = items.slice(Math.max(0, start - itemsPerRow * marginRows), end + itemsPerRow * marginRows);
+	}
+
+	function scroll() {
+		const scrollTop = container.scrollTop;
+		if (Math.abs(scrollTop - previousScroll) < scrollThreshold) {
+			return;
+		}
+		previousScroll = scrollTop;
+		updateVisibleItems();
 	}
 
 	function scrollToLast() {
@@ -50,7 +61,7 @@
 
 <svelte:window on:resize={updateVisibleItems}/>
 
-<div bind:this={container} bind:clientWidth class="relative flex-1 w-full h-full overflow-y-scroll scrollbar-hide" on:scroll={updateVisibleItems}>
+<div bind:this={container} bind:clientWidth class="relative flex-1 w-full h-full overflow-y-scroll scrollbar-hide" on:scroll={scroll}>
 	<div class="absolute size-[1px]" style="top: {Math.ceil((items.length) / itemsPerRow) * (itemHeight + gapY) + marginTop}px;"></div>
 
 	{#each items as item, i (item.image)}
