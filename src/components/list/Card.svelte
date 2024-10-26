@@ -29,10 +29,10 @@
 	href={`/card/${pokemon.id}/`}
 	rel="dofollow"
 >
-	<div class="card-pokestore group relative p-8 max-lg:p-5 flex flex-col items-center w-fit cursor-pointer transition-transform duration-500 ease-out hover:scale-[1.025]">
+	<div class="card-pokestore group relative max-lg:p-5 flex flex-col items-center w-fit cursor-pointer transition-transform duration-500 ease-out hover:scale-[1.025]">
 		<div class:list={rarity.toLowerCase()}></div>
 		<div
-			class={`aura h-[26rem] w-[20rem] absolute left-[1.4rem] blur-[1.5rem] rounded-[15rem] -z-10 bg-[var(--type-color)]
+			class={`aura h-[26rem] w-[20rem] absolute blur-[1.5rem] rounded-[15rem] -z-10 bg-[var(--type-color)]
 			transition-all duration-700 ease-out group-hover:blur-[2.5rem] ${types.toLowerCase().split(',')}`}
 		></div>
 		<div bind:this={loaderElement} class="loader" style={`--card-color: #${card.meanColor};`}></div>

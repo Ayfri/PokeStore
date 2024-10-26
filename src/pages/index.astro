@@ -25,13 +25,15 @@ types.sort((a, b) => a.localeCompare(b));
 		alt: "Pokémon TCG Card List",
 	}}
 >
-	<main class="py-2 max-lg:px-0 text-white text-lg flex flex-col h-[calc(100lvh-3rem)] gap-2 mb-40">
+	<main class="max-lg:px-0 text-white text-lg flex flex-col flex-1 gap-2">
 		<CardGrid client:load {cards} {sets} {rarities} {types}/>
 	</main>
 </Layout>
 
-<style>
+<style is:global>
 	body {
-		overflow: hidden;
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
 	}
 </style>

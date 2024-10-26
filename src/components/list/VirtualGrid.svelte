@@ -6,37 +6,41 @@
 	export let items: Card[];
 	export let itemHeight: number;
 	export let itemWidth: number;
+	export let gapX: number = 0;
+	export let gapY: number = 0;
+	export let marginTop: number = 0;
 
 	const marginRows = 2;
 
 	let container: HTMLDivElement;
 	let clientWidth: number;
 	let itemsPerRow: number = 1;
+	let visibleRows: number = 0;
 	let visibleItems: Card[] = [];
-	let scrollingTo = false;
+	let scrollingTo: boolean = false;
+
+	$: if (container && items) updateVisibleItems();
+	$: if ('window' in globalThis) visibleRows = Math.ceil(window.innerHeight / (itemHeight + gapY));
+	$: leftMargin = (clientWidth - (itemsPerRow * itemWidth + (itemsPerRow - 1) * gapX)) / 2;
 
 	onMount(updateVisibleItems);
 
 	function updateVisibleItems() {
 		if (scrollingTo) return;
-		itemsPerRow = Math.floor(clientWidth / itemWidth);
+		itemsPerRow = Math.floor(clientWidth / (itemWidth + gapX));
 		const scrollTop = container.scrollTop;
-		const start = Math.floor(scrollTop / itemHeight) * itemsPerRow;
+		const start = Math.floor(scrollTop / (itemHeight + gapY)) * itemsPerRow;
 		const end = start + visibleRows * itemsPerRow;
 		visibleItems = items.slice(start, end + itemsPerRow * marginRows);
 	}
-
-	$: if (container && items) updateVisibleItems();
-	$: leftMargin = (clientWidth - itemsPerRow * itemWidth) / 2;
-	$: visibleRows = Math.ceil(window.innerHeight / itemHeight);
 
 	function scrollToLast() {
 		scrollingTo = true;
 		const start = items.length - visibleRows * itemsPerRow;
 		const end = start + visibleRows * itemsPerRow;
 		visibleItems = items.slice(start, end + itemsPerRow * marginRows);
-		const scrollTop = (items.length / itemsPerRow) * itemHeight;
 
+		const scrollTop = (items.length / itemsPerRow) * (itemHeight + gapY) + marginTop;
 		queueMicrotask(() => {
 			container.scrollTop = scrollTop;
 			scrollingTo = false;
@@ -46,18 +50,18 @@
 
 <svelte:window on:resize={updateVisibleItems}/>
 
-<div bind:this={container} class="relative w-full h-full overflow-scroll scrollbar-hide mb-4" on:scroll={updateVisibleItems}>
-	<div bind:clientWidth class="w-full">
-		{#each items as item, i (item.image)}
-			{#if visibleItems.includes(item)}
-				{#key item.image}
-					<div class="inline absolute h-[{itemHeight}px]" style="top: {Math.floor(i / itemsPerRow) * itemHeight}px; left: {i % itemsPerRow * itemWidth + leftMargin}px">
-						<slot {item}/>
-					</div>
-				{/key}
-			{/if}
-		{/each}
-	</div>
+<div bind:this={container} bind:clientWidth class="relative flex-1 w-full h-full overflow-y-scroll scrollbar-hide" on:scroll={updateVisibleItems}>
+	<div class="absolute size-[1px]" style="top: {Math.ceil((items.length) / itemsPerRow) * (itemHeight + gapY) + marginTop}px;"></div>
+
+	{#each items as item, i (item.image)}
+		{#if visibleItems.includes(item)}
+			{#key item.image}
+				<div class="absolute" style="top: {Math.floor(i / itemsPerRow) * (itemHeight + gapY) + marginTop}px; left: {i % itemsPerRow * (itemWidth + gapX) + leftMargin}px">
+					<slot {item}/>
+				</div>
+			{/key}
+		{/if}
+	{/each}
 </div>
 
 <ScrollToBottom on:click={scrollToLast}/>

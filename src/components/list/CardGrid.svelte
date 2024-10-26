@@ -45,6 +45,6 @@
 	</div>
 </div>
 
-<VirtualGrid itemHeight={544} itemWidth={340} items={filteredCards} let:item>
+<VirtualGrid gapX={100} gapY={50} itemHeight={480} itemWidth={320} items={filteredCards} let:item marginTop={50}>
 	<CardComponent card={item}/>
 </VirtualGrid>

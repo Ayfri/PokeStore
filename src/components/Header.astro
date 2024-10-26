@@ -3,22 +3,25 @@ import {Image} from 'astro:assets';
 import pokestore from '~/assets/pokestore.png';
 ---
 
-<header class="relative m-2 lg:mb-10 2xl:m-2 py-3 px-8 max-lg:px-6 flex items-center justify-between gap-8 rounded-full z-10 bg-gray-800">
-	<a href="/" class="text-gray-400">Cards</a>
-	<span class="flex-1"></span>
-	<a href="/" class="logo-link absolute left-1/2 top-full max-lg:top-3/4 -translate-x-1/2 -translate-y-1/2 p-2.5 rounded-full">
-		<Image
-			alt="logo"
-			densities={[
-				0.2,
-				0.5,
-				1,
-			]}
-			loading="eager"
-			class="object-contain aspect-square size-16 max-lg:size-12"
-			src={pokestore}
-		/>
-	</a>
+<header class="w-full p-2 pb-12">
+	<div class="relative py-3 px-8 max-lg:px-6 flex items-center justify-between gap-8 rounded-full z-10 bg-gray-800">
+
+		<a href="/" class="text-gray-400">Cards</a>
+		<span class="flex-1"></span>
+		<a href="/" class="logo-link absolute left-1/2 top-full max-lg:top-3/4 -translate-x-1/2 -translate-y-1/2 p-2.5 rounded-full">
+			<Image
+				alt="logo"
+				densities={[
+					0.2,
+					0.5,
+					1,
+				]}
+				loading="eager"
+				class="object-contain aspect-square size-16 max-lg:size-12"
+				src={pokestore}
+			/>
+		</a>
+	</div>
 </header>
 
 <style>
