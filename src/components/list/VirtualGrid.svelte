@@ -59,7 +59,7 @@
 	}
 </script>
 
-<svelte:window on:resize={updateVisibleItems}/>
+<svelte:window on:resize={() => setTimeout(updateVisibleItems, 0)}/>
 
 <div bind:this={container} bind:clientWidth class="relative flex-1 w-full h-full overflow-y-scroll scrollbar-hide" on:scroll={scroll}>
 	<div class="absolute size-[1px]" style="top: {Math.ceil((items.length) / itemsPerRow) * (itemHeight + gapY) + marginTop}px;"></div>
