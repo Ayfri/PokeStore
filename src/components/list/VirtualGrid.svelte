@@ -72,6 +72,8 @@
 				</div>
 			{/key}
 		{/if}
+	{:else}
+		<slot name="empty"/>
 	{/each}
 </div>
 

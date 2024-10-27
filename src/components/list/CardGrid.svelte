@@ -51,4 +51,8 @@
 
 <VirtualGrid gapX={100} gapY={50} itemHeight={480} itemWidth={300} items={filteredCards} let:item marginTop={15 + clientWidth * 0.025}>
 	<CardComponent card={item}/>
+
+	<div slot="empty">
+		<p class="text-white text-center mt-32 text-2xl">No cards found</p>
+	</div>
 </VirtualGrid>
