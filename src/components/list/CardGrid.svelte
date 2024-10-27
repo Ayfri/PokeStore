@@ -49,7 +49,7 @@
 	</div>
 </div>
 
-<VirtualGrid gapX={100} gapY={50} itemHeight={480} itemWidth={300} items={filteredCards} let:item marginTop={15 + clientWidth * 0.025}>
+<VirtualGrid gapX={100 + clientWidth * 0.035} gapY={50} itemHeight={480} itemWidth={300} items={filteredCards} let:item marginTop={15 + clientWidth * 0.025}>
 	<CardComponent card={item}/>
 
 	<div slot="empty">
