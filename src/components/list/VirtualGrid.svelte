@@ -29,7 +29,7 @@
 
 	function updateVisibleItems() {
 		if (scrollingTo) return;
-		itemsPerRow = Math.floor(clientWidth / (itemWidth + gapX));
+		itemsPerRow = Math.max(1, Math.floor(clientWidth / (itemWidth + gapX)));
 		const scrollTop = container.scrollTop;
 		const start = Math.floor(scrollTop / (itemHeight + gapY)) * itemsPerRow;
 		const end = start + visibleRows * itemsPerRow;
