@@ -12,6 +12,8 @@
 	export let rarities: string[];
 	export let types: string[];
 
+	let clientWidth: number = 0;
+
 	let displayedCards = cards;
 	$: displayedCards =
 		$displayAll ? cards : cards.filter((card, index, self) => card.pokemon && self.findIndex(c => c.pokemon.id === card.pokemon.id) === index);
@@ -36,6 +38,8 @@
 	}
 </script>
 
+<svelte:window bind:innerWidth={clientWidth}/>
+
 <div class="w-full mx-auto max-lg:px-2">
 	<div class="flex max-lg:flex-col justify-between mx-28 max-lg:m-0 pb-2 lg:pb-3 items-center border-b-white border-b-[6px] max-lg:border-b-4">
 		<PageTitle title="Card List"/>
@@ -45,6 +49,6 @@
 	</div>
 </div>
 
-<VirtualGrid gapX={100} gapY={50} itemHeight={480} itemWidth={320} items={filteredCards} let:item marginTop={50}>
+<VirtualGrid gapX={100} gapY={50} itemHeight={480} itemWidth={300} items={filteredCards} let:item marginTop={15 + clientWidth * 0.025}>
 	<CardComponent card={item}/>
 </VirtualGrid>
