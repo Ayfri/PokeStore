@@ -24,7 +24,7 @@
 </script>
 
 <div class="flex items-center gap-4 max-lg:flex-col max-lg:gap-1.5">
-	<label class="text-white flex items-center gap-2" for="display-all">
+	<label class="text-white flex items-center gap-2 max-lg:text-[1rem] max-lg:leading-snug" for="display-all">
 		Display all cards
 		<input bind:checked={$displayAll} class="!w-min" id="display-all" name="display-all" type="checkbox">
 	</label>
