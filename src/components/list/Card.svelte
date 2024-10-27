@@ -39,7 +39,7 @@
 			decoding="async"
 			draggable="false"
 			height="420"
-			loading="lazy"
+			loading="eager"
 			on:load={() => loaded = true}
 			src={image}
 			width="300"
