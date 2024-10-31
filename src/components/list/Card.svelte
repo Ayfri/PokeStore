@@ -12,6 +12,8 @@
 		types,
 	} = card;
 
+	const lowResolutionImage = image.replace("_hires", "");
+
 	const {name} = pokemon;
 	let loaded = false;
 </script>
@@ -26,7 +28,7 @@
 	<div class="card-pokestore group relative flex flex-col items-center w-fit cursor-pointer transition-transform duration-500 ease-out hover:scale-[1.025]">
 		<div class:list={rarity.toLowerCase()}></div>
 		<div
-			class={`aura h-[26rem] w-[20rem] absolute blur-[1.5rem] rounded-[15rem] -z-10 bg-[var(--type-color)]
+			class={`aura h-[26rem] max-2xs:h-[22rem] w-[20rem] max-2xs:w-[16rem] absolute blur-[1.5rem] rounded-[15rem] -z-10 bg-[var(--type-color)]
 			transition-all duration-700 ease-out group-hover:blur-[2.5rem] ${types.toLowerCase().split(',')}`}
 		></div>
 		{#if !loaded}
@@ -34,14 +36,16 @@
 		{/if}
 		<img
 			alt={name.charAt(0).toUpperCase() + name.slice(1)}
-			class="rounded-lg h-[420px] w-[300px] transition-opacity duration-300"
+			class="rounded-lg h-[420px] max-2xs:h-[342px] w-[300px] max-2xs:w-[245px] transition-opacity duration-300"
 			class:opacity-0={!loaded}
 			decoding="async"
 			draggable="false"
 			height="420"
 			loading="eager"
 			on:load={() => loaded = true}
+			sizes="(max-width: 245px) 245px, 300px"
 			src={image}
+			srcset="{lowResolutionImage} 245px, {image} 300px"
 			width="300"
 		/>
 		<h2 class="text-center font-bold text-2xl">{name.charAt(0).toUpperCase() + name.slice(1)}</h2>
@@ -282,6 +286,11 @@
 		position: absolute;
 		width: 300px;
 		z-index: -1;
+
+		@media (max-width: 420px) {
+			height: 342px;
+			width: 245px;
+		}
 	}
 
 	@keyframes placeHolderShimmer {

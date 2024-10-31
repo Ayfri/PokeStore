@@ -15,6 +15,10 @@ export default {
 					'800': '#232323',
 				},
 			},
+			screens: {
+				'xs': '420px',
+				'2xs': '350px',
+			},
 		},
 	},
 	plugins: [],

@@ -24,7 +24,7 @@
 </script>
 
 <div class="flex items-center gap-4 max-lg:flex-col max-lg:gap-1.5">
-	<label class="text-white flex items-center gap-2 max-lg:text-[1rem] max-lg:leading-snug" for="display-all">
+	<label class="text-white flex items-center gap-2 max-lg:text-[1rem] max-lg:leading-snug max-sm:text-sm" for="display-all">
 		Display all cards
 		<input bind:checked={$displayAll} class="!w-min" id="display-all" name="display-all" type="checkbox">
 	</label>
@@ -43,7 +43,7 @@
 </div>
 
 <div class="flex items-center gap-4 max-lg:flex-col max-lg:gap-1.5">
-	<output class="text-gold-400 text-[1rem] font-semibold lg:mr-2 max-lg:-mb-2">Cards :
+	<output class="text-gold-400 text-[1rem] font-semibold lg:mr-2 max-lg:-mb-2 max-sm:text-sm">Cards :
 		<span>{visibleCardsCount}</span>
 	</output>
 
@@ -131,6 +131,16 @@
 		input, select, .reset-btn, .sort-order-btn {
 			border-width: 2px;
 			font-size: 0.8rem;
+		}
+	}
+
+	@media (max-width: 420px) {
+		input, select, .reset-btn, .sort-order-btn {
+			font-size: 0.7rem;
+			height: 0.8rem;
+			line-height: 0;
+			padding: 0.1rem 0.2rem;
+			width: 8rem;
 		}
 	}
 
