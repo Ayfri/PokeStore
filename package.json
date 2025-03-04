@@ -6,7 +6,8 @@
 		"dev": "astro dev",
 		"build": "astro build",
 		"preview": "astro preview",
-		"jampack": "jampack ./dist --cache_folder ./node_modules/.cache/jampack"
+		"jampack": "jampack ./dist --cache_folder ./node_modules/.cache/jampack",
+		"scrapers": "tsx --env-file=.env scrapper-cli.ts"
 	},
 	"dependencies": {
 		"@astrojs/check": "^0.9.4",
@@ -24,6 +25,9 @@
 		"typescript": "^5.7.2"
 	},
 	"devDependencies": {
+		"@inquirer/prompts": "^3.3.0",
+		"chalk": "^5.3.0",
+		"tsx": "^4.7.0",
 		"@types/node": "^22.10.2"
 	}
 }

@@ -7,7 +7,7 @@ import * as fs from 'node:fs/promises';
 import type {Card} from '../types.ts';
 import {HOLO_CARDS} from './files.ts';
 
-async function getCardMasks() {
+export async function getCardMasks() {
 	const holoCards = JSON.parse(await fs.readFile(HOLO_CARDS, 'utf-8')).flat() as Card[];
 
 	for (const card of holoCards) {

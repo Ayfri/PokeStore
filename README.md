@@ -22,6 +22,34 @@ To install the project you need to follow multiple steps :
 9. Go to `http://localhost:4321/admin/load` and wait for the 'ok' to appear to load the JSON data into the database. This step can take a few dozen seconds.
 10. Go to `http://localhost:4322` and enjoy the project !
 
+## Data Scrapers
+
+You can use the interactive CLI to scrape and update various Pokemon data:
+
+```bash
+pnpm scrapers
+```
+
+This will present a menu where you can choose which scraper to run:
+
+- **cards**: Fetch all Pokémon cards from TCG API
+- **foil**: Generate foil URLs for holographic cards
+- **holo**: Extract holographic cards from cards dataset
+- **pokemons**: Fetch all Pokémon data from PokéAPI
+- **sets**: Fetch all card sets from TCG API
+- **types**: Extract all Pokémon types from cards dataset
+
+For best results, run the scrapers in the following order:
+
+1. `pokemons` - Get basic Pokémon data
+2. `sets` - Get card sets data
+3. `cards` - Get all cards (requires Pokémon data)
+4. `holo` - Extract holographic cards (requires cards data)
+5. `foil` - Generate foil URLs (requires holo data)
+6. `types` - Extract types (requires cards data)
+
+The scraped data is saved to JSON files in the `src/assets/` directory.
+
 ## Technologies
 
 This project uses the following technologies :
@@ -54,12 +82,12 @@ The project is structured as follows :
   /resources : The scripts and JSON files used to load the database
   /src : The source code of the api
     /pages : The endpoints of the api
-      
 /public : The public folder of the client
 /src : The source code of the client
   /components : The components of the website
   /fonts : The fonts of the website
   /pages : The pages of the website
+  /srcappers : The files of the scrapers
   /styles : The styles of the website
   /utils : The utilities of the client
 ```
